@@ -1,5 +1,8 @@
 package org.example.myproject.config;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.example.myproject.user.UserController;
 import org.example.myproject.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +18,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
+    private static final Logger logger = LogManager.getLogger(SpringSecurityConfig.class);
+
+    //https://docs.spring.io/spring-security/reference/servlet/appendix/namespace/http.html#nsa-remember-me-attributes , 참고
+
     @Bean
     public SecurityFilterChain securityException(HttpSecurity http) throws Exception {
 
@@ -25,17 +32,24 @@ public class SpringSecurityConfig {
         );
 
 
+        // .usernameParameter, .usernameParameter(), loginProcessingUrl는 username, password, login 기본값으로 하겠음.
         /* 로그인 Form */
         http.formLogin(form -> form
                 .loginPage("/login")
                 .permitAll()
+                .successHandler((request, response, authentication) -> {
+                            logger.info("Login Success : {}", authentication.getPrincipal());
+                        })
+                .failureHandler(((request, response, exception) -> {
+                            logger.error("Login Failed : {}", exception.getMessage());
+                }))
         );
 
         return http.build();
 
+
     }
 
-    @Bean
 
 
 //    @Bean

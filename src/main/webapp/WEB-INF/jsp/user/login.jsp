@@ -8,9 +8,9 @@
 
     </head>
     <body>
-        <form action="#" method="POST">
-            <label>아이디 : <input type="text"></label>
-            <label>비밀번호 : <input type="password"></label>
+        <form action="/login" method="POST">
+            <label>아이디 : <input type="text" name="username"></label>
+            <label>비밀번호 : <input type="password" name="password"></label>
             <button type="submit">로그인</button>
         </form>
     </body>
