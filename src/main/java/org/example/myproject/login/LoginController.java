@@ -2,12 +2,15 @@ package org.example.myproject.login;
 
 import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+
+import java.security.Principal;
 
 @Controller
 public class LoginController {
@@ -20,10 +23,13 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(Principal principal) {
 
-        logger.info("TEST");
-        System.out.println();
-        return "user/login";
+//        model.addAttribute("user", principal.getName());
+
+//        if (principal.getName() != null) {
+//            logger.info(principal.getName());
+//        }
+        return "login";
     }
 }

@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -36,27 +39,32 @@ public class SpringSecurityConfig {
         /* 로그인 Form */
         http.formLogin(form -> form
                 .loginPage("/login")
+                .defaultSuccessUrl("/home", true)
                 .permitAll()
                 .successHandler((request, response, authentication) -> {
                             logger.info("Login Success : {}", authentication.getPrincipal());
                         })
                 .failureHandler(((request, response, exception) -> {
-                            logger.error("Login Failed : {}", exception.getMessage());
+                            logger.error("Login Failed : exception : {}, request : {}, response : {}", exception.getMessage(), request.getParameter("username"), response.getStatus());
                 }))
         );
 
         return http.build();
-
-
     }
 
-
-
 //    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//                .username("user")
-//                .password("")
-//
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
 //    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {}
+//            PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
 }

@@ -19,10 +19,10 @@ import java.util.List;
 public class UserDTO implements UserDetails {
     private String userId;
     private String userPw;
-    private String role;
+    private String roles;
     private String email;
     private String nickname;
-    private String imageUrl;
+    private String profileImageUrl;
 
 
 //    public Collection<? extends GrantedAuthority> getAuthorities() {
