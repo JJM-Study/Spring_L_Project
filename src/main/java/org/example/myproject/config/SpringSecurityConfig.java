@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.example.myproject.user.UserController;
 import org.example.myproject.user.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,8 +31,10 @@ public class SpringSecurityConfig {
 
         /* 로그인 */
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/login").permitAll()
-                .anyRequest().permitAll()
+                .requestMatchers("/login", "/home", "/", "/sign-up").permitAll()
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+//                .anyRequest().authenticated()
+                        .anyRequest().permitAll()
         );
 
 
@@ -39,10 +42,12 @@ public class SpringSecurityConfig {
         /* 로그인 Form */
         http.formLogin(form -> form
                 .loginPage("/login")
-                .defaultSuccessUrl("/home", true)
+//                .defaultSuccessUrl("/home", true)
                 .permitAll()
+                /* roles에 따라 다른 로그인 처리 등을 위해 커스텀 핸들러 클래스 구현 고려할 것.*/
                 .successHandler((request, response, authentication) -> {
-                            logger.info("Login Success : {}", authentication.getPrincipal());
+                            logger.info("Login Success : principal : {}", authentication.getPrincipal());
+                            response.sendRedirect("/home");
                         })
                 .failureHandler(((request, response, exception) -> {
                             logger.error("Login Failed : exception : {}, request : {}, response : {}", exception.getMessage(), request.getParameter("username"), response.getStatus());

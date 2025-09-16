@@ -15,7 +15,9 @@
             <a href="/login"></a>
         </li>
         <li>
-            <p><sec:authentication property="principal.username"></p>
+            <sec:authorize access="isAuthenticated()" >
+                   <p><sec:authentication property="principal.username" /></p>
+            </sec:authorize>
         </li>
     </ul>
     </body>
