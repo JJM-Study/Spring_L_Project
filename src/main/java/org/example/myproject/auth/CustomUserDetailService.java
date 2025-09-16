@@ -1,8 +1,6 @@
 package org.example.myproject.auth;
 
 import org.apache.logging.log4j.LogManager;
-import org.example.myproject.user.UserDTO;
-import org.example.myproject.user.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,22 +13,22 @@ import org.apache.logging.log4j.Logger;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
     @Autowired
-    private UserMapper userMapper;
+    private AuthMapper authMapper;
 
     private static final Logger logger = LogManager.getLogger(CustomUserDetailService.class);
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.info("username : {}", username);
-        UserDTO userDTO = userMapper.selectUserInfo(username);
+        AuthDTO authDTO = authMapper.selectUserInfo(username);
 
-        logger.info("current userDTO : {}", userDTO);
+        logger.info("current userDTO : {}", authDTO);
 
-        if (userDTO == null) {
+        if (authDTO == null) {
             throw new UsernameNotFoundException("user not found with username" + username);
         }
 
-        return userDTO;
+        return authDTO;
     }
 
 }

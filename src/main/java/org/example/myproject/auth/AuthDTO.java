@@ -1,22 +1,19 @@
-package org.example.myproject.user;
+package org.example.myproject.auth;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 
 @Getter
 @Setter
 @Data
 @ToString
-public class UserDTO implements UserDetails {
+public class AuthDTO implements UserDetails {
     private String userId;
     private String userPw;
     private String roles;

@@ -2,19 +2,12 @@ package org.example.myproject.config;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.myproject.user.UserController;
-import org.example.myproject.user.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -31,10 +24,10 @@ public class SpringSecurityConfig {
 
         /* 로그인 */
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/login", "/home", "/", "/sign-up").permitAll()
-                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-//                .anyRequest().authenticated()
-                        .anyRequest().permitAll()
+                .requestMatchers("/login", "/home", "/", "/sign-up", "/WEB-INF/**").permitAll()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .anyRequest().authenticated()
+//                .anyRequest().permitAll()
         );
 
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.myproject.auth.AuthMapper">
+    <select id="selectUserInfo" resultType="org.example.myproject.auth.AuthDTO">
+        SELECT
+            user_id,
+            user_pw,
+            nickname,
+            roles,
+            email,
+            profile_image_url
+        FROM usermst
+        WHERE user_id = #{user_id}
+    </select>
+
+
+    <insert id="signUpUser" parameterType="org.example.myproject.auth.AuthDTO">
+        insert into usermst
+            (
+             user_id,
+             user_pw,
+             nickname,
+             email,
+             profile_image_url,
+             roles)
+        values (#{userId}, #{userPw}, #{nickname} , #{email}, null, #{roles});
+    </insert>
+
+</mapper>

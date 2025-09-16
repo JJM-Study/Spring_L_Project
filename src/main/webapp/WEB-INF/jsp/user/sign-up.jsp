@@ -12,13 +12,14 @@
     <body>
         <form method="POST" action="#">
             <label>
-                아이디 : <input type="text" />
+                아이디 : <input type="text" name="username"/>
+                <button type="button">중복확인</button>
             </label>
             <label>
-                비밀번호 : <input type="password" /><button><i class="bi bi-eye"></i></button>
+                비밀번호 : <input type="password" name="password" /><button><i class="bi bi-eye"></i></button>
             </label>
             <label>
-                비밀번호 재확인 : <input type="password"><button><i class="bi bi-eye"></i></button>
+                비밀번호 재확인 : <input type="password" name="check-password"><button><i class="bi bi-eye"></i></button>
             </label>
 
             <button type="submit">회원가입</button>
