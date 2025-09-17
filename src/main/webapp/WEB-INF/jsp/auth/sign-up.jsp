@@ -10,14 +10,14 @@
     <head>
         <title>회원가입</title>
         <script src="/js/auth/sign-up.js" defer></script>
-          <meta name="_csrf" content="${_csrf.token}">
+<%--        <meta name="_csrf" content="${_csrf.token}">--%>
     </head>
 
     <body>
         <form id="signUpForm">
             <label>
                 아이디 : <input type="text" name="username"/>
-                <button type="button">중복확인</button>
+                <button type="button" id="existId">중복확인</button>
             </label>
             <label>
                 비밀번호 : <input type="password" name="password" /><button><i class="bi bi-eye"></i></button>

@@ -1,6 +1,8 @@
-package org.example.myproject.auth;
+package org.example.myproject.auth.controller;
 
 import org.apache.logging.log4j.LogManager;
+import org.example.myproject.auth.dto.AuthDTO;
+import org.example.myproject.auth.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 import org.apache.logging.log4j.Logger;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +44,14 @@ public class AuthController {
         return "auth/login";
     }
 
+    @GetMapping("/exist-id")
+    public String existId(String username)
+    {
+
+
+        return "";
+    }
+
     @GetMapping("/sign-up")
     public String signUpForm() {
 
@@ -57,6 +66,9 @@ public class AuthController {
             AuthDTO authDTO,
             @RequestParam("check-password") String checkPassword
     ) {
+
+
+        logger.info("SIGN-UP CONNECTION TEST");
 
         /* 실무에서 쓰던 방식대로 json으로 success, message 를 나눠서 통신하겠음. 차후 전역적으로 이걸 처리할 수 있는 handler 구현 고민.*/
         Map<String, Object> result = new HashMap<>();

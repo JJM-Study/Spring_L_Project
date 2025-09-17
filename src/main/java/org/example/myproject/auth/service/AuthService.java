@@ -1,10 +1,13 @@
-package org.example.myproject.auth;
+package org.example.myproject.auth.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.myproject.auth.dto.AuthDTO;
+import org.example.myproject.auth.mapper.AuthMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class AuthService {
@@ -23,4 +26,8 @@ public class AuthService {
         return authMapper.signUpUser(authDTO);
     }
 
+    public String existId(String username) {
+
+        return authMapper.existId(username);
+    }
 }

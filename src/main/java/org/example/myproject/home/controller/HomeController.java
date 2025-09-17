@@ -1,8 +1,7 @@
-package org.example.myproject.home;
+package org.example.myproject.home.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.myproject.user.UserController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 

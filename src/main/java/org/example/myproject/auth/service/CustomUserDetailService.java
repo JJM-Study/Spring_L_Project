@@ -1,6 +1,8 @@
-package org.example.myproject.auth;
+package org.example.myproject.auth.service;
 
 import org.apache.logging.log4j.LogManager;
+import org.example.myproject.auth.dto.AuthDTO;
+import org.example.myproject.auth.mapper.AuthMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

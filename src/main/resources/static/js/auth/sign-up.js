@@ -1,7 +1,5 @@
 const signUpForm = document.getElementById("signUpForm");
 const signUpBtn = document.getElementById("signUpButton");
-const csrfToken = document.querySelector('meta[name=_csrf]').getAttribute('content');
-
 
 //fetch("/sign-up", {
 //    method: "POST",
@@ -15,23 +13,39 @@ const csrfToken = document.querySelector('meta[name=_csrf]').getAttribute('conte
 //})
 
 signUpForm.addEventListener("submit", async (e) => {
-   e.preventDefault();
+e.preventDefault();
 
-const fd = new FormData(signUpForm);
+// const fd = new FormData(signUpForm);
 
-   const response = await fetch("/sign-up", {
-   method : "POST",
-   body : fd,
-headers: {
-  "Content-Type": "application/json",
-  "X-CSRF-TOKEN": csrfToken
-}
+   try {
 
-   });
-   console.log("response : " + response);
-   const data = await response.json();
-   console.log("message : " + data.message);
+       console.log("sign-up test");
 
-   alert(data.message);
+       const fd = new FormData(signUpForm);
+
+
+       const response = await fetch("/sign-up", {
+           method: "POST",
+           body: fd
+           //    headers: {
+           //   "Content-Type": "application/json",
+           //   "X-CSRF-TOKEN": csrfToken
+           // }
+
+       });
+       console.log("response : " + response);
+       const resultData = await response.json();
+       console.log("message : " + resultData.message);
+
+       alert(resultData.message);
+
+       if (response.ok) {
+           location.href = "/login";
+       }
+
+   } catch(error) {
+       console.log("서버 요청 중 에러 발생 : " + error);
+   }
+
 
 });
