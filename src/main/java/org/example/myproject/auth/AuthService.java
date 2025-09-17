@@ -17,9 +17,9 @@ public class AuthService {
     private static final Logger logger = LogManager.getLogger(AuthService.class);
 
 
-    public int signUpUser(AuthDTO authDTO) {
+    public boolean signUpUser(AuthDTO authDTO) {
 
-        authDTO.setUserPw(passwordEncoder.encode(authDTO.getUserPw()));
+        authDTO.setPassword(passwordEncoder.encode(authDTO.getPassword()));
         return authMapper.signUpUser(authDTO);
     }
 

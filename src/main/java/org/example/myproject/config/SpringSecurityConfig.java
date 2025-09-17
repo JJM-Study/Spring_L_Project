@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,9 +26,13 @@ public class SpringSecurityConfig {
         /* 로그인 */
         http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/login", "/home", "/", "/sign-up", "/WEB-INF/**").permitAll()
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/sign-up").permitAll()  // POST도 명시적으로 허용
+
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
 //                .anyRequest().permitAll()
+
+
         );
 
 
@@ -46,6 +51,8 @@ public class SpringSecurityConfig {
                             logger.error("Login Failed : exception : {}, request : {}, response : {}", exception.getMessage(), request.getParameter("username"), response.getStatus());
                 }))
         );
+//
+//        http.csrf(csrf -> csrf.disable()); // 테스트용
 
         return http.build();
     }

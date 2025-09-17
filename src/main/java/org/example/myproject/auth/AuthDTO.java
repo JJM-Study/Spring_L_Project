@@ -14,8 +14,8 @@ import java.util.Collection;
 @Data
 @ToString
 public class AuthDTO implements UserDetails {
-    private String userId;
-    private String userPw;
+    private String username;
+    private String password;
     private String roles;
     private String email;
     private String nickname;
@@ -33,11 +33,13 @@ public class AuthDTO implements UserDetails {
     }
 
 
+    @Override
     public String getUsername() {
-        return userId;
+        return username;
     }
 
+    @Override
     public String getPassword() {
-        return userPw;
+        return password;
     }
 }

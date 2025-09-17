@@ -6,7 +6,7 @@
 
     <head>
         <title>LOGIN FORM TEST</title>
-        <script src="/js/user/login.js" defer></script>
+        <script src="/js/auth/login.js" defer></script>
     </head>
     <body>
         <form action="/login" method="POST">

@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface AuthMapper {
     AuthDTO selectUserInfo(String userId);
 
-    int signUpUser(AuthDTO authDTO);
+    boolean signUpUser(AuthDTO authDTO);
 }

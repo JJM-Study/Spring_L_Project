@@ -4,13 +4,14 @@ import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import org.apache.logging.log4j.Logger;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class AuthController {
@@ -38,35 +39,58 @@ public class AuthController {
         if (authentication != null && authentication.isAuthenticated()) {
             return "redirect:/home";
         }
-        System.out.printf("Authentication object is null");
-        return "user/login";
+        System.out.println("Authentication object is null\n");
+        return "auth/login";
     }
 
     @GetMapping("/sign-up")
     public String signUpForm() {
 
-        return "user/sign-up";
+        return "auth/sign-up";
     }
 
 
-    @PostMapping("/sign-up/")
-    public String signUpUser(
+
+    @PostMapping("/sign-up")
+    @ResponseBody
+    public Map<String, Object> signUpUser(
             AuthDTO authDTO,
-            String checkPassword,
-            RedirectAttributes redirectAttributes
+            @RequestParam("check-password") String checkPassword
     ) {
+
+        /* 실무에서 쓰던 방식대로 json으로 success, message 를 나눠서 통신하겠음. 차후 전역적으로 이걸 처리할 수 있는 handler 구현 고민.*/
+        Map<String, Object> result = new HashMap<>();
+
         if (!authDTO.getPassword().equals(checkPassword)) {
 
             logger.error("wrong password");
 
-            redirectAttributes.addFlashAttribute("message", "패스워드가 일치하지 않습니다.");
-            return redirectAttributes
+            result.put("success", false);
+            result.put("message", "패스워드가 일치하지 않습니다.");
+            return result;
         }
 
-        boolean result = authService.signUpUser(authDTO);
+        try {
 
-        if (result) {
-            return
+            boolean signUpResult = authService.signUpUser(authDTO);
+
+            if (!signUpResult) {
+                logger.error("failed sigh-up");
+                result.put("success", false);
+                result.put("message", "회원 가입이 실패했습니다.");
+                return result;
+            }
+
+            logger.error("sigh-up success");
+            result.put("success", true);
+            result.put("message", "회원 가입이 완료되었습니다.");
+            return result;
+
+        } catch(Exception e) {
+            logger.info("회원가입 중 예외 발생 : " + e);
+            result.put("success", false);
+            result.put("message", "회원가입 중 예외가 발생했습니다.");
+            return result;
         }
     }
 
