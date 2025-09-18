@@ -40,7 +40,7 @@ public class AuthController {
         if (authentication != null && authentication.isAuthenticated()) {
             return "redirect:/home";
         }
-        System.out.println("Authentication object is null\n");
+        System.out.println("Authentication object is null");
         return "auth/login";
     }
 

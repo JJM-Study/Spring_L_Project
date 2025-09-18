@@ -5,7 +5,7 @@ import org.example.myproject.auth.dto.AuthDTO;
 
 @Mapper
 public interface AuthMapper {
-    AuthDTO selectUserInfo(String userId);
+    AuthDTO selectUserInfo(String username);
 
     boolean signUpUser(AuthDTO authDTO);
 

@@ -6,22 +6,22 @@
 <mapper namespace="org.example.myproject.auth.mapper.AuthMapper">
     <select id="selectUserInfo" resultType="org.example.myproject.auth.dto.AuthDTO">
         SELECT
-            user_id,
-            user_pw,
+            user_id as username,
+            user_pw as password,
             nickname,
             roles,
             email,
             profile_image_url
         FROM usermst
-        WHERE user_id = #{username}
+        WHERE user_id = #{username};
     </select>
 
 
     <insert id="signUpUser" parameterType="org.example.myproject.auth.dto.AuthDTO">
         insert into usermst
             (
-             user_id,
-             user_pw,
+             user_id as username,
+             user_pw as password,
              nickname,
              email,
              profile_image_url,
@@ -30,8 +30,8 @@
     </insert>
 
 
-    <select id="existId" parameterType="String">
-        
+    <select id="existId" parameterType="java.lang.String">
+        select 1;
     </select>
 
 </mapper>
