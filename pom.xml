@@ -100,9 +100,17 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.taglibs</groupId>
+            <artifactId>taglibs-standard-impl</artifactId>
+            <version>1.2.5</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
         </dependency>
+
 
         <!-- Servlet API (컴파일 전용, 런타임에는 Tomcat이 제공) -->
         <dependency>

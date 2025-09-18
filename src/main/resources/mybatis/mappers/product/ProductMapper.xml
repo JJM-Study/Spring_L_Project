@@ -8,8 +8,8 @@
     <select id="selectProductList" resultType="org.example.myproject.product.dto.ProductDto">
         select a.prod_no, a.prod_name, a.price, a.stock_qty, a.crt_dt, a.del_dt, b.image_url
         from product_master a
-        left join product_image b on a.prod_no = b.prod_no AND b.is_main = 'Y'
-        where a.del_yn = 'N'
+        left join product_image b on a.prod_no = b.prod_no AND b.is_main = 1
+        where a.del_yn = 0
     </select>
 
     <!--    <select id="selectProductDetail" parameterType="string" resultType="org.example.myproject.product.model.ProductDetailDto">-->
@@ -26,7 +26,7 @@
         from product_master a
         left join product_image b on a.prod_no = b.prod_no
         left join product_detail c on a.prod_no = c.prod_no
-        where a.del_yn = 'N' and a.prod_no = #{prodNo}
+        where a.del_yn = 0 and a.prod_no = #{prodNo}
         order by b.sort_order
     </select>
 

@@ -29,8 +29,8 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/sign-up").permitAll()  // POST도 명시적으로 허용
 
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .anyRequest().authenticated()
-//                .anyRequest().permitAll()
+//                .anyRequest().authenticated()
+                .anyRequest().permitAll()
 
 
         );

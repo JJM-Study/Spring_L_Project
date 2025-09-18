@@ -49,7 +49,7 @@ public class AuthController {
     {
 
 
-        return "";
+        return "temp";
     }
 
     @GetMapping("/sign-up")

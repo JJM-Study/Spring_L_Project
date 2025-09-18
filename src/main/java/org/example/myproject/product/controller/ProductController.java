@@ -19,13 +19,13 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/productList")
+    @GetMapping("/products")
     public String selectProductList(Model model) {
         List<ProductDto> productList = productService.selectProductList();
         model.addAttribute("pageTitle", "상품");
         model.addAttribute("itemList", productList);
 
-        return "/product/productList";
+        return "product/product-list";
     }
 
     @GetMapping("/productDetail")
