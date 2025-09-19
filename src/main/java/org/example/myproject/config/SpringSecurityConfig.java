@@ -25,7 +25,7 @@ public class SpringSecurityConfig {
 
         /* 로그인 */
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/login", "/home", "/", "/sign-up", "/WEB-INF/**").permitAll()
+                .requestMatchers("/login", "/home", "/", "/sign-up", "/WEB-INF/**", "/product/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/sign-up").permitAll()  // POST도 명시적으로 허용
 
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()

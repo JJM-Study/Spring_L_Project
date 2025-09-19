@@ -1,5 +1,6 @@
 package org.example.myproject.product.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.myproject.product.dto.ProductDetailDto;
 import org.example.myproject.product.dto.ProductDto;
 import org.example.myproject.product.service.ProductService;
@@ -7,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 
 @Controller
@@ -28,12 +31,14 @@ public class ProductController {
         return "product/product-list";
     }
 
-    @GetMapping("/productDetail")
-    public String selectProductDetail(@RequestParam("prodNo") String prodNo, Model model) {
+    @GetMapping("/detail/{prodNo}")
+    public String selectProductDetail(@PathVariable("prodNo") String prodNo, Model model) {
         ProductDetailDto imageList = productService.selectProductDetail(prodNo);
+        model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
         model.addAttribute("pageTitle", imageList.getProdName());
         model.addAttribute("itemList", imageList);
 
-        return "/product/productDetail";
+//        return "product/product-detail";
+        return "layout/main-layout";
     }
 }
