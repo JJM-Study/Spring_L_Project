@@ -10,6 +10,7 @@
         from product_master a
         left join product_image b on a.prod_no = b.prod_no AND b.is_main = 1
         where a.del_yn = 0
+        limit #{pCount} offset #{page};
     </select>
 
     <!--    <select id="selectProductDetail" parameterType="string" resultType="org.example.myproject.product.model.ProductDetailDto">-->

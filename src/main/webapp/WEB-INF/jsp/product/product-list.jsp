@@ -2,7 +2,21 @@
 <%@ include file="/WEB-INF/jsp/layout/header.jsp" %>
 
 <main class="flex-grow-1">
-<div class="container mt-4">
+<script src="/js/product/product.js" defer></script>
+<section class="container mt-4">
+  <div class="btn-group" role="group" aria-label="Page Size">
+    <ul>
+        <li>
+          <a href="#" class="btn-array btn btn-outline-primary" data-count="30">30</a>
+        </li>
+        <li>
+          <a href="#" class="btn-array btn btn-outline-primary" data-count="50">50</a>
+        </li>
+        <li>
+          <a href="#" class="btn-array btn btn-outline-primary" data-count="100">100</a>
+        </li>
+    </ul>
+  </div>
   <div class="row">
     <c:forEach var="item" items="${itemList}">
       <div class="col-md-3 mb-4">
@@ -30,10 +44,15 @@
       </div>
     </c:forEach>
   </div>
-</div>
+
+  <div id="pages">
+
+  </div>
+
+</section>
 </main>
 
-<script src="/js/cart.js"></script>
+<script src="/js/cart/cart.js"></script>
 <script>
 
     document.addEventListener('DOMContentLoaded', function() {

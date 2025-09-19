@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface ProductMapper {
-    List<ProductDto> selectProductList();
+    List<ProductDto> selectProductList(int page, int pCount);
 
     ProductDetailDto selectProductDetail(String prodNo);
 

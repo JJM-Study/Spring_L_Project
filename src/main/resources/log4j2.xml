@@ -9,20 +9,22 @@
         <Root level="error">
             <AppenderRef ref="Console"/>
         </Root>
+
+        <!--  SQL 로그 출력  -->
+        <Logger name="org.apache.ibatis" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="java.sql" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <!-- 본인 매퍼 패키지 -->
+        <Logger name="org.example.myproject.product.mapper" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+
     </Loggers>
-
-    <!-- SQL 출력 -->
-
-    <Logger name="jdbc.sqlonly" level="DEBUG" additivity="false">
-        <AppenderRef ref="Console"/>
-    </Logger>
-    <Logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
-        <AppenderRef ref="Console"/>
-    </Logger>
-    <Logger name="jdbc.audit" level="DEBUG" additivity="false">
-        <AppenderRef ref="Console"/>
-    </Logger>
-
-
 
 </Configuration>
