@@ -26,14 +26,14 @@
                 <img src="" class="card-img-top" alt="기본 이미지">
             </c:when>
             <c:otherwise>
-                <a href="/product/productDetail?prodNo=${item.prodNo}">
+                <a href="/product/detail/${item.prodNo}">
                     <img src="${item.imageUrl}" class="card-img-top" alt="상품 이미지">
                 </a>
             </c:otherwise>
           </c:choose>
           <div class="card-body">
             <h5 class="card-title">
-                <a href="/product/productDetail?prodNo=${item.prodNo}" style="text-decoration: none;">
+                <a href="/product/detail/${item.prodNo}" style="text-decoration: none;">
             ${item.prodName}
             </a>
             </h5>

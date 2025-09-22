@@ -11,6 +11,10 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,12 +44,14 @@ public class ProductController {
         return "product/product-list";
     }
 
-    @GetMapping("/productDetail")
-    public String selectProductDetail(@RequestParam("prodNo") String prodNo, Model model) {
+    @GetMapping("/detail/{prodNo}")
+    public String selectProductDetail(@PathVariable("prodNo") String prodNo, Model model) {
         ProductDetailDto imageList = productService.selectProductDetail(prodNo);
+        model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
         model.addAttribute("pageTitle", imageList.getProdName());
         model.addAttribute("itemList", imageList);
 
-        return "product/product-detail";
+//        return "product/product-detail";
+        return "layout/main-layout";
     }
 }

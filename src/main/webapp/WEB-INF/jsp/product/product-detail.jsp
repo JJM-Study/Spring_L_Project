@@ -1,9 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/jsp/layout/header.jsp" %>
+<%--<%@ include file="/WEB-INF/jsp/layout/main-layout.jsp" %>--%>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/product_detail.css">
 
-<main class="flex-grow-1">
-    <div class="container mt-4">
+
+<%--<main class="flex-grow-1">--%>
+    <section class="detail-container mt-4">
         <div class="row">
             <c:forEach var="item" items="${itemList.imageList}">
               <div class="col-md-3 mb-3">
@@ -21,8 +23,8 @@
          <c:out value="${itemList.detailDesc}" escapeXml="false" />
       </div>
       <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
-    </div>
-</main>
+    </section>
+<%--</main>--%>
 
 
 <script src="/js/cart/cart.js"></script>
@@ -52,4 +54,4 @@
 
 </script>
 
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<%--<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>--%>
