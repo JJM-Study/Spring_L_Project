@@ -9,9 +9,11 @@ import java.util.List;
 
 @Mapper
 public interface ProductMapper {
-    List<ProductDto> selectProductList(int page, int pCount);
+    List<ProductDto> selectProductList(int cPage, int offset);
 
     ProductDetailDto selectProductDetail(String prodNo);
 
     List<ProductPriceDto> selectProductPrice(List<Long> prodNo);
+
+    int selectProductCount();
 }

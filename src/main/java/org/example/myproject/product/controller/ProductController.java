@@ -3,6 +3,7 @@ package org.example.myproject.product.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.controller.AuthController;
+import org.example.myproject.config.Pagination;
 import org.example.myproject.product.dto.ProductDetailDto;
 import org.example.myproject.product.dto.ProductDto;
 import org.example.myproject.product.service.ProductService;
@@ -32,12 +33,20 @@ public class ProductController {
     // https://gangnam-americano.tistory.com/18 // 페이지네이션 구현 필요. 참고할 것.
 
     /*필터 조건을 더 확장하게 된다면, ModelAttribute 및 Search용 필터를 추가로 만드는 걸 고려할 것.*/
+    // pPage = 현재 페이지 , pCount = 페이지 갯수.
     @GetMapping("/products")
-    public String selectProductList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "30") int pCount, Model model) {
-        List<ProductDto> productList = productService.selectProductList(page, pCount);
+    public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "30") int pageSize, Model model) {
+
+        int listCnt = productService.selectProductCount();
+
+        Pagination pagination = new Pagination(cPage, pageSize, listCnt);
+
+
+        logger.info("listCnt : " + listCnt);
+
+        List<ProductDto> productList = productService.selectProductList(cPage, pagination.getOffset());
 
         logger.info("productList : " + productList.size());
-
         model.addAttribute("pageTitle", "상품");
         model.addAttribute("itemList", productList);
 
