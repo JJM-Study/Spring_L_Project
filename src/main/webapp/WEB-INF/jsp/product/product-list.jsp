@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="/WEB-INF/jsp/layout/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--<%@ include file="/WEB-INF/jsp/layout/main-layout.jsp" %>--%>
 
-<main class="flex-grow-1">
+<%--<main class="flex-grow-1">--%>
 <script src="/js/product/product.js" defer></script>
 <section class="container mt-4">
   <div class="btn-group" role="group" aria-label="Page Size">
@@ -46,11 +47,15 @@
   </div>
 
   <div id="pages">
-
+      <ul>
+        <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
+            <li><a href="/product/products?cPage=${i}">${i}</a></li>
+        </c:forEach>
+      </ul>
   </div>
 
 </section>
-</main>
+<%--</main>--%>
 
 <script src="/js/cart/cart.js"></script>
 <script>
@@ -80,4 +85,4 @@
 
 </script>
 
-<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>
+<%--<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>--%>

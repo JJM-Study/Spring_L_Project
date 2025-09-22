@@ -15,9 +15,9 @@ public class ProductService {
     @Autowired
     ProductMapper productMapper;
 
-    public List<ProductDto> selectProductList(int cPage, int offset) {
+    public List<ProductDto> selectProductList(int pageSize, int offset) {
 
-        return productMapper.selectProductList(cPage, offset);
+        return productMapper.selectProductList(pageSize, offset);
     }
 
     public ProductDetailDto selectProductDetail(String prodNo) {

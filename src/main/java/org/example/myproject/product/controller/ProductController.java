@@ -43,14 +43,17 @@ public class ProductController {
 
 
         logger.info("listCnt : " + listCnt);
-
-        List<ProductDto> productList = productService.selectProductList(cPage, pagination.getOffset());
+        logger.info("cPage :" + pageSize + " offset : " +  pagination.getOffset());
+        List<ProductDto> productList = productService.selectProductList(pageSize, pagination.getOffset());
 
         logger.info("productList : " + productList.size());
         model.addAttribute("pageTitle", "상품");
         model.addAttribute("itemList", productList);
+        model.addAttribute("pagination", pagination);
+        model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-list.jsp");
 
-        return "product/product-list";
+        return "layout/main-layout";
+//        return "product/product-list";
     }
 
     @GetMapping("/detail/{prodNo}")
