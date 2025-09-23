@@ -17,39 +17,39 @@ public class Pagination {
     private final int listCnt;
 
     // 현재 페이지
-    private int curPage;
+    private final int curPage;
 
     // 총 페이지 개수
-    private int pageCnt;
+    private final int pageCnt;
 
     // 한 블럭(range) 당 페이지 수
     /* 한 블럭당 페이지 수는, 이후 페이지네이션 기능 확장하여서 좀 더 유연하게 할 것을 고민.*/
-    private int rangeSize = 10;
+    private final int rangeSize = 10;
 
     // 총 블럭 수
-    private int rangeCnt;
+    private final int rangeCnt;
 
     // 다음 페이지까지의 간격.
 
-    private int step = 5;
+    private final int step = 5;
 
 
     // 시작 페이지
-    private int startPage;
+    private final int startPage;
 
     // 끝 페이지
-    private int endPage;
+    private final int endPage;
 
     // 시작 index
-    private int offset;
+    private final int offset;
 
-    private int pageSize;
+    private final int pageSize;
 
     // 다음 페이지
-    private int nextPage;
+    private final int nextPage;
 
     // 이전 페이지
-    private int prevPage;
+    private final int prevPage;
 
     // 이후 확장 시, 페이지 size의 상하한을 정하는 방법을 추가할 것을 고민해볼 것
     // pageSize : 총 display 할 페이지 수(프론트 엔드에서 동적 조절) ,
@@ -73,7 +73,7 @@ public class Pagination {
 
         int pages = (int) Math.ceil((double) this.listCnt / this.pageSize);
         this.pageCnt = Math.max(pages, 1);
-    // this.rangeSize = Math.max(1, rangeSize)
+        // this.rangeSize = Math.max(1, rangeSize)
 
         int p = Math.min(Math.max(curPage, 1), this.pageCnt);
         this.curPage = p;
@@ -82,42 +82,38 @@ public class Pagination {
         this.offset = (p - 1) * this.pageSize;
 
         int rangeSize = this.rangeSize;
-        int step = this.step;
         int totalPages = this.pageCnt;
 
-        int curRangeIdx = (p - 1) / rangeSize;
-        int sp = curRangeIdx * rangeSize + 1;
-        int ep = Math.min(sp + rangeSize - 1, totalPages);
 
-        int maxStart = Math.max(1, totalPages - rangeSize + 1);
+        int range = Math.max(1, Math.min(this.rangeSize, totalPages));
 
+
+        int step = Math.max(1, Math.min(this.step, range - 1));
+
+
+        int curRangeIdx = (p - 1) / range;
+        int sp = curRangeIdx * range + 1;
+        int ep = Math.min(sp + range - 1, totalPages);
+
+
+        int maxStart = Math.max(1, totalPages - range + 1);
         int start = sp;
-
-//        int startPage = Math.max(1, curPage - step);
-//        int endPage = Math.min(curPage + step, totalPages);
-//
-//        if (totalPages <= rangeSize) {
-//            this.startPage = 1;
-//            this.endPage = totalPages;
-//        } else {
-//            int curRangeIdx = (p - 1) / rangeSize;
-//            int sp = curRangeIdx * rangeSize + 1;
-//            int ep = Math.min(sp + rangeSize - 1, totalPages);
-
-            if (p == ep && totalPages > rangeSize) {
-                start = Math.min(sp + step, maxStart);
-            } else if (p == sp && totalPages > rangeSize) {
-                start = Math.max(sp - step, 1);
-            }
-
-            int end = Math.min(start + rangeSize - 1, totalPages);
-            this.startPage = start;
-            this.endPage = end;
+        if (p == ep && totalPages > range) {
+            start = Math.min(sp + step, maxStart);
+        } else if (p == sp && totalPages > range) {
+            start = Math.max(sp - step, 1);
+        }
+        int end = Math.min(start + range - 1, totalPages);
 
 
-       this.rangeCnt = (int)Math.ceil((double)this.pageCnt / this.rangeSize);
+        int prev = (p > 1) ? (p == start ? Math.max(start - 1, 1) : p - 1) : 1;
+        int next = (p < totalPages) ? (p == end ? Math.min(end + 1, totalPages) : p + 1) : totalPages;
 
-       this.prevPage = (p > 1) ? p - 1 : 1;
-       this.nextPage = (p < this.pageCnt) ? p + 1 : this.pageCnt;
+
+        this.startPage = start;
+        this.endPage = end;
+        this.prevPage = prev;
+        this.nextPage = next;
+        this.rangeCnt = (int) Math.ceil((double) totalPages / range);
     }
 }

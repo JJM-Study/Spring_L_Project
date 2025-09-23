@@ -35,7 +35,7 @@ public class ProductController {
     /*필터 조건을 더 확장하게 된다면, ModelAttribute 및 Search용 필터를 추가로 만드는 걸 고려할 것.*/
     // pPage = 현재 페이지 , pCount = 페이지 갯수.
     @GetMapping("/products")
-    public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "30") int pageSize, Model model) {
+    public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "10") int pageSize, Model model) {
 
         int listCnt = productService.selectProductCount();
 
@@ -53,6 +53,9 @@ public class ProductController {
         model.addAttribute("pagination", pagination);
         model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-list.jsp");
 
+        logger.info("prev :" + pagination.getPrevPage());
+        logger.info("next :" + pagination.getNextPage());
+
         return "layout/main-layout";
 //        return "product/product-list";
     }
@@ -63,6 +66,7 @@ public class ProductController {
         model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
         model.addAttribute("pageTitle", imageList.getProdName());
         model.addAttribute("itemList", imageList);
+
 
 //        return "product/product-detail";
         return "layout/main-layout";

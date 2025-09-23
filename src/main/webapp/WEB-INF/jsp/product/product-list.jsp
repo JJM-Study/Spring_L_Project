@@ -48,9 +48,11 @@
 
   <div id="pages">
       <ul>
+        <li><a href="/product/products?cPage=${pagination.prevPage}">이전</a></li>
         <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
             <li><a href="/product/products?cPage=${i}">${i}</a></li>
         </c:forEach>
+        <li><a href="/product/products?cPage=${pagination.nextPage}">다음</a></li>
       </ul>
   </div>
 
