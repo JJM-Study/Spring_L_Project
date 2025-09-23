@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 console.log("array success : " + pCount);
-                location.href = "/product/products?cPage=1"
+                location.href = `/product/products?cPage=1&pageSize=${pageSize}`;
 
             } catch (error) {
                 console.log("서버 전송 중 에러 :" + error);

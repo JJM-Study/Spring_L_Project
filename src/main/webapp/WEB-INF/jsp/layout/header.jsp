@@ -37,7 +37,7 @@
                 <a class="nav-link" href="/cart/cartlist">장바구니</a>
              </li>
              <li class="nav-item">
-                <a class="nav-link" href="/product/productList">상품</a>
+                <a class="nav-link" href="/product/products">상품</a>
              </li>
              <li class="nav-item">
                 <a class="nav-link" href="/">메뉴</a>
