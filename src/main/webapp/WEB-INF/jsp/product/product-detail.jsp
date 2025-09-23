@@ -6,15 +6,27 @@
 
 <%--<main class="flex-grow-1">--%>
     <section class="detail-container mt-4">
-        <div class="row">
+        <div class="image-container">
             <c:forEach var="item" items="${itemList.imageList}">
-              <div class="col-md-3 mb-3">
+                <c:if test="${not item.isMain}">
+                    <div class="img-main col-md-3 mb-3">
+                        <img src="${item.imageUrl}"
+                             alt="${'메인 상품 이미지'}"
+                             class="card-img-top" style="height: 300px; object-fit: contain;"/>
+                    </div>
+                </c:if>
                 <div class="card">
-                    <img src="${item.imageUrl}"
-                         alt="${item.isMain == 'Y' ? '메인 상품 이미지' : '상품 이미지' }"
-                         class="card-img-top" style="height: 300px; object-fit: contain;"/>
+                    <c:if test="${not item.isMain}" />
+                    <ul class="list-group md">
+                        <c:if test="${item.isMain} == 1">
+                        <li class="list-group-item">
+                            <img src="${item.imageUrl}"
+                                 alt="${'서브 상품 이미지'}"
+                                 class="temp" />
+                        </li>
+                        </c:if>
+                    </ul>
                 </div>
-              </div>
             </c:forEach>
         </div>
 

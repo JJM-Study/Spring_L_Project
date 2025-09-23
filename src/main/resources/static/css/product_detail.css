@@ -16,3 +16,7 @@ section > div {
     width : 100%;
 
 }
+
+.image-container {
+    border : 1px solid black;
+}

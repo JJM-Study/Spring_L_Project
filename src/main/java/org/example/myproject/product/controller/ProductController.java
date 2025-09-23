@@ -48,6 +48,7 @@ public class ProductController {
 
         logger.info("productList : " + productList.size());
         logger.info(" EndPage : " + pagination.getEndPage() + "StartPage : " + pagination.getStartPage());
+        logger.info("lists : " + productList);
         model.addAttribute("pageTitle", "상품");
         model.addAttribute("itemList", productList);
         model.addAttribute("pagination", pagination);

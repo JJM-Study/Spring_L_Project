@@ -115,7 +115,7 @@
             alert("주문할 상품을 선택하세요.");
             return;
         }
-
+        debugger;
         $.ajax({
            url : '/order/from-cart',
            method: 'POST',
