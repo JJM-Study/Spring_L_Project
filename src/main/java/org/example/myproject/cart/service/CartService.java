@@ -10,6 +10,7 @@ import org.example.myproject.order.dto.OrderDto;
 import org.example.myproject.product.dto.ProductPriceDto;
 import org.example.myproject.product.service.ProductService;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,8 +25,10 @@ public class CartService {
 
     private static final Logger logger = LogManager.getLogger(CartService.class);
 
+    @Autowired
     private final CartMapper cartMapper;
 
+    @Autowired
     private ProductService productService;
 
     public CartService(CartMapper cartMapper) {
@@ -52,49 +55,57 @@ public class CartService {
 
 
     public Map<String, Object> convertCartNosToOrderItems(@Param("cartNos") List<Long> cartNos) {
-        logger.info("cartNos: " + cartNos);
-        List<CartDto> cartItems = cartMapper.selectOrderCartItemsById(cartNos);
-
-        List<Long> productNos = cartItems.stream()
-                .map(CartDto::getProdNo)
-                .collect(Collectors.toList());
-
-
-        List<ProductPriceDto> productPriceList = productService.selectProductPrice(productNos);
-
-        // 이걸 Map으로 변환
-        Map<Long, Integer> productPriceMap = productPriceList.stream()
-                .collect(Collectors.toMap(ProductPriceDto::getProdNo, ProductPriceDto::getPrice));
-
-
-        // 주문 생성
-        CartDto cartItem = cartItems.get(0);
-        OrderDto order = new OrderDto();
-        order.setOrderDate(LocalDate.now());
-        int totalAmount = cartItems.stream().mapToInt(CartDto::getQty).sum();
-        order.setTotalAmount(totalAmount);
-        order.setUserId(cartItem.getUserId());
-        order.setOrderStatus("ORDERED");
-
-
-        // 주문 상세 생성
-        List<OrderDetailDto> orderDetails = cartItems.stream().map(cart -> {
-            OrderDetailDto detail = new OrderDetailDto();
-            detail.setProdNo(cart.getProdNo());
-            detail.setQty(cart.getQty());
-            detail.setPrice(productPriceMap.get(cart.getProdNo()));
-            return detail;
-        }).collect(Collectors.toList());
-
-        // 최종 래핑해서 반환
-
         Map<String, Object> result = new HashMap<>();
-        result.put("orderMaster", order);
-        result.put("orderDetails", orderDetails);
-        return result;
+        try {
+            logger.info("cartNos: " + cartNos);
+            List<CartDto> cartItems = cartMapper.selectOrderCartItemsById(cartNos);
+
+            List<Long> productNos = cartItems.stream()
+                    .map(CartDto::getProdNo)
+                    .collect(Collectors.toList());
+
+
+            List<ProductPriceDto> productPriceList = productService.selectProductPrice(productNos);
+
+            // 이걸 Map으로 변환
+            Map<Long, Integer> productPriceMap = productPriceList.stream()
+                    .collect(Collectors.toMap(ProductPriceDto::getProdNo, ProductPriceDto::getPrice));
+
+
+            // 주문 생성
+            CartDto cartItem = cartItems.get(0);
+            OrderDto order = new OrderDto();
+            order.setOrderDate(LocalDate.now());
+            int totalAmount = cartItems.stream().mapToInt(CartDto::getQty).sum();
+            order.setTotalAmount(totalAmount);
+            order.setUserId(cartItem.getUserId());
+            order.setOrderStatus("ORDERED");
+
+
+            // 주문 상세 생성
+            List<OrderDetailDto> orderDetails = cartItems.stream().map(cart -> {
+                OrderDetailDto detail = new OrderDetailDto();
+                detail.setProdNo(cart.getProdNo());
+                detail.setQty(cart.getQty());
+                detail.setPrice(productPriceMap.get(cart.getProdNo()));
+                return detail;
+            }).collect(Collectors.toList());
+
+            // 최종 래핑해서 반환
+
+
+            result.put("orderMaster", order);
+            result.put("orderDetails", orderDetails);
+            return result;
+
+        } catch (Exception e) {
+            logger.info("CartService Error" + e.getMessage());
+            return result;
+        }
 
     }
 
+}
 //
 //    public OrderRequestDto convertCartNosToOrderRequest(List<Long> cartNos) {
 //        List<CartDto> cartItems = cartMapper.selectOrderCartItemsById(cartNos);
@@ -163,6 +174,3 @@ public class CartService {
 //    // 6. 결과 묶어서 반환
 //    order.setOrderDetails(orderDetails);
 //    return List.of(order);
-
-
-}

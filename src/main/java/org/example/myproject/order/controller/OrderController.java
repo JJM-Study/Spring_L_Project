@@ -42,7 +42,7 @@ public class OrderController {
             // 설계 원칙에 따라서 service에서 CartToOrder 구현
             Map<String, Object> result = cartService.convertCartNosToOrderItems(cartNos);
             OrderDto order = (OrderDto) result.get("orderMaster");
-            logger.info("order : " + order);
+            logger.info("order (OrderController): " + order);
             List<OrderDetailDto> orderDetails = (List<OrderDetailDto>) result.get("orderDetails");
 
             // service 추가
@@ -54,7 +54,7 @@ public class OrderController {
             return ResponseEntity.ok(response);
          } catch(Exception e) {
              response.put("success", false);
-            response.put("message", "주문 실패" + e.getMessage());
+            logger.info("주문 실패" + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
 

@@ -1,11 +1,16 @@
 package org.example.myproject.order.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.example.myproject.cart.service.CartService;
 import org.example.myproject.order.mapper.OrderSequenceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -14,15 +19,19 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class OrderNumberGeneratorService {
 
-        @Autowired
+    private static final Logger logger = LogManager.getLogger(OrderNumberGeneratorService.class);
+
+    @Autowired
     OrderSequenceMapper orderSequenceMapper;
 
     @Transactional
     public String generateOrderNumber() {
-
+        logger.info("generateOrderNumber");
         try {
             LocalDate today = LocalDate.now();
             Date seqDate = java.sql.Date.valueOf(today);
+
+            Principal principal
 
             Integer currentSeq = orderSequenceMapper.selectForUpdate(seqDate);
 

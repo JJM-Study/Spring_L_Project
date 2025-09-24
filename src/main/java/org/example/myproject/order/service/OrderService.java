@@ -37,6 +37,7 @@ public class OrderService {
         // 주문 처리 여기에 추가할 것. insertOrderMaster(OrderDto order);
         // 주문 처리 여기에 추가할 것. insertOrderDetail(OrderDto orderDetail);
         orderMaster.setOrderNo(orderNo);
+
         orderMapper.insertOrderMaster(orderMaster);
 
         for (OrderDetailDto details : orderDetails) {

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ include file="/WEB-INF/jsp/layout/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<main class="flex-grow-1">
+<%--<main class="flex-grow-1">--%>
 <div class="container mt-4">
 <%-- 현재 정렬 상태를 유지하려고 hidden input 사용 --%>
 <form id="sortForm" method="get" action="/cart/cartlist">
@@ -76,7 +76,7 @@
 
     </div>
 </div>
-</main>
+<%--</main>--%>
 
 <script>
     let currentOrderColumn = "${orderColumn}";
@@ -117,7 +117,7 @@
         }
 
         try {
-
+        // debugger;
         $.ajax({
            url : '/order/from-cart',
            method: 'POST',
@@ -152,4 +152,4 @@
     }
 </style>
 
-<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>
+<%--<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>--%>

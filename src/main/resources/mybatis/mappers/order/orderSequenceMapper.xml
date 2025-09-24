@@ -6,19 +6,19 @@
     <select id="selectForUpdate" resultType="int" parameterType="java.util.Date">
         SELECT seq_no
         FROM order_sequence
-        WHERE seq_date = #{seq_date}
+        WHERE seq_date = #{seqDate}
         FOR UPDATE
     </select>
 
     <insert id="insertSequence" parameterType="map">
         INSERT INTO order_sequence (seq_date, seq_no)
-        VALUES (#{seq_date}, #{seq_no})
+        VALUES (#{seqDate}, #{seqNo})
     </insert>
 
     <insert id="updateSequence" parameterType="java.util.Date">
         UPDATE order_sequence
         SET seq_no = seq_no + 1
-        WHERE seq_date = #{seq_date}
+        WHERE seq_date = #{seqDate}
     </insert>
 
 </mapper>

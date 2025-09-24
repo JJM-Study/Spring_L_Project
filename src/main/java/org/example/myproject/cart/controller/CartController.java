@@ -44,10 +44,12 @@ public class CartController {
         model.addAttribute("pageTitle", "장바구니");
         model.addAttribute("orderColumn", orderColumn);
         model.addAttribute("orderType", orderType);
+        model.addAttribute("layoutBody","/WEB-INF/jsp/cart/cartlist.jsp");
 
         List<CartDto> cartList = cartService.selectOrderCartList(orderColumn, orderType);
         model.addAttribute("cartList", cartList);
-        return "cart/cartlist";
+//        return "cart/cartlist";
+        return "layout/main-layout";
     }
 
     @RequestMapping("/add")

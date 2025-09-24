@@ -14,7 +14,7 @@ public interface ProductMapper {
 
     ProductDetailDto selectProductDetail(String prodNo);
 
-    List<ProductPriceDto> selectProductPrice(@Param("prodNos") List<Long> prodNo);
+    List<ProductPriceDto> selectProductPrice(@Param("prodNos") List<Long> prodNos);
 
     int selectProductCount();
 }

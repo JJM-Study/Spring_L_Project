@@ -54,7 +54,7 @@
     </resultMap>
 
     <select id="selectProductPrice" resultType="org.example.myproject.product.dto.ProductPriceDto">
-        SELECT price
+        SELECT prod_no, price
         FROM product_master
         WHERE prod_no IN
         <foreach collection="prodNos" item="prodNo" open="(" separator="," close=")">
