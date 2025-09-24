@@ -9,7 +9,7 @@
         VALUES (#{userId}, #{prodNo}, #{qty}, NOW())
     </insert>
 
-    <select id="selectOrderCartItemsById" parameterType="long" resultType="org.example.myproject.cart.dto.CartDto">
+    <select id="selectOrderCartItemsById" resultType="org.example.myproject.cart.dto.CartDto">
         SELECT *
         FROM order_cart
         WHERE cart_no IN
@@ -25,7 +25,7 @@
         FROM order_cart a
         LEFT JOIN product_master b
         ON a.prod_no = b.prod_no
-        WHERE (a.del_yn = 'N' OR a.del_yn IS NULL)
+        WHERE (a.del_yn = 0 OR a.del_yn IS NULL)
         <choose>
             <when test="orderColumn == 'prodNo'">
                 ORDER BY b.prod_no ${orderType}

@@ -53,11 +53,11 @@
 
     </resultMap>
 
-    <select id="selectProductPrice" parameterType="java.util.List" resultType="map">
+    <select id="selectProductPrice" resultType="org.example.myproject.product.dto.ProductPriceDto">
         SELECT price
         FROM product_master
         WHERE prod_no IN
-        <foreach collection="list" item="prodNo" open="(" separator="," close=")">
+        <foreach collection="prodNos" item="prodNo" open="(" separator="," close=")">
             #{prodNo}
         </foreach>
     </select>

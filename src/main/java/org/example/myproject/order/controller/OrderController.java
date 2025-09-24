@@ -1,5 +1,8 @@
 package org.example.myproject.order.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.example.myproject.auth.service.CustomUserDetailService;
 import org.example.myproject.cart.service.CartService;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
@@ -21,6 +24,8 @@ import java.util.Map;
 public class OrderController {
 // 전체 선택 및 주문, 주문 실패 등 구현
 
+    private static final Logger logger = LogManager.getLogger(CustomUserDetailService.class);
+
     @Autowired
     OrderService orderService;
 
@@ -37,6 +42,7 @@ public class OrderController {
             // 설계 원칙에 따라서 service에서 CartToOrder 구현
             Map<String, Object> result = cartService.convertCartNosToOrderItems(cartNos);
             OrderDto order = (OrderDto) result.get("orderMaster");
+            logger.info("order : " + order);
             List<OrderDetailDto> orderDetails = (List<OrderDetailDto>) result.get("orderDetails");
 
             // service 추가
@@ -46,8 +52,8 @@ public class OrderController {
             response.put("message", "주문 성공");
 
             return ResponseEntity.ok(response);
-        } catch(Exception e) {
-            response.put("success", false);
+         } catch(Exception e) {
+             response.put("success", false);
             response.put("message", "주문 실패" + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }

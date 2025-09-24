@@ -12,5 +12,5 @@ public interface CartMapper {
 
     int addToOrderCart(CartDto cartDto);
 
-    List<CartDto> selectOrderCartItemsById(List<Long> cartDtos);
+    List<CartDto> selectOrderCartItemsById(@Param("cartNos") List<Long> cartNos);
 }

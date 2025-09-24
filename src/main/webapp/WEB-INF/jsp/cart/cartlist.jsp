@@ -115,11 +115,17 @@
             alert("주문할 상품을 선택하세요.");
             return;
         }
-        debugger;
+
+        try {
+
         $.ajax({
            url : '/order/from-cart',
            method: 'POST',
-           contentType: 'application/json',
+           contentType : 'application/json',
+           headers: {
+             'X-CSRF-TOKEN' : csrfToken
+           },
+
            data: JSON.stringify(selectedItems),
            success: function(data) {
                alert('주문 성공!');
@@ -129,6 +135,10 @@
                 console.error(error);
            }
         })
+
+        } catch (error) {
+            console.log("서버 처리 중 에러 : " + error);
+        }
 
     }
 

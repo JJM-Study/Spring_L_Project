@@ -1,5 +1,6 @@
 package org.example.myproject.product.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import org.example.myproject.product.dto.ProductDetailDto;
 import org.example.myproject.product.dto.ProductDto;
 import org.example.myproject.product.dto.ProductPriceDto;
@@ -13,7 +14,7 @@ public interface ProductMapper {
 
     ProductDetailDto selectProductDetail(String prodNo);
 
-    List<ProductPriceDto> selectProductPrice(List<Long> prodNo);
+    List<ProductPriceDto> selectProductPrice(@Param("prodNos") List<Long> prodNo);
 
     int selectProductCount();
 }

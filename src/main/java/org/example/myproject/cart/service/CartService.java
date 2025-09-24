@@ -1,5 +1,8 @@
 package org.example.myproject.cart.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.example.myproject.auth.controller.AuthController;
 import org.example.myproject.cart.mapper.CartMapper;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.order.dto.OrderDetailDto;
@@ -18,6 +21,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class CartService {
+
+    private static final Logger logger = LogManager.getLogger(CartService.class);
 
     private final CartMapper cartMapper;
 
@@ -47,6 +52,7 @@ public class CartService {
 
 
     public Map<String, Object> convertCartNosToOrderItems(@Param("cartNos") List<Long> cartNos) {
+        logger.info("cartNos: " + cartNos);
         List<CartDto> cartItems = cartMapper.selectOrderCartItemsById(cartNos);
 
         List<Long> productNos = cartItems.stream()
@@ -61,6 +67,7 @@ public class CartService {
                 .collect(Collectors.toMap(ProductPriceDto::getProdNo, ProductPriceDto::getPrice));
 
 
+        // 주문 생성
         CartDto cartItem = cartItems.get(0);
         OrderDto order = new OrderDto();
         order.setOrderDate(LocalDate.now());

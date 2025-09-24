@@ -1,6 +1,9 @@
 package org.example.myproject.cart.controller;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.example.myproject.auth.controller.AuthController;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.service.CartService;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/cart")
 public class CartController {
+
+    private static final Logger logger = LogManager.getLogger(CartController.class);
 
     private CartService cartService;
 

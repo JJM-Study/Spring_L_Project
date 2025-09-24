@@ -6,12 +6,15 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="error">
+        <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>
 
         <!--  SQL 로그 출력  -->
         <Logger name="org.apache.ibatis" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="org.mybatis.spring" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Logger name="java.sql" level="debug" additivity="false">
@@ -21,9 +24,10 @@
         <Logger name="org.example.myproject.product.mapper" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Root level="info">
+
+        <Logger name="org.example.myproject.order.mapper" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
-        </Root>
+        </Logger>
 
     </Loggers>
 
