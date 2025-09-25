@@ -9,9 +9,7 @@ import org.example.myproject.cart.service.CartService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,8 +50,14 @@ public class CartController {
         return "layout/main-layout";
     }
 
+    @ResponseBody
     @RequestMapping("/add")
-    public ResponseEntity<Map<String, Object>> addToOrderCart(CartDto cartDto) {
+//    public ResponseEntity<Map<String, Object>> addToOrderCart(CartDto cartDto) {
+    public ResponseEntity<Map<String, Object>> addToOrderCart(@RequestBody CartDto cartDto) {
+
+        logger.info("cartDto.getProdNo :" + cartDto.getProdNo());
+        logger.info("cartDto.getQty :" + cartDto.getQty());
+
 
 //        Integer qty = cartDto.getQty() == null || cartDto.getQty() <= 0 ? 1 : cartDto.getQty();
         if (cartDto.getQty() == null || cartDto.getQty() <= 0) {

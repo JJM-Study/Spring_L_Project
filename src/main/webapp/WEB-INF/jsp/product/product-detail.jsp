@@ -29,41 +29,22 @@
                 </div>
             </c:forEach>
         </div>
-
       <p>가격 : "${itemList.price}"원</p>
       <div class="product-detail-desc">
          <c:out value="${itemList.detailDesc}" escapeXml="false" />
       </div>
+        <div>
+            <button id="pBtn" type="button">+</button>
+            <input type="number" class="qty" value="1" min="1"/>
+            <button id="mBtn" type="button">-</button>
+        </div>
       <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
     </section>
 <%--</main>--%>
 
 
+
 <script src="/js/cart/cart.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.add-to-cart-btn').forEach(function (btn) {
-            btn.addEventListener('click', function() {
-                const prodNo = this.dataset.prodno;
-
-                addToCart(prodNo).then(data => {
-                    if (data.success) {
-                       if (confirm("담기 성공했습니다. 장바구니로 이동하시겠습니까?")) {
-                            window.location.href="cart/cartlist";
-                       } else {
-
-                       }
-
-                    } else {
-                        alert(data.message);
-                    }
-                }).catch(err => {
-                    alert("에러 발생 : " + err.message);
-                });
-            });
-        });
-    });
-
-</script>
+<script src="/js/product/product_detail.js"></script>
 
 <%--<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>--%>
