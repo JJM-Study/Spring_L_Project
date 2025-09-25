@@ -1,5 +1,6 @@
 package org.example.myproject.order.service;
 
+import org.apache.catalina.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -7,6 +8,10 @@ import org.example.myproject.cart.service.CartService;
 import org.example.myproject.order.mapper.OrderSequenceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,11 +32,11 @@ public class OrderNumberGeneratorService {
     @Transactional
     public String generateOrderNumber() {
         logger.info("generateOrderNumber");
+
         try {
+
             LocalDate today = LocalDate.now();
             Date seqDate = java.sql.Date.valueOf(today);
-
-            Principal principal
 
             Integer currentSeq = orderSequenceMapper.selectForUpdate(seqDate);
 

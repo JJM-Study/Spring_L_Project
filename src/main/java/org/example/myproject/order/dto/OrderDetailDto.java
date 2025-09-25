@@ -11,6 +11,7 @@ public class OrderDetailDto {
     private Long prodNo;
     private Integer qty;
     private Integer price;
+    private Boolean delYN;
     private LocalDate crtDt;
     private LocalDate updDt;
     private LocalDate delDt;

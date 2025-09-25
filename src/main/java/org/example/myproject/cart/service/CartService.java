@@ -79,7 +79,7 @@ public class CartService {
             int totalAmount = cartItems.stream().mapToInt(CartDto::getQty).sum();
             order.setTotalAmount(totalAmount);
             order.setUserId(cartItem.getUserId());
-            order.setOrderStatus("ORDERED");
+//            order.setOrderStatus("ORDERED");
 
 
             // 주문 상세 생성

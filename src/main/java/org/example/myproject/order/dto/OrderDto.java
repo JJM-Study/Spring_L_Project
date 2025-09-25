@@ -9,7 +9,7 @@ public class OrderDto {
     private String orderNo;
     private String userId;
     private LocalDate orderDate;
-    private String orderStatus;
+    private String orderStatus; // Default = 'READY'
     private Integer totalAmount;
     private String delYn;
     private LocalDate crtDt;

@@ -4,12 +4,16 @@
 <mapper namespace="org.example.myproject.order.mapper.OrderMapper">
     <insert id="insertOrderMaster" parameterType="org.example.myproject.order.dto.OrderDto">
         insert into order_master
-        (order_no, user_id, order_date, order_status, total_amount, del_yn, crt_dt, upd_dt, del_dt)
-        values();
+        (order_no, user_id, total_amount)
+        values
+        (#{order.orderNo}, #{order.userId}, #{order.totalAmount});
     </insert>
 
 
     <insert id="insertOrderDetail" parameterType="org.example.myproject.order.dto.OrderDetailDto">
-
+        insert into order_detail
+        (order_no, prod_no, qty, price)
+        values
+        (#{order.orderNo}, #{order.prodNo}, #{order.qty}, #{order.price})
     </insert>
 </mapper>
