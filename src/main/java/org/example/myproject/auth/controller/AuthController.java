@@ -76,7 +76,7 @@ public class AuthController {
         if (!authDTO.getPassword().equals(checkPassword)) {
 
             logger.error("wrong password");
-
+            
             result.put("success", false);
             result.put("message", "패스워드가 일치하지 않습니다.");
             return result;

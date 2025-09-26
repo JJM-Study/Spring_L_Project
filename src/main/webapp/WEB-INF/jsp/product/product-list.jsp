@@ -40,6 +40,7 @@
             </h5>
             <p class="card-text">${item.price}원</p>
             <button class="btn btn-primary add-to-cart-btn" data-prodno="${item.prodNo}">장바구니 담기</button>
+            <input type="hidden" class="qty" value="1" />
           </div>
         </div>
       </div>
@@ -60,31 +61,4 @@
 <%--</main>--%>
 
 <script src="/js/cart/cart.js"></script>
-<script>
-
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.add-to-cart-btn').forEach(function (btn) {
-        btn.addEventListener('click', function() {
-          const prodNo = this.dataset.prodno;
-
-          addToCart(prodNo).then(data => {
-             if (data.success) {
-                if (confirm("담기 성공했습니다. 장바구니로 이동하시겠습니까?")) {
-                    window.location.href="/cart/cartlist";
-                } else {
-
-                }
-             } else {
-                alert(data.message);
-             }
-          })
-          .catch(err => {
-             alert("에러 발생 : " + err.message);
-          });
-        });
-      });
-    });
-
-</script>
-
 <%--<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>--%>

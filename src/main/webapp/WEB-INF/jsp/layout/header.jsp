@@ -43,6 +43,9 @@
              <li class="nav-item">
                 <a class="nav-link" href="/">메뉴</a>
              </li>
+             <li class="nay-item">
+                <a class="nav-link" href="/errorrrr">로그인</a>
+             </li>
             </ul>
             </div>
           </div>
