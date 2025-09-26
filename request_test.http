@@ -5,4 +5,6 @@ GET https://examples.http-client.intellij.net/get
 ###
 POST http://localhost:8080/sign-up?username=test7&password=1234&check-password=1234&_csrf=OdSG5J49aQEzFhDK4Q6HAn02r4ra_pXoKqaFdRSmL9dMzE3nWLHg0akFWTcedyauhyOzMEhUgujiyvTFTJfgTCOSSeF--CzS
 
+###
 
+GET http://localhost:8080/errortest
