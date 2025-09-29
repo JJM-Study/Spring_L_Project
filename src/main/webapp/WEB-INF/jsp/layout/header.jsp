@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/common/public.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <script src="/js/layout/header.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link href="/css/layout/header.css" rel="stylesheet">
 </head>
@@ -45,7 +45,7 @@
                      <li class="nav-item">
                          <ul>
                              <sec:authorize access="isAuthenticated()">
-                                    <a class="nav-link" href="/logout">로그아웃</a>
+                                    <a class="nav-link logout" href="#">로그아웃</a>
                              </sec:authorize>
                              <sec:authorize access="isAnonymous()">
                                    <a class="nav-link" href="/login">로그인</a>
