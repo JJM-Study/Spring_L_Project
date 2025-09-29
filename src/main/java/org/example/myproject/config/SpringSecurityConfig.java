@@ -19,6 +19,7 @@ public class SpringSecurityConfig {
     private static final Logger logger = LogManager.getLogger(SpringSecurityConfig.class);
 
     //https://docs.spring.io/spring-security/reference/servlet/appendix/namespace/http.html#nsa-remember-me-attributes , 참고
+    //https://docs.spring.io/spring-security/reference/servlet/appendix/namespace/http.html#nsa-saml2-logout-attributes -> 필터 체인 Attribute
 
     @Bean
     public SecurityFilterChain securityException(HttpSecurity http) throws Exception {

@@ -13,8 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<%--    <link rel="stylesheet" href="/css/common.css">--%>
+    <link href="/css/layout/header.css" rel="stylesheet">
 </head>
 <body>
 <div class="wrapper d-flex flex-column min-vh-100">
@@ -30,25 +29,44 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">홈</a>
-            </li>
-             <li class="nav-item">
-                <a class="nav-link" href="/cart/cartlist">장바구니</a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link" href="/product/products">상품</a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link" href="/">메뉴</a>
-             </li>
-             <li class="nay-item">
-                <a class="nav-link" href="/errorrrr">로그인</a>
-             </li>
-            </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">홈</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/cart/cartlist">장바구니</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/product/products">상품</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/">메뉴</a>
+                     </li>
+                     <li class="nav-item">
+                         <ul>
+                             <sec:authorize access="isAuthenticated()">
+                                    <a class="nav-link" href="/logout">로그아웃</a>
+                             </sec:authorize>
+                             <sec:authorize access="isAnonymous()">
+                                   <a class="nav-link" href="/login">로그인</a>
+                             </sec:authorize>
+                         </ul>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/errorrrr">전역 에러 테스트용</a>
+                     </li>
+                     <li class="nav-item">
+                         <sec:authorize access="isAuthenticated()">
+                            <div class="userInfo">
+                                안녕하세요! <sec:authentication property="principal.username" />님!
+                                <%-- 드롭다운 추가해서, 유저 ID 클릭 시 로그아웃 버튼이 나오도록 하는 방법 고민. --%>
+                            </div>
+                         </sec:authorize>
+                     </li>
+
+                </ul>
             </div>
           </div>
         </nav>
     </header>
-    </c:if>
+</c:if>

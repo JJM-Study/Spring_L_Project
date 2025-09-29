@@ -32,12 +32,11 @@ public class OrderController {
     @Autowired
     CartService cartService;
 
-
+    // 바로 주문 받기용임.
     @PostMapping("/from-cart")
     public ResponseEntity<Map<String, Object>> orderFromCart(@RequestBody List<Long> cartNos) {
         Map<String, Object> response = new HashMap<>();
         try {
-
 
             // 설계 원칙에 따라서 service에서 CartToOrder 구현
             Map<String, Object> result = cartService.convertCartNosToOrderItems(cartNos);

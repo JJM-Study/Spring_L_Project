@@ -29,6 +29,7 @@ public class OrderNumberGeneratorService {
     @Autowired
     OrderSequenceMapper orderSequenceMapper;
 
+
     @Transactional
     public String generateOrderNumber() {
         logger.info("generateOrderNumber");
@@ -48,7 +49,7 @@ public class OrderNumberGeneratorService {
                 currentSeq += 1;
             }
 
-            // 주문번호 : ORD20250606-0001
+            // 주문번호 : ORD20250606-0001 (ORD + 날짜 + 시퀀스 / MES 당시 사용하던 방식.)
             String formattedSeq = String.format("%04d", currentSeq);
 
             return "ORD" + today.format(DateTimeFormatter.BASIC_ISO_DATE) + "-" + formattedSeq;

@@ -4,26 +4,13 @@
 <!DOCTYPE html>
 
 
-<html>
-    <head>
-        <title>Home</title>
-    </head>
-
-    <body>
     <ul>
         <li>
-            <a href="/login"></a>
+            <p>MAIN HOME</p>
         </li>
         <li>
             <sec:authorize access="isAuthenticated()" >
-                   <p><sec:authentication property="principal.username" /></p>
+                   <p>접속 유저 : <sec:authentication property="principal.username" /></p>
             </sec:authorize>
         </li>
     </ul>
-    </body>
-
-
-    <footer>
-
-    </footer>
-</html>

@@ -1,30 +1,19 @@
 package org.example.myproject.error;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.experimental.NonFinal;
-import org.apache.ibatis.javassist.NotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.myproject.product.controller.ProductController;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @ControllerAdvice
-public class GlobalExceptionHandler implements HandlerInterceptor {
+public class ViewExceptionHandler {
 
-    private static final Logger logger = LogManager.getLogger(GlobalExceptionHandler.class);
+    private static final Logger logger = LogManager.getLogger(ViewExceptionHandler.class);
 
     //https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-servlet/exceptionhandlers.html#mvc-ann-customer-servlet-container-error-page
 
