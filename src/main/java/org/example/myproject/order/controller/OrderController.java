@@ -3,6 +3,7 @@ package org.example.myproject.order.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.service.CustomUserDetailService;
+import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.service.CartService;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
@@ -40,14 +41,16 @@ public class OrderController {
             // 설계 원칙에 따라서 service에서 CartToOrder 구현
             Map<String, Object> result = cartService.convertCartNosToOrderItems(cartNos);
             OrderDto order = (OrderDto) result.get("orderMaster");
+            List<CartDto> cartDto = (List<CartDto>) result.get("cartNos");
+
             logger.info("order (OrderController): " + order);
             List<OrderDetailDto> orderDetails = (List<OrderDetailDto>) result.get("orderDetails");
 
             // service 추가
-            orderService.createOrder(order, orderDetails);
+            orderService.createOrder(order, orderDetails, cartDto);
 
             response.put("success", true);
-            response.put("message", "주문 성공");
+            response.put("message", "주문 성공 (결제 생략)");
             response.put("orderId", order.getOrderNo());
 
             return ResponseEntity.ok(response);
@@ -57,6 +60,26 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
 
+    }
+
+    @RequestMapping("/order/order_prod")
+    public ResponseEntity<Map<String, Object>> orderNow(@RequestBody OrderDetailDto request) {
+        Long prodNo = request.getProdNo("prodNo");
+        Integer qty = request.getQty("qty");
+
+        OrderDto order = orderService.searchOrder();
+
+        OrderDetailDto orderDetail = orderService.searchOrderDetail("");
+
+        Order
+
+        //List.of로 감싸는 걸로...
+        orderService.createOrder(order, orderDetail);
+
+
+
+
+        return
     }
 
     @GetMapping("/result")

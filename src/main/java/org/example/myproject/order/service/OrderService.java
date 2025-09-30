@@ -1,7 +1,9 @@
 package org.example.myproject.order.service;
 
+import jakarta.annotation.Nullable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.mapper.CartMapper;
 import org.example.myproject.order.mapper.OrderMapper;
 import org.example.myproject.order.mapper.OrderSequenceMapper;
@@ -38,7 +40,9 @@ public class OrderService {
     private static final Logger logger = LogManager.getLogger(OrderService.class);
 
     @Transactional
-    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails) {
+//    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails) {
+    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto) {
+
 
         if (orderMaster == null) {
             throw new IllegalArgumentException("주문 상품이 비어 있습니다.");
@@ -80,11 +84,21 @@ public class OrderService {
             orderMapper.insertOrderDetail(details);
         }
 
-        cartMapper.deleteCart();
+        for (CartDto cartNos : cartDto) {
+            Long cartNo = cartNos.getCartNo();
+            cartMapper.deleteCart(cartNo);
+        }
 
         return orderNo;
     }
 
+    public OrderDto searchOrder() {
 
+
+    }
+
+    public OrderDetailDto searchOrderDetail(String orderNo) {
+
+    }
 
 }

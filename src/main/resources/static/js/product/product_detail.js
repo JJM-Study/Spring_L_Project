@@ -1,7 +1,7 @@
 const pBtn = document.querySelector("#pBtn");
 const mBtn = document.querySelector("#mBtn");
-const pd_inputQty = document.querySelector(".qty")
-
+const pd_inputQty = document.querySelector(".qty");
+const orderBtn = document.querySelector(".btn-ord-now");
 
 pBtn.addEventListener("click", ()=> {
     let qty = parseInt(pd_inputQty.value) || 0;
@@ -14,3 +14,26 @@ mBtn.addEventListener("click", ()=> {
     if(qty > 0) qty--;
     pd_inputQty.value = qty;
 });
+
+orderBtn.addEventListener("click", () => {
+    const prodNo = this.dataset.prodno;
+    const qty = parseInt(pd_inputQty.value);
+
+    fetch("/order/order_prod", {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        },
+        body: JSON.stringify({
+            "prodNo": prodNo,
+            "qty": qty
+            })
+        }).then((res) => {
+            return res.json();
+        }).then((data) => {
+
+        })
+    })
+});
+

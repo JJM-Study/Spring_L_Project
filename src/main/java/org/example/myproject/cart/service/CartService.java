@@ -95,7 +95,7 @@ public class CartService {
 
             result.put("orderMaster", order);
             result.put("orderDetails", orderDetails);
-            result.put("cartNos", );
+            result.put("cartNos", cartItems);
             return result;
 
         } catch (Exception e) {

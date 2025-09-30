@@ -39,6 +39,7 @@
             <button id="mBtn" type="button">-</button>
         </div>
       <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
+        <button class="btn btn-primary btn-ord-now" data-prodno="${itemList.prodNo}">주문하기</button>
     </section>
 <%--</main>--%>
 
