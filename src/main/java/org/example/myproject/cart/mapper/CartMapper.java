@@ -12,5 +12,7 @@ public interface CartMapper {
 
     int addToOrderCart(CartDto cartDto);
 
+    void deleteCart(List<Long> cartNos);
+
     List<CartDto> selectOrderCartItemsById(@Param("cartNos") List<Long> cartNos);
 }

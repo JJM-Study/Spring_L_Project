@@ -13,7 +13,7 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Model model) {
         model.addAttribute("layoutBody", "/WEB-INF/jsp/home.jsp");
-
+        logger.info("home test");
         return "layout/main-layout";
     }
 

@@ -11,9 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +48,7 @@ public class OrderController {
 
             response.put("success", true);
             response.put("message", "주문 성공");
+            response.put("orderId", order.getOrderNo());
 
             return ResponseEntity.ok(response);
          } catch(Exception e) {
@@ -57,6 +57,15 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
 
-
     }
+
+    @GetMapping("/result")
+    public String ordResult(@RequestParam("orderId") String orderId, Model model) {
+        model.addAttribute("orderId", orderId);
+        logger.info("check orderId=" + orderId);
+        model.addAttribute("layoutBody", "/WEB-INF/jsp/order/order-conform.jsp");
+
+        return "layout/main-layout";
+    }
+
 }

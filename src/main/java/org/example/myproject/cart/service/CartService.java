@@ -53,7 +53,6 @@ public class CartService {
         return cartMapper.addToOrderCart(cartDto);
     }
 
-
     public Map<String, Object> convertCartNosToOrderItems(@Param("cartNos") List<Long> cartNos) {
         Map<String, Object> result = new HashMap<>();
         try {
@@ -96,6 +95,7 @@ public class CartService {
 
             result.put("orderMaster", order);
             result.put("orderDetails", orderDetails);
+            result.put("cartNos", );
             return result;
 
         } catch (Exception e) {

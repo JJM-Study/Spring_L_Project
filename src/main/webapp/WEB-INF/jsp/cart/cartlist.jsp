@@ -129,6 +129,7 @@
            data: JSON.stringify(selectedItems),
            success: function(data) {
                alert('주문 성공!');
+               location.href = "/order/result?orderId=" + data.orderId;
            },
            error: function(xhr, status, error) {
                 alert('주문 실패');

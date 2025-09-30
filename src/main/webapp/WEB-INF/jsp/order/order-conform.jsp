@@ -5,8 +5,8 @@
 
     <section class="container mt-4">
 
-        <h2>주문 완료 </h2>
-        <p>주문번호 ${orderNo}</p>
+        <h2>주문 완료</h2>
+        <p>주문번호 ${orderId}</p>
 
     </section>
 

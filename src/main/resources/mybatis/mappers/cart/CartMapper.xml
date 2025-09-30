@@ -9,6 +9,11 @@
         VALUES (#{userId}, #{prodNo}, #{qty}, NOW())
     </insert>
 
+    <delete id="deleteCart">
+
+
+    </delete>
+
     <select id="selectOrderCartItemsById" resultType="org.example.myproject.cart.dto.CartDto">
         SELECT *
         FROM order_cart
@@ -27,7 +32,7 @@
         ON a.prod_no = b.prod_no
         WHERE (a.del_yn = 0 OR a.del_yn IS NULL)
         <choose>
-            <when test="orderColumn == 'prodNo'">
+            <when test="orderColumn == 'prod_name'">
                 ORDER BY b.prod_no ${orderType}
             </when>
             <when test="orderColumn == 'qty'">

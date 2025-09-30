@@ -2,6 +2,7 @@ package org.example.myproject.order.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.myproject.cart.mapper.CartMapper;
 import org.example.myproject.order.mapper.OrderMapper;
 import org.example.myproject.order.mapper.OrderSequenceMapper;
 import org.example.myproject.order.dto.OrderDetailDto;
@@ -24,6 +25,9 @@ public class OrderService {
 
     @Autowired
     OrderSequenceMapper orderSequenceMapper;
+
+    @Autowired
+    CartMapper cartMapper;
 
     @Autowired
     OrderNumberGeneratorService orderNumberGeneratorService;
@@ -75,6 +79,8 @@ public class OrderService {
             details.setOrderNo(orderNo);
             orderMapper.insertOrderDetail(details);
         }
+
+        cartMapper.deleteCart();
 
         return orderNo;
     }
