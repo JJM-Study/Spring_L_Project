@@ -10,6 +10,7 @@ public class ProductDto {
         private String prodName;
         private Integer price;
         private Integer stockQty;
+        private String status;
         private LocalDate crtDt;
         private LocalDate updDt;
         private String delYn;

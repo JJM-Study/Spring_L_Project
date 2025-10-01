@@ -39,10 +39,13 @@ public class OrderService {
 
     private static final Logger logger = LogManager.getLogger(OrderService.class);
 
+
+    // 1. createOrder 설계 미스. 즉시 주문, 카트 주문 동시 사용하게 설계했으나 단일 주문은 단독 주문이라는 걸 고려하지
+    // 못하여 파라미터를 List.of로 굳이 바꿔서 createOrder 보내는 수고를 해야 함. 이에 대해서 차후 리펙토링 필요하다고 생각.
+    // 2. 지금 보니 orderMaster 파라미터는 불필요하다. 장바구니가 안정화 되면, 제거하는 방향으로 리펙토링.
     @Transactional
 //    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails) {
     public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto) {
-
 
         if (orderMaster == null) {
             throw new IllegalArgumentException("주문 상품이 비어 있습니다.");
@@ -90,15 +93,6 @@ public class OrderService {
         }
 
         return orderNo;
-    }
-
-    public OrderDto searchOrder() {
-
-
-    }
-
-    public OrderDetailDto searchOrderDetail(String orderNo) {
-
     }
 
 }

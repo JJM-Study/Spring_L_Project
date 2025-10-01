@@ -34,4 +34,9 @@ public class ProductService {
 
         return productMapper.selectProductCount();
     }
+
+    public ProductDto selectNowOrdProduct(Long prodNo) {
+        return productMapper.selectNowOrdProduct(prodNo);
+    }
+
 }

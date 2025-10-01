@@ -16,4 +16,5 @@
         values
         (#{order.orderNo}, #{order.prodNo}, #{order.qty}, #{order.price})
     </insert>
+
 </mapper>

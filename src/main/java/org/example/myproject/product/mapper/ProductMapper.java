@@ -17,4 +17,7 @@ public interface ProductMapper {
     List<ProductPriceDto> selectProductPrice(@Param("prodNos") List<Long> prodNos);
 
     int selectProductCount();
+
+    ProductDto selectNowOrdProduct(@Param("prodNo") Long prodNo);
+
 }

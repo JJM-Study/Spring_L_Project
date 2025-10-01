@@ -53,6 +53,7 @@ public class CartService {
         return cartMapper.addToOrderCart(cartDto);
     }
 
+    // Cart 테이블에서 가져오던 UserId를, 주문 시 Authentication 으로 가져오도록 수정하는 게 보완상 맞는 것 같다.
     public Map<String, Object> convertCartNosToOrderItems(@Param("cartNos") List<Long> cartNos) {
         Map<String, Object> result = new HashMap<>();
         try {

@@ -10,4 +10,5 @@ public interface OrderMapper {
 
     void insertOrderMaster(@Param("order") OrderDto order);
     void insertOrderDetail(@Param("order") OrderDetailDto orderDetail);
+
 }
