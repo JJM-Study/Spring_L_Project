@@ -64,9 +64,11 @@ public class ProductController {
     @GetMapping("/detail/{prodNo}")
     public String selectProductDetail(@PathVariable("prodNo") String prodNo, Model model) {
         ProductDetailDto imageList = productService.selectProductDetail(prodNo);
+        logger.info("imageList :" + imageList);
         model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
         model.addAttribute("pageTitle", imageList.getProdName());
         model.addAttribute("itemList", imageList);
+
 
 
 //        return "product/product-detail";

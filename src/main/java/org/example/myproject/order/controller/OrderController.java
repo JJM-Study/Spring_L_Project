@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,9 +68,10 @@ public class OrderController {
 
     }
 
-    @RequestMapping("/order/order_prod")
-    public ResponseEntity<Map<String, Object>> orderNow(@RequestBody OrderRequestDto request) {
 
+    @PostMapping("/order_prod")
+    public ResponseEntity<Map<String, Object>> orderNow(@RequestBody OrderRequestDto request) {
+        Map<String, Object> response = new HashMap<>();
         // 주문 시, 제품 번호를 읽는 것 외에도 다른 조치를 통해 멱등성 등 보장하는 방법에 대해서 고민할 것.
 
 
@@ -77,28 +79,34 @@ public class OrderController {
         Integer qty = request.getQty();
         Integer price = productService.selectNowOrdProduct(prodNo).getPrice();
 
-        if (price == null) {
-            // 이번 기회에 여기에다가 전역 에러 정의해서 처리해보자.
-            throw new ProductNotFoundException("주문 상품이 존재하지 않습니다.");
-        }
+//        if (price == null) {
+//            // 이번 기회에 여기에다가 전역 에러 정의해서 처리해보자.
+//            throw new ProductNotFoundException("주문 상품이 존재하지 않습니다.");
+//        }
 
         OrderDto order = new OrderDto();
         // UserDetail DTO
+        order.setTotalAmount(qty);
 
         OrderDetailDto orderDetail = new OrderDetailDto();
         orderDetail.setProdNo(prodNo);
         orderDetail.setQty(qty);
         orderDetail.setPrice(price);
 
+
+
         // 지금 보니 createOrder 메소드의 order 파라미터는 불필요하다. 장바구니가 안정화 되면, 제거하는 방향으로 리펙토링.
         // 지금은 order.setAmount(qty); 정도만 넣어서 일단 넘기는 식으로 하자.
         //List.of로 감싸는 걸로...
-        orderService.createOrder(order, orderDetail);
+        String orderId = orderService.createOrder(order, List.of(orderDetail), Collections.emptyList());
+
+        //  success, message 등 키-값을 모듈 형태로 관리하는 방법은 없는 지 나중에 고민.
+        response.put("success", true);
+        response.put("message", "주문 성공 (결제 생략)");
+        response.put("orderId", orderId);
 
 
-
-
-        return
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
     @GetMapping("/result")

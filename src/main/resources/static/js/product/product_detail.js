@@ -15,15 +15,14 @@ mBtn.addEventListener("click", ()=> {
     pd_inputQty.value = qty;
 });
 
-orderBtn.addEventListener("click", () => {
-    const prodNo = this.dataset.prodno;
+orderBtn.addEventListener("click", (event) => {
+    const prodNo = event.currentTarget.dataset.prodno;
     const qty = parseInt(pd_inputQty.value);
-
     fetch("/order/order_prod", {
         method: "POST",
         headers: {
-            "content-type": "application/json",
-            "X-CSRF-TOKEN": csrfToken
+            'content-type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
         },
         body: JSON.stringify({
             "prodNo": prodNo,
@@ -32,8 +31,10 @@ orderBtn.addEventListener("click", () => {
         }).then((res) => {
             return res.json();
         }).then((data) => {
-
+            if(data.success) {
+                location.href = "/order/result?orderId=" + data.orderId;
+            } else {
+                alert("주문 실패");
+            }
         })
     })
-});
-

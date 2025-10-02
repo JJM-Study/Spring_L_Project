@@ -33,17 +33,16 @@
 
     <resultMap id="ProductDetailMap" type="org.example.myproject.product.dto.ProductDetailDto">
         <id property="prodNo" column="prod_no" />
-<!--       Camel 설정 줬으므로 주석. -->
-<!--        <result property="prodName" column="prod_name" />-->
-<!--        <result property="price"    column="price" />-->
-<!--        <result property="stockQty" column="stock_qty" />-->
-<!--        <result property="crtDt"    column="crt_dt" />-->
-<!--        <result property="delDt"    column="del_dt" />-->
+        <result property="prodName" column="prod_name" />
+        <result property="price"    column="price" />
+        <result property="stockQty" column="stock_qty" />
+        <result property="crtDt"    column="crt_dt" />
+        <result property="delDt"    column="del_dt" />
 
-<!--        <result property="detailDesc" column="detail_desc" />-->
-<!--        <result property="notice" column="notice" />-->
-<!--        <result property="shippingInfo" column="shipping_info" />-->
-<!--        <result property="additionalInfo" column="additional_info" />-->
+        <result property="detailDesc" column="detail_desc" />
+        <result property="notice" column="notice" />
+        <result property="shippingInfo" column="shipping_info" />
+        <result property="additionalInfo" column="additional_info" />
 
         <!-- imageUrl은 리스트니까 collection 사용 -->
         <collection property="imageList" ofType="org.example.myproject.product.dto.ProductImageDto">

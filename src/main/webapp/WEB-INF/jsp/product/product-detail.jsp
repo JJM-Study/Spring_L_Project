@@ -39,13 +39,13 @@
             <button id="mBtn" type="button">-</button>
         </div>
       <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
-        <button class="btn btn-primary btn-ord-now" data-prodno="${itemList.prodNo}">주문하기</button>
+      <button class="btn btn-primary btn-ord-now" data-prodno="${itemList.prodNo}">주문하기</button>
     </section>
 <%--</main>--%>
 
 
 
 <script src="/js/cart/cart.js"></script>
-<script src="/js/product/product_detail.js"></script>
+<script src="/js/product/product_detail.js" defer></script>
 
 <%--<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>--%>

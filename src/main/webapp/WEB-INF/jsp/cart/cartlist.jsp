@@ -121,7 +121,7 @@
         $.ajax({
            url : '/order/from-cart',
            method: 'POST',
-           contentType : 'application/json',
+           'content-Type' : 'application/json',
            headers: {
              'X-CSRF-TOKEN' : csrfToken
            },
