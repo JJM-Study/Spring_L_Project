@@ -18,6 +18,9 @@ mBtn.addEventListener("click", ()=> {
 orderBtn.addEventListener("click", (event) => {
     const prodNo = event.currentTarget.dataset.prodno;
     const qty = parseInt(pd_inputQty.value);
+    console.log("prodNo : " + prodNo);
+    console.log("qty : " + qty);
+
     fetch("/order/order_prod", {
         method: "POST",
         headers: {

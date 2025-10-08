@@ -121,22 +121,26 @@
         $.ajax({
            url : '/order/from-cart',
            method: 'POST',
-           'content-Type' : 'application/json',
+           'contentType' : 'application/json',
            headers: {
              'X-CSRF-TOKEN' : csrfToken
            },
 
            data: JSON.stringify(selectedItems),
            success: function(data) {
-               alert('주문 성공!');
+               console.log(data),
+               alert(data.message);
                location.href = "/order/result?orderId=" + data.orderId;
            },
            error: function(xhr, status, error) {
-                alert('주문 실패');
-                console.error(error);
-           }
-        })
-
+                if (xhr.responseJSON) {
+                    alert(xhr.responseJSON.message);
+                } else {
+                    alert("주문 실패");
+                }
+                console.error("에러 메세지 : " + error);
+                }
+           })
         } catch (error) {
             console.log("서버 처리 중 에러 : " + error);
         }

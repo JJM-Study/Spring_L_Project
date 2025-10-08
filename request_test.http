@@ -8,3 +8,8 @@ POST http://localhost:8080/sign-up?username=test7&password=1234&check-password=1
 ###
 
 GET http://localhost:8080/errortest
+
+
+###
+
+POST http://localhost:8080/order/from-cart

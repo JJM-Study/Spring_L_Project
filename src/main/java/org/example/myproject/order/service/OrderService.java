@@ -5,6 +5,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.mapper.CartMapper;
+import org.example.myproject.error.BusinessException;
+import org.example.myproject.error.ErrorCode;
 import org.example.myproject.order.mapper.OrderMapper;
 import org.example.myproject.order.mapper.OrderSequenceMapper;
 import org.example.myproject.order.dto.OrderDetailDto;
@@ -13,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +49,8 @@ public class OrderService {
     public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto) {
 
         if (orderMaster == null) {
-            throw new IllegalArgumentException("주문 상품이 비어 있습니다.");
+//            throw new IllegalArgumentException("주문 상품이 비어 있습니다.");
+            throw new BusinessException(ErrorCode.PRODUCT_ORDER_NOT_FOUND);
         }
 
         String orderNo = orderNumberGeneratorService.generateOrderNumber();
@@ -65,7 +67,8 @@ public class OrderService {
             logger.info("!authentication.isAuthenticated() : " + !authentication.isAuthenticated());
             logger.info("!(authentication instanceof UserDetails) " + !(authentication instanceof UserDetails));
 
-            throw new RuntimeException("로그인 필요");
+            //throw new RuntimeException("로그인 필요");
+            throw new BusinessException(ErrorCode.REQUEST_LOGIN);
         }
 
         Object principal = authentication.getPrincipal();

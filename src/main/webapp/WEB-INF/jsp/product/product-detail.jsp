@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<%@ include file="/WEB-INF/jsp/layout/main-layout.jsp" %>--%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/product_detail.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/product/product_detail.css">
 
 
 <%--<main class="flex-grow-1">--%>

@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.service.CustomUserDetailService;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.service.CartService;
+import org.example.myproject.error.BusinessException;
+import org.example.myproject.error.ErrorCode;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
 import org.example.myproject.order.dto.OrderRequestDto;
@@ -60,14 +62,19 @@ public class OrderController {
             response.put("orderId", order.getOrderNo());
 
             return ResponseEntity.ok(response);
-         } catch(Exception e) {
-             response.put("success", false);
+
+            // 2025/10/08 Business 예외 추가.
+        } catch (BusinessException e) {
+            response.put("message", e.getMessage());
+            response.put("success", false);
+            return ResponseEntity.status(e.getErrorCode().getStatus()).body(response);
+
+        } catch (Exception e) {
+            response.put("success", false);
             logger.info("주문 실패" + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
-
     }
-
 
     @PostMapping("/order_prod")
     public ResponseEntity<Map<String, Object>> orderNow(@RequestBody OrderRequestDto request) {
@@ -100,6 +107,7 @@ public class OrderController {
         //List.of로 감싸는 걸로...
         String orderId = orderService.createOrder(order, List.of(orderDetail), Collections.emptyList());
 
+        logger.info("orderId" + orderId);
         //  success, message 등 키-값을 모듈 형태로 관리하는 방법은 없는 지 나중에 고민.
         response.put("success", true);
         response.put("message", "주문 성공 (결제 생략)");
