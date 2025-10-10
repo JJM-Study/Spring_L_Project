@@ -29,10 +29,30 @@
                 </div>
             </c:forEach>
         </div>
+
+
       <p>가격 : "${itemList.price}"원</p>
-      <div class="product-detail-desc">
-         <c:out value="${itemList.detailDesc}" escapeXml="false" />
-      </div>
+
+        <p>원문 : </p>
+        <div class="product-detail">
+            <c:choose>
+                <c:when test="${not empty itemList.detailDesc}">
+        <pre style="white-space:pre-wrap; background:#f7f7f7; padding:8px;">
+          RAW: [<c:out value="${itemList.detailDesc}" />]
+        </pre>
+
+        <p>렌더링 결과:</p>
+                <div>
+  <c:out value="${itemList.detailDesc}" escapeXml="false" />
+                </div>
+                </c:when>
+                <c:otherwise>
+                    <p>상품 정보가 없습니다.</p>
+                </c:otherwise>
+            </c:choose>
+        </div>
+
+
         <div>
             <button id="pBtn" type="button">+</button>
             <input type="number" class="qty" value="1" min="1"/>

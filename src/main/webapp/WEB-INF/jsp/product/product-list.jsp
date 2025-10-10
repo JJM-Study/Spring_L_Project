@@ -1,22 +1,28 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--<%@ include file="/WEB-INF/jsp/layout/main-layout.jsp" %>--%>
 
 <%--<main class="flex-grow-1">--%>
 <script src="/js/product/product.js" defer></script>
+<script src="/js/product/product-list.js" defer></script>
 <section class="container mt-4">
-  <div class="btn-group" role="group" aria-label="Page Size">
-    <ul>
-        <li>
-          <a href="#" class="btn-array btn btn-outline-primary" data-count="30">30</a>
-        </li>
-        <li>
-          <a href="#" class="btn-array btn btn-outline-primary" data-count="50">50</a>
-        </li>
-        <li>
-          <a href="#" class="btn-array btn btn-outline-primary" data-count="100">100</a>
-        </li>
-    </ul>
+<div class="filter">
+      <div class="btn-group" role="group" aria-label="Page Size">
+        <ul>
+            <li>
+              <a href="#" class="btn-array btn btn-outline-primary" data-count="30">30</a>
+            </li>
+            <li>
+              <a href="#" class="btn-array btn btn-outline-primary" data-count="50">50</a>
+            </li>
+            <li>
+              <a href="#" class="btn-array btn btn-outline-primary" data-count="100">100</a>
+            </li>
+        </ul>
+      </div>
+      <div>
+        <input type="text" class="search-title"></input>
+        <button class="search-title-btn">검색</button>
+      </div>
   </div>
   <div class="row">
     <c:forEach var="item" items="${itemList}">
@@ -49,11 +55,38 @@
 
     <nav aria-abel="Pagination" id="pages">
         <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="/product/products?cPage=${pagination.prevPage}">이전</a></li>
+
+            <!-- 이전 -->
+            <c:url var="prevUrl" value="/product/products">
+                <c:param name="cPage" value="${pagination.prevPage}" />
+                <c:if test = "${not empty title}">
+                    <c:param name="title" value="${title}" />
+                </c:if>
+            </c:url>
+            <li class="page-item">
+                <a class="page-link" href="${prevUrl}">이전</a>
+            </li>
+
             <c:forEach var="i" begin="${pagination.startPage}" end="${pagination.endPage}" step="1">
-                <li class="page-item"><a class="page-link" href="/product/products?cPage=${i}&pageSize=${pagination.pageSize}">${i}</a></li>
+                <c:url var="pageUrl" value="/product/products" >
+                    <c:param name="cPage" value="${i}" />
+                    <c:param name="pageSize" value="${pagination.pageSize}" />
+                    <c:if test="${not empty title}">
+                        <c:param name="title" value="${title}" />
+                    </c:if>
+                </c:url>
+                <li class="page-item"><a class="page-link" href="${pageUrl}">${i}</a></li>
             </c:forEach>
-            <li class="page-item"><a class="page-link" href="/product/products?cPage=${pagination.nextPage}">다음</a></li>
+
+            <c:url var="nextUrl" value="/product/products">
+                <c:param name="cPage" value="${pagination.nextPage}" />
+                <c:if test="${not empty title}">
+                   <c:param name="title" value="${title}" />
+                </c:if>
+            </c:url>
+            <li class="page-item">
+                <a class="page-link" href="${nextUrl}">다음</a>
+            </li>
         </ul>
     </nav>
 

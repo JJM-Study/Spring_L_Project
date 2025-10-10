@@ -10,6 +10,9 @@
         from product_master a
         left join product_image b on a.prod_no = b.prod_no AND b.is_main = 1
         where a.del_yn = 0
+        <if test="title != '' and title != null">
+            AND prod_name LIKE CONCAT('%', #{title}, '%')
+        </if>
         limit #{pageSize} offset #{offset};
     </select>
 
@@ -65,7 +68,10 @@
     <select id="selectProductCount" resultType="int">
         SELECT count(*)
         FROM product_master
-        WHERE del_yn = 0;
+        WHERE del_yn = 0
+        <if test="title != null and title != ''">
+            AND prod_name LIKE CONCAT('%', #{title}, '%')
+        </if>
     </select>
 
 

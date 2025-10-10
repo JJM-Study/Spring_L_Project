@@ -10,13 +10,13 @@ import java.util.List;
 
 @Mapper
 public interface ProductMapper {
-    List<ProductDto> selectProductList(int pageSize, int offset);
+    List<ProductDto> selectProductList(int pageSize, int offset, String title);
 
     ProductDetailDto selectProductDetail(String prodNo);
 
     List<ProductPriceDto> selectProductPrice(@Param("prodNos") List<Long> prodNos);
 
-    int selectProductCount();
+    int selectProductCount(@Param("title") String title);
 
     ProductDto selectNowOrdProduct(@Param("prodNo") Long prodNo);
 

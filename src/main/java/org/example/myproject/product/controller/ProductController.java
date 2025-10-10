@@ -35,27 +35,34 @@ public class ProductController {
     /*필터 조건을 더 확장하게 된다면, ModelAttribute 및 Search용 필터를 추가로 만드는 걸 고려할 것.*/
     // pPage = 현재 페이지 , pCount = 페이지 갯수.
     @GetMapping("/products")
-    public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "10") int pageSize, Model model) {
+    //public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "10") int pageSize, Model model) {
+    public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(required = false) String title, Model model) {
 
-        int listCnt = productService.selectProductCount();
-
+//        int listCnt = productService.selectProductCount();
+        int listCnt = productService.selectProductCount(title);
+        logger.info("search-title :" + title);
         Pagination pagination = new Pagination(cPage, pageSize, listCnt);
 
 
         logger.info("listCnt : " + listCnt);
         logger.info("cPage :" + pageSize + " offset : " +  pagination.getOffset());
-        List<ProductDto> productList = productService.selectProductList(pageSize, pagination.getOffset());
+        List<ProductDto> productList = productService.selectProductList(pageSize, pagination.getOffset(), title);
 
         logger.info("productList : " + productList.size());
-        logger.info(" EndPage : " + pagination.getEndPage() + "StartPage : " + pagination.getStartPage());
+        logger.info("EndPage : " + pagination.getEndPage() + "StartPage : " + pagination.getStartPage());
         logger.info("lists : " + productList);
+
         model.addAttribute("pageTitle", "상품");
         model.addAttribute("itemList", productList);
         model.addAttribute("pagination", pagination);
         model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-list.jsp");
+        model.addAttribute("title", title);
+
+
 
         logger.info("prev :" + pagination.getPrevPage());
         logger.info("next :" + pagination.getNextPage());
+        logger.info("title : " + title);
 
         return "layout/main-layout";
 //        return "product/product-list";
