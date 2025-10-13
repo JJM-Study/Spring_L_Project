@@ -6,6 +6,8 @@ import org.example.myproject.auth.controller.AuthController;
 import org.example.myproject.config.Pagination;
 import org.example.myproject.product.dto.ProductDetailDto;
 import org.example.myproject.product.dto.ProductDto;
+import org.example.myproject.product.dto.ProductImageDto;
+import org.example.myproject.product.dto.SendImageDTO;
 import org.example.myproject.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -70,12 +72,16 @@ public class ProductController {
 
     @GetMapping("/detail/{prodNo}")
     public String selectProductDetail(@PathVariable("prodNo") String prodNo, Model model) {
-        ProductDetailDto imageList = productService.selectProductDetail(prodNo);
-        logger.info("imageList :" + imageList);
-        model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
-        model.addAttribute("pageTitle", imageList.getProdName());
-        model.addAttribute("itemList", imageList);
+        ProductDetailDto itemDetail = productService.selectProductDetail(prodNo);
+//        logger.info("imageList :" + imageList.get);
 
+        SendImageDTO sendImageDTO = productService.isMainImage(itemDetail);
+
+        model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
+        model.addAttribute("pageTitle", itemDetail.getProdName());
+        model.addAttribute("itemList", itemDetail);
+        model.addAttribute("subImages", sendImageDTO.getSubImages());
+        model.addAttribute("mainImages", sendImageDTO.getMainImage());
 
 
 //        return "product/product-detail";

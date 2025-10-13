@@ -8,15 +8,90 @@ main {
 section {
     margin : 16px;
     border : 1px solid black;
-    height : 100%;
-    flex: 1;
+    /* height : 100%; */
+    /* display : flex; */
+    flex :1;
+    display:flex;
 }
 
-section > div {
-    width : 100%;
-
-}
-
-.image-container {
+.main-image-container {
     border : 1px solid black;
+    width : 560px;
+    height : 450px;
+    padding : 3px;
+    overflow : hidden;
+
 }
+
+.main-image-container img {
+    width : 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-container {
+    flex: 1; /* 남은 공간만 차지 */
+}
+
+
+
+.sub-list {
+    gap : 10px;
+    display : flex;
+    padding : 0;
+    margin : 0;
+}
+
+.sub-list li img {
+    width: 100%;
+    height : 100%;
+    object-fit: cover;
+}
+
+.sub-container {
+    /* border : 1px solid black; */
+    height: 155px;
+    padding : 5px;
+    display : flex;
+    align-items: center;
+    background-color : #eee;
+}
+
+.sub-container ul li {
+    width: 150px;
+    height: 120px;
+
+}
+
+.sub-list > li {
+
+}
+
+.sub-list {
+    display : flex;
+    position:relative;
+    list-style-type: none;
+
+}
+
+.notice {
+
+}
+
+
+/* order-container*/
+
+.order-container {
+    padding : 5px;
+    border : 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+.qtyBtn {
+    display: flex;
+}
+
+
+/*orderBtn {
+    display: block;
+}*/
