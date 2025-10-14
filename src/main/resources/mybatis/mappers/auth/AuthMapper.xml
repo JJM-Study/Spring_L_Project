@@ -20,8 +20,8 @@
     <insert id="signUpUser" parameterType="org.example.myproject.auth.dto.AuthDTO">
         insert into usermst
             (
-             user_id as username,
-             user_pw as password,
+             user_id,
+             user_pw,
              nickname,
              email,
              profile_image_url,
@@ -30,8 +30,8 @@
     </insert>
 
 
-    <select id="existId" parameterType="java.lang.String">
-        select 1;
+    <select id="existId" resultType="java.lang.String">
+        select user_id from usermst where user_id = #{username}
     </select>
 
 </mapper>

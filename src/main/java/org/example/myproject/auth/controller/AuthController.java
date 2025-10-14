@@ -44,12 +44,15 @@ public class AuthController {
         return "auth/login";
     }
 
-    @GetMapping("/exist-id")
-    public String existId(String username)
-    {
+    @PostMapping("/exist-id")
+    @ResponseBody
+    public Map<String, Object> existId(@RequestBody String username) {
+        Map<String, Object> response = new HashMap<>();
+         String result = authService.existId(username);
 
-
-        return "temp";
+         response.put("username", result);
+         logger.info("username" + result);
+        return response;
     }
 
     @GetMapping("/sign-up")
