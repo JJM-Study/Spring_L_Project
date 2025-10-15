@@ -17,4 +17,30 @@
         (#{order.orderNo}, #{order.prodNo}, #{order.qty}, #{order.price})
     </insert>
 
+
+
+    <select id="orderList" resultType="org.example.myproject.order.dto.OrderListDTO">
+        with ranked_products as (
+        select
+        a.order_no as order_no,
+        a.order_date as order_date,
+        c.prod_name as prod_name,
+        row_number() over (
+        partition by a.order_no
+        order by c.price desc, b.prod_no asc
+        ) as rn
+        from order_master as a
+        inner join order_detail as b on a.order_no = b.order_no
+        inner join product_master as c on b.prod_no = c.prod_no
+        )
+        select
+        order_no,
+        order_date,
+        prod_name
+        from ranked_products
+        where rn = 1;
+    </select>
+
+
+
 </mapper>

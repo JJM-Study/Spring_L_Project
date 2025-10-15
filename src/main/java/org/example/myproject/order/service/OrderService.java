@@ -7,6 +7,7 @@ import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.mapper.CartMapper;
 import org.example.myproject.error.BusinessException;
 import org.example.myproject.error.ErrorCode;
+import org.example.myproject.order.dto.OrderListDTO;
 import org.example.myproject.order.mapper.OrderMapper;
 import org.example.myproject.order.mapper.OrderSequenceMapper;
 import org.example.myproject.order.dto.OrderDetailDto;
@@ -96,6 +97,10 @@ public class OrderService {
         }
 
         return orderNo;
+    }
+
+    public List<OrderListDTO> orderList() {
+        return orderMapper.orderList();
     }
 
 }

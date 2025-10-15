@@ -9,6 +9,7 @@ import org.example.myproject.error.BusinessException;
 import org.example.myproject.error.ErrorCode;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
+import org.example.myproject.order.dto.OrderListDTO;
 import org.example.myproject.order.dto.OrderRequestDto;
 import org.example.myproject.order.service.OrderService;
 import org.example.myproject.product.service.ProductService;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/order")
@@ -122,6 +120,18 @@ public class OrderController {
         model.addAttribute("orderId", orderId);
         logger.info("check orderId=" + orderId);
         model.addAttribute("layoutBody", "/WEB-INF/jsp/order/order-conform.jsp");
+
+        return "layout/main-layout";
+    }
+
+    @GetMapping("/orderList")
+    public String orderList(Model model) {
+        List<OrderListDTO> orderList = new ArrayList<>();
+
+        orderList = orderService.orderList();
+
+        model.addAttribute("orderList", orderList);
+        model.addAttribute("layoutBody", "/WEB-INF/jsp/order/order-list.jsp");
 
         return "layout/main-layout";
     }

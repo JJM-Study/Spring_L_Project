@@ -12,6 +12,11 @@
         </Root>
 
         <!--  SQL 로그 출력  -->
+
+        <Logger name="org.example.myproject" level="debug" additivity="true">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
         <Logger name="org.apache.ibatis" level="debug" additivity="true">
             <AppenderRef ref="Console"/>
         </Logger>
