@@ -46,8 +46,9 @@ public class AuthController {
 
     @PostMapping("/exist-id")
     @ResponseBody
-    public Map<String, Object> existId(@RequestBody String username) {
+    public Map<String, Object> existId(@RequestBody Map<String, String> userdata) {
         Map<String, Object> response = new HashMap<>();
+         String username = userdata.get("username");
          String result = authService.existId(username);
 
          response.put("username", result);

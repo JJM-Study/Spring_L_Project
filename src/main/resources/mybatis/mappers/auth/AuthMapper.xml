@@ -31,7 +31,7 @@
 
 
     <select id="existId" resultType="java.lang.String">
-        select user_id from usermst where user_id = #{username}
+        select user_id from usermst where user_id = #{username};
     </select>
 
 </mapper>

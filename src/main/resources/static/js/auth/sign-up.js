@@ -1,6 +1,7 @@
 const signUpForm = document.getElementById("signUpForm");
 const signUpBtn = document.getElementById("signUpButton");
 const checkIdBtn = document.getElementById("existId");
+const showPwBtns = document.querySelectorAll(".showPwBtn");
 //fetch("/sign-up", {
 //    method: "POST",
 //    headers: {
@@ -52,6 +53,46 @@ e.preventDefault();
 
 });
 
+showPwBtns.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+       const parentLabel = button.closest("label");
+
+       const PasswordInput = parentLabel.querySelector('input');
+
+       if (PasswordInput.type === "password") {
+            PasswordInput.type = "text";
+       } else {
+            PasswordInput.type = "password";
+       }
+    })
+
+});
+//
+//showPwBtn.addEventListener("click", () => {
+//
+//    if (passwdBtn.type === "password") {
+//        passwdBtn.type = "text";
+//    }
+//    else {
+//        passwdBtn.type = "password";
+//    }
+//
+//});
+//
+//showPwBtn.addEventListener("click", () => {
+//
+//    if (passwdChgBtn.type === "password") {
+//        passwdChgBtn.type = "text";
+//    }
+//    else {
+//        passwdChgBtn.type = "password";
+//    }
+//
+//});
+
+
 
 checkIdBtn.addEventListener("click", async() => {
 
@@ -87,14 +128,17 @@ checkIdBtn.addEventListener("click", async() => {
 
     })
 
-    console.log("response :" + JSON.stringify(response));
+    //console.log("response :" + JSON.stringify(response));
+    console.log("response :" + response);
 
     const result = await response.json();
-    console.log("result" + result);
-    if (result.isExist) {
-        alert(username + "은 이미 존재하는 아이디입니다.");
-    } else {
+    console.log("result" + result.username);
+    if (result.username === "" || result.username === null || result.username === undefined) {
         alert(username + "은 사용 가능한 아이디입니다.");
+    } else {
+        alert(username + "은 이미 존재하는 아이디입니다.");
     }
+
+
 
 })
