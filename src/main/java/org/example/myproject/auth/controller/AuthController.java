@@ -2,6 +2,7 @@ package org.example.myproject.auth.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.example.myproject.auth.dto.AuthDTO;
+import org.example.myproject.auth.dto.SignUpDTO;
 import org.example.myproject.auth.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -67,8 +68,7 @@ public class AuthController {
     @PostMapping("/sign-up")
     @ResponseBody
     public Map<String, Object> signUpUser(
-            AuthDTO authDTO,
-            @RequestParam("check-password") String checkPassword
+            @RequestBody AuthDTO authDTO
     ) {
 
 
@@ -77,14 +77,14 @@ public class AuthController {
         /* 실무에서 쓰던 방식대로 json으로 success, message 를 나눠서 통신하겠음. 차후 전역적으로 이걸 처리할 수 있는 handler 구현 고민.*/
         Map<String, Object> result = new HashMap<>();
 
-        if (!authDTO.getPassword().equals(checkPassword)) {
-
-            logger.error("wrong password");
-            
-            result.put("success", false);
-            result.put("message", "패스워드가 일치하지 않습니다.");
-            return result;
-        }
+//        if (!singUpDTO.getPassword().equals(singUpDTO.getCheckPassword())) {
+//
+//            logger.error("wrong password");
+//
+//            result.put("success", false);
+//            result.put("message", "패스워드가 일치하지 않습니다.");
+//            return result;
+//        }
 
         try {
 

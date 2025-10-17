@@ -3,6 +3,7 @@ package org.example.myproject.auth.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.example.myproject.auth.dto.AuthDTO;
+import org.example.myproject.auth.dto.SignUpDTO;
 import org.springframework.security.core.parameters.P;
 
 @Mapper
