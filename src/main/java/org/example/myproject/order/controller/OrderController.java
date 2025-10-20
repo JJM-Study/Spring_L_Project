@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.service.CustomUserDetailService;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.service.CartService;
+import org.example.myproject.config.Pagination;
 import org.example.myproject.error.BusinessException;
 import org.example.myproject.error.ErrorCode;
 import org.example.myproject.order.dto.OrderDetailDto;
@@ -124,14 +125,25 @@ public class OrderController {
         return "layout/main-layout";
     }
 
-    @GetMapping("/orderList")
-    public String orderList(Model model) {
+    @GetMapping("/ordlist")
+    public String orderList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "30") int pageSize, Model model) {
         List<OrderListDTO> orderList = new ArrayList<>();
 
-        orderList = orderService.orderList();
 
+        int listCnt = orderService.selectOrdListCount();
+
+        Pagination pagination = new Pagination(cPage, pageSize, listCnt);
+
+        orderList = orderService.orderList(pageSize, pagination.getOffset());
+
+        model.addAttribute("pageTitle", "상품 로그");
+        model.addAttribute("pagination", pagination);
         model.addAttribute("orderList", orderList);
+        model.addAttribute("pageUrl", "/order/ordlist");
         model.addAttribute("layoutBody", "/WEB-INF/jsp/order/order-list.jsp");
+
+
+
 
         return "layout/main-layout";
     }

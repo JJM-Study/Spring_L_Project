@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product/product_detail.css">
 
 
+
 <%--<main class="flex-grow-1">--%>
     <section class="detail-container mt-4">
         <div class="info-container">
@@ -81,5 +82,13 @@
 
 <script src="/js/cart/cart.js"></script>
 <script src="/js/product/product_detail.js" defer></script>
+
+
+<script type="text/javascript">
+
+   const prod = ${itemListJson};
+   console.log(prod);
+
+</script>
 
 <%--<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>--%>

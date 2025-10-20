@@ -13,9 +13,11 @@
             <label>아이디 : <input type="text" name="username"></label>
             <label>비밀번호 : <input type="password" name="password"></label>
             <button type="submit">로그인</button>
+            <span>remember-me</span>
             <input type="checkbox" name="remember-me">
             <button type="button" id="sign-up">회원가입</button>
             <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <p>${errorMessage}</p>
         </form>
     </body>
 

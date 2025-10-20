@@ -38,9 +38,12 @@
         order_date,
         prod_name
         from ranked_products
-        where rn = 1;
+        where rn = 1
+        limit ${pageSize} offset ${offset};
     </select>
 
-
+    <select id="selectOrdListCount" resultType="int">
+        select count(*) from order_master;
+    </select>
 
 </mapper>

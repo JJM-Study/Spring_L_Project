@@ -99,8 +99,12 @@ public class OrderService {
         return orderNo;
     }
 
-    public List<OrderListDTO> orderList() {
-        return orderMapper.orderList();
+    public List<OrderListDTO> orderList(int pageSize, int offset) {
+        return orderMapper.orderList(pageSize, offset);
     }
+
+    public int selectOrdListCount() {
+        return orderMapper.selectOrdListCount();
+    };
 
 }

@@ -1,5 +1,7 @@
 package org.example.myproject.product.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.controller.AuthController;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +31,8 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+    @Autowired
+    ObjectMapper
 
     private static final Logger logger = LogManager.getLogger(ProductController.class);
 
@@ -57,6 +62,7 @@ public class ProductController {
         model.addAttribute("pageTitle", "상품");
         model.addAttribute("itemList", productList);
         model.addAttribute("pagination", pagination);
+        model.addAttribute("pageUrl", "/product/products");
         model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-list.jsp");
         model.addAttribute("title", title);
 
@@ -75,11 +81,14 @@ public class ProductController {
         ProductDetailDto itemDetail = productService.selectProductDetail(prodNo);
 //        logger.info("imageList :" + imageList.get);
 
+//        String itemDetailJson = gson.toJson(itemDetail);
+
         SendImageDTO sendImageDTO = productService.isMainImage(itemDetail);
 
         model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
         model.addAttribute("pageTitle", itemDetail.getProdName());
         model.addAttribute("itemList", itemDetail);
+//        model.addAttribute("itemListJson", itemDetailJson);
         model.addAttribute("subImages", sendImageDTO.getSubImages());
         model.addAttribute("mainImages", sendImageDTO.getMainImage());
 

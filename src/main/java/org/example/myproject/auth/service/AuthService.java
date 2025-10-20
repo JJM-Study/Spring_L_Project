@@ -3,13 +3,11 @@ package org.example.myproject.auth.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.dto.AuthDTO;
-import org.example.myproject.auth.dto.SignUpDTO;
 import org.example.myproject.auth.mapper.AuthMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 public class AuthService {

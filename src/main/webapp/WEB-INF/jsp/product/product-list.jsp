@@ -53,7 +53,9 @@
     </c:forEach>
   </div>
 
-    <nav aria-abel="Pagination" id="pages">
+
+  <jsp:include page="/WEB-INF/jsp/common/pagination.jsp"/>
+<%--    <nav aria-abel="Pagination" id="pages">
         <ul class="pagination">
 
             <!-- 이전 -->
@@ -88,7 +90,7 @@
                 <a class="page-link" href="${nextUrl}">다음</a>
             </li>
         </ul>
-    </nav>
+    </nav> --%>
 
 </section>
 <%--</main>--%>

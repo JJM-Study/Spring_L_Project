@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link href="/css/order/order-list.css" rel="stylesheet">
 
 <section>
   <table>
@@ -11,13 +12,16 @@
         </tr>
      </thead>
      <tbody>
-        <tr>
-           <c:forEach var="order" items="${orderList}" begin="0" end="9">
+           <%-- <c:forEach var="order" items="${orderList}" begin="0" end="${pageSize}"> --%>
+           <c:forEach var="order" items="${orderList}">
+           <tr>
               <td>${order.orderDate}</td>
               <td>${order.orderNo}</td>
               <td>${order.prodName}</td>
+           </tr>
            </c:forEach>
-        </tr>
      </tbody>
   </table>
+
+  <jsp:include page="/WEB-INF/jsp/common/pagination.jsp"/>
 </section>

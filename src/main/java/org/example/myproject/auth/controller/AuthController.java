@@ -1,12 +1,13 @@
 package org.example.myproject.auth.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.example.myproject.auth.dto.AuthDTO;
-import org.example.myproject.auth.dto.SignUpDTO;
 import org.example.myproject.auth.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -30,17 +31,28 @@ public class AuthController {
 
     /* Pricipal을 쓸 지, Authentication 쓸 지 ... */
     @GetMapping("/login")
-    public String loginPage(Authentication authentication) {
+    public String loginPage(Authentication authentication, Model model, HttpSession httpSession) {
 
+
+        String errorMessage = (String) httpSession.getAttribute("errorMessage");
+        logger.info("errorMessage" + errorMessage);
 //        model.addAttribute("user", principal.getName());
 
 //        if (principal.getName() != null) {
 //            logger.info(principal.getName());
 //        }
+//        if (Model)
+
 
         if (authentication != null && authentication.isAuthenticated()) {
             return "redirect:/home";
         }
+
+        if(errorMessage != null) {
+            model.addAttribute("errorMessage", errorMessage);
+            httpSession.removeAttribute("errorMessage");
+        }
+
         System.out.println("Authentication object is null");
         return "auth/login";
     }

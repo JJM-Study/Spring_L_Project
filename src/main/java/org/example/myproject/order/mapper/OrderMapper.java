@@ -14,5 +14,7 @@ public interface OrderMapper {
     void insertOrderMaster(@Param("order") OrderDto order);
     void insertOrderDetail(@Param("order") OrderDetailDto orderDetail);
 
-    List<OrderListDTO> orderList();
+    List<OrderListDTO> orderList(@Param("pageSize") int pageSize, @Param("offset") int offset);
+
+    int selectOrdListCount();
 }

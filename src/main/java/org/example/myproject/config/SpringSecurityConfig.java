@@ -3,21 +3,26 @@ package org.example.myproject.config;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.service.CustomUserDetailService;
+import org.example.myproject.error.BusinessException;
+import org.example.myproject.error.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
+import java.net.URLEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -25,15 +30,26 @@ public class SpringSecurityConfig {
 
     private static final Logger logger = LogManager.getLogger(SpringSecurityConfig.class);
 
-    @Autowired private DataSource dataSource;
-    @Autowired
-    private CustomUserDetailService customUserDetailService;
+//    @Autowired private DataSource dataSource;
+//    @Autowired
+//    private CustomUserDetailService customUserDetailService;
+    private final DataSource dataSource;
+
+    private final CustomUserDetailService customUserDetailService;
+
+    SpringSecurityConfig(DataSource dataSource, CustomUserDetailService customUserDetailService) {
+        this.dataSource = dataSource;
+        this.customUserDetailService = customUserDetailService;
+    }
 
     //https://docs.spring.io/spring-security/reference/servlet/appendix/namespace/http.html#nsa-remember-me-attributes , 참고
     //https://docs.spring.io/spring-security/reference/servlet/appendix/namespace/http.html#nsa-saml2-logout-attributes -> 필터 체인 Attribute
 
     @Bean
-    public SecurityFilterChain securityException(HttpSecurity http, UserDetailsService userDetailsService) throws Exception {
+    public SecurityFilterChain securityException(HttpSecurity http, AuthenticationFailureHandler authenticationFailureHandler ) throws Exception {
+
+
+
 
         /* 로그인 */
         http.authorizeHttpRequests((requests) -> requests
@@ -59,9 +75,17 @@ public class SpringSecurityConfig {
                             logger.info("Login Success : principal : {}", authentication.getPrincipal());
                             response.sendRedirect("/home");
                         })
-                .failureHandler(((request, response, exception) -> {
-                            logger.error("Login Failed : exception : {}, request : {}, response : {}", exception.getMessage(), request.getParameter("username"), response.getStatus());
-                }))
+                        .failureHandler(authenticationFailureHandler)
+//                .failureHandler(((request, response, exception) -> {
+////                  String errorMessage = "";
+//                    logger.error("Login Failed : exception : {}, request : {}, response : {}", exception.getMessage(), request.getParameter("username"), response.getStatus());
+////                            if (exception instanceof BadCredentialsException) {
+////                                errorMessage = "아이디 혹은 비밀번호가 일치하지 않습니다.";
+////                            }
+////
+////                            response.sendRedirect("/login?error=" + URLEncoder.encode(errorMessage, "UTF-8"));
+//
+//                }))
         );
 
         http.logout(logout -> logout
