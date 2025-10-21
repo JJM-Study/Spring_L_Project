@@ -1,7 +1,6 @@
 package org.example.myproject.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.controller.AuthController;
@@ -32,7 +31,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
     @Autowired
-    ObjectMapper
+    ObjectMapper objectMapper;
 
     private static final Logger logger = LogManager.getLogger(ProductController.class);
 
@@ -78,22 +77,34 @@ public class ProductController {
 
     @GetMapping("/detail/{prodNo}")
     public String selectProductDetail(@PathVariable("prodNo") String prodNo, Model model) {
-        ProductDetailDto itemDetail = productService.selectProductDetail(prodNo);
+
+        try {
+
+            ProductDetailDto itemDetail = productService.selectProductDetail(prodNo);
 //        logger.info("imageList :" + imageList.get);
 
 //        String itemDetailJson = gson.toJson(itemDetail);
 
-        SendImageDTO sendImageDTO = productService.isMainImage(itemDetail);
+                String itemDetailJson = objectMapper.writeValueAsString(itemDetail);
+                logger.info("itemDetailJson :" + itemDetailJson);
 
-        model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
-        model.addAttribute("pageTitle", itemDetail.getProdName());
-        model.addAttribute("itemList", itemDetail);
+            SendImageDTO sendImageDTO = productService.isMainImage(itemDetail);
+
+            model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
+            model.addAttribute("pageTitle", itemDetail.getProdName());
+            model.addAttribute("itemList", itemDetail);
+            model.addAttribute("itemDetailJson", itemDetailJson);
 //        model.addAttribute("itemListJson", itemDetailJson);
-        model.addAttribute("subImages", sendImageDTO.getSubImages());
-        model.addAttribute("mainImages", sendImageDTO.getMainImage());
-
+            model.addAttribute("subImages", sendImageDTO.getSubImages());
+            model.addAttribute("mainImages", sendImageDTO.getMainImage());
 
 //        return "product/product-detail";
+
+        }
+        catch(Exception e) {
+            logger.error(ProductController.class.getSimpleName() + "예외 발생");
+        }
+
         return "layout/main-layout";
     }
 }

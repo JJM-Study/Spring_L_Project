@@ -3,6 +3,12 @@
 <%--<%@ include file="/WEB-INF/jsp/layout/main-layout.jsp" %>--%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product/product_detail.css">
 
+<%
+    System.out.println("=== JSP 디버깅 ===");
+    System.out.println("itemDetailJson: " + request.getAttribute("itemDetailJson"));
+    System.out.println("itemList: " + request.getAttribute("itemList"));
+
+%>
 
 
 <%--<main class="flex-grow-1">--%>
@@ -74,21 +80,21 @@
         </div>
 
 
-
     </section>
+
+            <input type="hidden" id="console" value='${itemDetailJson}'>
+
 <%--</main>--%>
 
 
 
 <script src="/js/cart/cart.js"></script>
 <script src="/js/product/product_detail.js" defer></script>
+<script>
+    // 콘솔 정보 출력도 모듈화 하는 것을 고민.
+    const prod = document.getElementById("console").value;
 
-
-<script type="text/javascript">
-
-   const prod = ${itemListJson};
-   console.log(prod);
+    console.log(prod);
 
 </script>
-
 <%--<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>--%>

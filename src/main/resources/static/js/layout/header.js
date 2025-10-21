@@ -1,6 +1,6 @@
 const logoutBtn = document.querySelector(".logout");
 
-logoutBtn.addEventListener("click", (event) => {
+logoutBtn?.addEventListener("click", (event) => {
     event.preventDefault();
 
     const logoutForm = document.createElement("form");
