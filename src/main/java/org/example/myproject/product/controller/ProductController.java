@@ -10,6 +10,8 @@ import org.example.myproject.product.dto.ProductDto;
 import org.example.myproject.product.dto.ProductImageDto;
 import org.example.myproject.product.dto.SendImageDTO;
 import org.example.myproject.product.service.ProductService;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Controller;
@@ -80,12 +82,19 @@ public class ProductController {
 
         try {
 
+            Safelist safelist = Safelist.basicWithImages();
+
             ProductDetailDto itemDetail = productService.selectProductDetail(prodNo);
+
+            itemDetail.setDetailDesc(Jsoup.clean(itemDetail.getDetailDesc(), safelist));
 //        logger.info("imageList :" + imageList.get);
 
 //        String itemDetailJson = gson.toJson(itemDetail);
 
-                String itemDetailJson = objectMapper.writeValueAsString(itemDetail);
+                String itemDetailJsonOrgin = objectMapper.writeValueAsString(itemDetail);
+
+                String itemDetailJson = Jsoup.clean(itemDetailJsonOrgin, safelist);
+
                 logger.info("itemDetailJson :" + itemDetailJson);
 
             SendImageDTO sendImageDTO = productService.isMainImage(itemDetail);
@@ -102,7 +111,7 @@ public class ProductController {
 
         }
         catch(Exception e) {
-            logger.error(ProductController.class.getSimpleName() + "예외 발생");
+            logger.error("Exception : " + ProductController.class.getSimpleName() + "예외 발생");
         }
 
         return "layout/main-layout";

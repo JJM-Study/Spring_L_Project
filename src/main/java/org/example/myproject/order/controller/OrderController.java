@@ -76,7 +76,7 @@ public class OrderController {
     }
 
     @PostMapping("/order_prod")
-    public ResponseEntity<Map<String, Object>> orderNow(@RequestBody OrderRequestDto request) {
+    public ResponseEntity<Map<String, Object>> orderNow(@RequestBody OrderRequestDto request) throws Exception {
         Map<String, Object> response = new HashMap<>();
         // 주문 시, 제품 번호를 읽는 것 외에도 다른 조치를 통해 멱등성 등 보장하는 방법에 대해서 고민할 것.
 
@@ -84,6 +84,13 @@ public class OrderController {
         Long prodNo = request.getProdNo();
         Integer qty = request.getQty();
         Integer price = productService.selectNowOrdProduct(prodNo).getPrice();
+
+        // 2025/10/20 추가 . 이중 인증
+        Integer totalPrice = request.getTotalPrice();
+
+        if (totalPrice != price * qty) {
+            throw new IllegalArgumentException("가격 불일치");// 비즈니스 예외로 수정 및 UI에 응답 반영할 것.
+        }
 
 //        if (price == null) {
 //            // 이번 기회에 여기에다가 전역 에러 정의해서 처리해보자.

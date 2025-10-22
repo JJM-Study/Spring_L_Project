@@ -34,7 +34,7 @@
             </div>
 
 
-                <p>가격 : "${itemList.price}"원</p>
+                <p id="js-price">가격 : ${itemList.price}원</p>
 
                 <p>원문 : </p>
             <div class="product-detail">
@@ -73,6 +73,7 @@
                 <input type="number" class="qty" value="1" min="1"/>
                 <button id="mBtn" type="button">-</button>
             </div>
+            <p>가격 : <span id="total-price">${itemList.price}</span></p>
             <div class="orderBtn">
               <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
               <button class="btn btn-primary btn-ord-now" data-prodno="${itemList.prodNo}">주문하기</button>
