@@ -25,7 +25,7 @@
     <!--    </select>-->
 
     <select id="selectProductDetail" resultMap="ProductDetailMap" parameterType="string">
-        select a.prod_no, a.prod_name, a.price, a.stock_qty, a.crt_dt, a.del_dt,
+        select a.prod_no, a.prod_name, a.price, a.stock_qty, a.crt_dt, a.del_dt, a.sales_dt,
         b.image_url, b.is_main, b.sort_order, c.detail_desc, c.notice, c.shipping_info, c.additional_info
         from product_master a
         left join product_image b on a.prod_no = b.prod_no
@@ -39,6 +39,9 @@
         <result property="prodName" column="prod_name" />
         <result property="price"    column="price" />
         <result property="stockQty" column="stock_qty" />
+
+        <result property="salesDt"    column="sales_dt" />
+
         <result property="crtDt"    column="crt_dt" />
         <result property="delDt"    column="del_dt" />
 

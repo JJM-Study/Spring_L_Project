@@ -80,6 +80,9 @@ function calculation () {
 window.addEventListener('pageshow', function(event) {
     // 페이지가 처음 로드되거나 새로고침될 때 실행
     //pd_inputQty = document.querySelector(".qty");
+
+    console.log("event.persisted : " + event.persisted);
+
     console.log("pd_inputQty :" + parseInt(pd_inputQty.value));
     console.log("Loaded 실행 확인");
     calculation();

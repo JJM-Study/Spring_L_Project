@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.controller.AuthController;
+import org.example.myproject.common.DateUtils;
 import org.example.myproject.config.Pagination;
 import org.example.myproject.product.dto.ProductDetailDto;
 import org.example.myproject.product.dto.ProductDto;
@@ -97,7 +98,11 @@ public class ProductController {
 
                 logger.info("itemDetailJson :" + itemDetailJson);
 
+            itemDetail.setSalesDtFormatted(DateUtils.formatLocalDateTime(itemDetail.getSalesDt()));
+
             SendImageDTO sendImageDTO = productService.isMainImage(itemDetail);
+
+            logger.info("itemDetail : " + itemDetail);
 
             model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
             model.addAttribute("pageTitle", itemDetail.getProdName());

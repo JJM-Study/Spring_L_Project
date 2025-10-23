@@ -11,6 +11,9 @@ public class ProductDetailDto {
     private String prodName;
     private Integer price;
     private Integer stockQty;
+
+    private LocalDateTime salesDt;
+
     private LocalDateTime crtDt;
     private LocalDateTime updDt;
     private String delYn;
@@ -20,6 +23,8 @@ public class ProductDetailDto {
     private String notice;
     private String shippingInfo;
     private String additionalInfo;
+
+    private String salesDtFormatted;
 
     private List<ProductImageDto> imageList;
 

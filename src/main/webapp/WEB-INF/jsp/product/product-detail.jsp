@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--<%@ include file="/WEB-INF/jsp/layout/main-layout.jsp" %>--%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/product/product_detail.css">
 
@@ -20,7 +21,7 @@
                              alt="${'메인 상품 이미지'}"
                              class="card-img-top"/>
                    </div>
-                   <div class="sub-container">
+                   <div class="image-sub-container">
                        <ul class="sub-list">
                            <c:forEach var="item" items="${subImages}">
                                        <li>
@@ -32,39 +33,48 @@
                        </ul>
                    </div>
             </div>
-
-
-                <p id="js-price">가격 : ${itemList.price}원</p>
-
-                <p>원문 : </p>
-            <div class="product-detail">
-              <p>상세 내용</p>
-                <c:choose>
-                    <c:when test="${not empty itemList.detailDesc}">
-                        <pre style="white-space:pre-wrap; background:#f7f7f7; padding:8px;">
-                          RAW: [<c:out value="${itemList.detailDesc}" />]
-                        </pre>
-
-                        <p>렌더링 결과:</p>
-                        <div>
-                             <p><c:out value="${itemList.detailDesc}" escapeXml="false" /></p>
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <p>상품 정보가 없습니다.</p>
-                    </c:otherwise>
-                </c:choose>
+            <div class="info-title"></div>
+            <div id="basic-info" class="info-sub-container">
+                <table>
+                  <tr>
+                    <td id="js-price">가격 : ${itemList.price}원</td>
+                  </tr>
+                  <tr>
+                    <td>판매일 : ${itemList.salesDtFormatted}</td>
+                  </tr>
+                </table>
             </div>
-            <div class="notice">
-                <p>공지</p>
-                <c:choose>
-                    <c:when test="${not empty itemList.notice}">
-                       <p>${itemList.notice}</p>
-                    </c:when>
-                    <c:otherwise>
-                       <p>판매자가 등록한 공지 사항이 없습니다.</p>
-                    </c:otherwise>
-                </c:choose>
+
+            <div class="product-detail">
+
+               <div class="info-title">
+                   <h2>상세 내용</h2>
+               </div>
+               <div id="prod-detail" class="info-sub-container">
+                   <c:choose>
+                       <c:when test="${not empty itemList.detailDesc}">
+                           <%-- <pre style="white-space:pre-wrap; background:#f7f7f7; padding:8px;">
+                             RAW: [<c:out value="${itemList.detailDesc}" />]
+                           </pre> --%>
+
+                           <div><c:out value="${itemList.detailDesc}" escapeXml="false" /></div>
+                       </c:when>
+                       <c:otherwise>
+                           <p>상품 정보가 없습니다.</p>
+                       </c:otherwise>
+                   </c:choose>
+               </div>
+               <div class="info-title"><h2>공지</h2></div>
+               <div id="notice" class="info-sub-container">
+                   <c:choose>
+                       <c:when test="${not empty itemList.notice}">
+                          <p>${itemList.notice}</p>
+                       </c:when>
+                       <c:otherwise>
+                          <p>판매자가 등록한 공지 사항이 없습니다.</p>
+                       </c:otherwise>
+                   </c:choose>
+               </div>
             </div>
         </div>
         <div class="order-container">

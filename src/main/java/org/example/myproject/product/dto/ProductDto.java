@@ -11,6 +11,8 @@ public class ProductDto {
         private Integer price;
         private Integer stockQty;
         private String status;
+        private LocalDate salesDt;
+
         private LocalDate crtDt;
         private LocalDate updDt;
         private String delYn;
