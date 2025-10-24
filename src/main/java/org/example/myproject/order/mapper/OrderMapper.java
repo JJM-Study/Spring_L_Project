@@ -17,4 +17,5 @@ public interface OrderMapper {
     List<OrderListDTO> orderList(@Param("pageSize") int pageSize, @Param("offset") int offset);
 
     int selectOrdListCount();
+
 }

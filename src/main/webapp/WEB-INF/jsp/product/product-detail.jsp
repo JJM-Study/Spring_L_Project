@@ -33,8 +33,11 @@
                        </ul>
                    </div>
             </div>
-            <div class="info-title"></div>
-            <div id="basic-info" class="info-sub-container">
+
+            <div id="basic-info-container" class="info-sub-container">
+            <div id="basic-info-header">
+                <h5>${itemList.prodName}</h5>
+            </div>
                 <table>
                   <tr>
                     <td id="js-price">가격 : ${itemList.price}원</td>
@@ -78,15 +81,17 @@
             </div>
         </div>
         <div class="order-container">
-            <div class="qtyBtn">
-                <button id="pBtn" type="button">+</button>
-                <input type="number" class="qty" value="1" min="1"/>
-                <button id="mBtn" type="button">-</button>
-            </div>
-            <p>가격 : <span id="total-price">${itemList.price}</span></p>
-            <div class="orderBtn">
-              <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
-              <button class="btn btn-primary btn-ord-now" data-prodno="${itemList.prodNo}">주문하기</button>
+            <div>
+                <div class="qtyBtn">
+                    <button id="pBtn" type="button">+</button>
+                    <input type="number" class="qty" value="1" min="1"/>
+                    <button id="mBtn" type="button">-</button>
+                </div>
+                <p>가격 : <span id="total-price">${itemList.price}</span></p>
+                <div class="orderBtn">
+                  <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
+                  <button class="btn btn-primary btn-ord-now" data-prodno="${itemList.prodNo}">주문하기</button>
+               </div>
            </div>
         </div>
 
@@ -103,9 +108,17 @@
 <script src="/js/product/product_detail.js" defer></script>
 <script>
     // 콘솔 정보 출력도 모듈화 하는 것을 고민.
-    const prod = document.getElementById("console").value;
 
-    console.log(prod);
+    function checkLog() {
+        const prod = document.getElementById("console").value;
+
+        console.log("===== 상품의 JSON 데이터 =====");
+        console.log(prod);
+        console.log("======");
+    }
+
+    console.log("상품의 세부 JSON 정보 확인을 원할 시 prod() 입력.");
+    window.prod = checkLog;
 
 </script>
 <%--<%@ include file="/WEB-INF/jsp/layout/footer.jsp" %>--%>

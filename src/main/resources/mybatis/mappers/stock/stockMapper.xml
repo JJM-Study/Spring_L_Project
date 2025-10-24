@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.myproject.stock.mapper.StockMapper">
+    <select id="selectStockQty" resultType="org.example.myproject.stock.dto.StockQtyDto">
+        SELECT
+        prod_no,
+        prod_name,
+        stock_qty
+        FROM
+        product_master
+        WHERE
+        prod_no IN (1, 2, 3, 4, 5)
+        AND
+        stock_qty < 100
+
+        FOR UPDATE;
+    </select>
+</mapper>

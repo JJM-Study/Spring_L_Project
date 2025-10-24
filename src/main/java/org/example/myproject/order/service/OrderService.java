@@ -72,6 +72,9 @@ public class OrderService {
             throw new BusinessException(ErrorCode.REQUEST_LOGIN);
         }
 
+
+
+
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserDetails) {
             userId = ((UserDetails)authentication.getPrincipal()).getUsername();
@@ -86,6 +89,7 @@ public class OrderService {
 
         orderMapper.insertOrderMaster(orderMaster);
 
+
         for (OrderDetailDto details : orderDetails) {
             details.setOrderNo(orderNo);
             orderMapper.insertOrderDetail(details);
@@ -98,6 +102,7 @@ public class OrderService {
 
         return orderNo;
     }
+
 
     public List<OrderListDTO> orderList(int pageSize, int offset) {
         return orderMapper.orderList(pageSize, offset);
