@@ -13,6 +13,8 @@ import org.example.myproject.order.mapper.OrderSequenceMapper;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
+import org.example.myproject.stock.dto.StockQtyDto;
+import org.example.myproject.stock.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +22,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -39,6 +44,9 @@ public class OrderService {
     @Autowired
     OrderMapper orderMapper;
 
+    @Autowired
+    StockService stockService;
+
     private static final Logger logger = LogManager.getLogger(OrderService.class);
 
 
@@ -48,6 +56,35 @@ public class OrderService {
     @Transactional
 //    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails) {
     public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto) {
+
+        Map<Long, Integer> requestQuantities = orderDetails.stream()
+                .collect(Collectors.toMap(
+                        OrderDetailDto::getProdNo,
+                        OrderDetailDto::getQty
+                ));
+
+// DB 조회에 필요한 상품 번호 리스트
+        List<Long> prodNos = new ArrayList<>(requestQuantities.keySet());
+
+        List<StockQtyDto> stock = stockService.selectStockQty(prodNos);
+
+        List<String> notEnoughProdNames = stock.stream()
+                .filter(dto -> {
+                    // 해당 상품의 요청 수량을 Map에서 가져옵니다.
+                    Integer requestedQty = requestQuantities.get(dto.getProdNo());
+
+                    // 💡 핵심 비교: 현재 재고 수량 < 요청 수량
+                    return dto.getStockQty() < requestedQty;
+                })
+                .map(StockQtyDto::getProdNames)
+                .toList();
+
+        if (!notEnoughProdNames.isEmpty()) {
+            // 3. 부족한 상품 이름들을 메시지에 담아 예외 발생
+            String productNames = String.join(", ", notEnoughProdNames);
+
+            throw new BusinessException(ErrorCode.STOCK_NOT_ENOUGH_DETAIL, productNames);
+        }
 
         if (orderMaster == null) {
 //            throw new IllegalArgumentException("주문 상품이 비어 있습니다.");

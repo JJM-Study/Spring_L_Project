@@ -30,6 +30,15 @@
         LEFT JOIN product_master b
         ON a.prod_no = b.prod_no
         WHERE (a.del_yn = 0 OR a.del_yn IS NULL)
+<!--        AND user_id = #{userId}-->
+
+        <if test="userId != null">
+            AND a.user_id = #{userId}
+        </if>
+        <if test="userId == null">
+            AND a.user_id IS NULL
+        </if>
+
         <choose>
             <when test="orderColumn == 'prod_name'">
                 ORDER BY b.prod_no ${orderType}
@@ -41,6 +50,10 @@
                 ORDER BY a.cart_no ${orderType}
             </otherwise>
         </choose>
+    </select>
+
+    <select id="chkCartItem" resultType="org.example.myproject.cart.dto.ChkCartItemDto">
+        select cart_no, user_id, prod_no from order_cart where cart_no = ${cartNo};
     </select>
 
     <!--    <when test="orderColumn == 'prodNo'">-->

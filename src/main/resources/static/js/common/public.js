@@ -1,5 +1,5 @@
-const csrfToken = document.querySelector('meta[name=_csrf]').getAttribute('content');
-
+//const csrfToken = document.querySelector('meta[name=_csrf]').getAttribute('content');
+const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 
 // ID 유효성 검사 : 0 성공, 1 길이 문제, 2 특수문자 문제
 

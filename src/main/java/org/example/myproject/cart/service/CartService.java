@@ -3,6 +3,7 @@ package org.example.myproject.cart.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.controller.AuthController;
+import org.example.myproject.cart.dto.ChkCartItemDto;
 import org.example.myproject.cart.mapper.CartMapper;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.order.dto.OrderDetailDto;
@@ -35,7 +36,7 @@ public class CartService {
         this.cartMapper = cartMapper;
     }
 
-    public List<CartDto> selectOrderCartList(String orderColumn, String orderType) {
+    public List<CartDto> selectOrderCartList(String orderColumn, String orderType, String userId) {
         List<String> allowedColumns = Arrays.asList("cart_no", "prod_name", "qty"); // 악의적 쿼리 삽입 방지 . 화이트리스트
         List<String> allowedType = Arrays.asList("asc", "desc");
 
@@ -46,7 +47,7 @@ public class CartService {
             orderType = "asc";
         }
 
-        return cartMapper.selectOrderCartList(orderColumn, orderType);
+        return cartMapper.selectOrderCartList(orderColumn, orderType, userId);
     }
 
     public int addToCart(CartDto cartDto) {
@@ -104,6 +105,14 @@ public class CartService {
             return result;
         }
 
+    }
+
+    public ChkCartItemDto chkCartItem(Long cartNo) {
+        return cartMapper.chkCartItem(cartNo);
+    }
+
+    public void deleteCart(Long cartNo){
+        cartMapper.deleteCart(cartNo);
     }
 
 }

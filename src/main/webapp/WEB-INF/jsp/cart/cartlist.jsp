@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
 <%--<main class="flex-grow-1">--%>
 <div class="container mt-4">
@@ -49,6 +50,9 @@
                     </c:if>
                 </a>
             </th>
+            <th>
+               삭제
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -60,6 +64,7 @@
                         <td>${cart.cartNo}</td>
                         <td>${cart.prodName}</td>
                         <td>${cart.qty}</td>
+                        <td><button class="del-cart" onClick="delCart(this.value)" value="${cart.cartNo}"><i class="bi bi-trash"></i></button></td>
                     </tr>
                 </c:forEach>
             </c:when>
@@ -81,6 +86,24 @@
 <script>
     let currentOrderColumn = "${orderColumn}";
     let currentOrderType = "${orderType}";
+
+
+    async function delCart(cartNo) {
+    try {
+        const response = await fetch("/cart/delete?cartNo=" + cartNo, {
+            method : "POST",
+            headers : {
+                'X-CSRF-TOKEN': csrfToken
+            }
+        });
+
+        if(response.ok) {
+            alert("삭제 되었습니다.");
+        }
+     } catch(error) {
+        alert("에러 발생 : " + error);
+        }
+    }
 
     function toggleOrderType(column) {
         let newOrderType ="asc";

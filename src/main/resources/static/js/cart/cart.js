@@ -20,7 +20,7 @@ const inputQty = document.querySelector(".qty");
                }).then((res) => {
                        return res.json();
                }).then((data) => {
-                       debugger;
+//                       debugger;
                        if (data.success) {
                            if (confirm("담기 성공했습니다. 장바구니로 이동하시겠습니까?")) {
                                window.location.href = "/cart/cartlist";
