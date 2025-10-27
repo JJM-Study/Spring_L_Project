@@ -72,13 +72,17 @@ public class CartController {
     @ResponseBody
     @RequestMapping("/add")
 //    public ResponseEntity<Map<String, Object>> addToOrderCart(CartDto cartDto) {
-    //public ResponseEntity<Map<String, Object>> addToOrderCart(@RequestBody CartDto cartDto) {
-    public ResponseEntity<Map<String, Object>> addToOrderCart(@RequestBody CartDto cartDto, Authentication authentication) {
+    public ResponseEntity<Map<String, Object>> addToOrderCart(@RequestBody CartDto cartDto) {
+//    public ResponseEntity<Map<String, Object>> addToOrderCart(@RequestBody CartDto cartDto, Authentication authentication) {
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 
         logger.info("cartDto.getProdNo :" + cartDto.getProdNo());
         logger.info("cartDto.getQty :" + cartDto.getQty());
 
-        Object principle = null;
+        Object principle = authentication.getPrincipal();
 
         if (authentication != null) {
             authentication.getPrincipal();
@@ -112,11 +116,11 @@ public class CartController {
 
     @ResponseBody
     @PostMapping("/delete")
-    public ResponseEntity<Map<String, Object>> delCart(@RequestParam("cartNo") Long cartNo, Authentication authentication) {
+    public ResponseEntity<Map<String, Object>> delCart(@RequestParam("cartNo") Long cartNo) {
         ChkCartItemDto chkCartItemDto = cartService.chkCartItem(cartNo);
 
         Map<String, Object> response = new HashMap<>();
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Object principal = authentication.getPrincipal();
 

@@ -64,13 +64,13 @@
                         <td>${cart.cartNo}</td>
                         <td>${cart.prodName}</td>
                         <td>${cart.qty}</td>
-                        <td><button class="del-cart" onClick="delCart(this.value)" value="${cart.cartNo}"><i class="bi bi-trash"></i></button></td>
+                        <td><button id="del-cart-${cart.cartNo}" onClick="delCart(this.value)" value="${cart.cartNo}"><i class="bi bi-trash"></i></button></td>
                     </tr>
                 </c:forEach>
             </c:when>
             <c:otherwise>
                 <tr>
-                    <td colspan="4" class="text-center">비어있습니다</td>
+                    <td colspan="5" class="text-center">비어있습니다</td>
                 </tr>
             </c:otherwise>
         </c:choose>
@@ -98,7 +98,32 @@
         });
 
         if(response.ok) {
-            alert("삭제 되었습니다.");
+            const delButton = document.getElementById("del-cart-" + cartNo);
+            if (delButton) {
+            console.log("tbRow" + delButton);
+            const delRow = delButton.closest('tr');
+                if(delRow) {
+                    const cellCount = delRow.children.length;
+
+                    delRow.innerHTML = '';
+
+                    const msgCell = document.createElement('td');
+
+                    msgCell.setAttribute('colspan', cellCount);
+
+                    msgCell.innerHTML = '삭제 처리되었습니다.';
+                    msgCell.style.textAlign = 'center';
+                    msgCell.style.color = 'gray';
+
+                    delRow.appendChild(msgCell);
+
+                // alert("삭제 되었습니다.");
+                } else {
+                    console.log("삭제 열을 찾을 수 없습니다.");
+                }
+            } else {
+                console.log("삭제 버튼을 찾을 수 없습니다.");
+            }
         }
      } catch(error) {
         alert("에러 발생 : " + error);
