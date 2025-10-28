@@ -15,6 +15,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +51,16 @@ public class ProductController {
     //public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "10") int pageSize, Model model) {
     public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(required = false) String title, Model model) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Object principle = authentication.getPrincipal();
+
+        String userId = null;
+
+        if (principle instanceof UserDetails) {
+            userId = ((UserDetails) principle).getUsername();
+        }
+
 //        int listCnt = productService.selectProductCount();
         int listCnt = productService.selectProductCount(title);
         logger.info("search-title :" + title);
@@ -55,7 +69,8 @@ public class ProductController {
 
         logger.info("listCnt : " + listCnt);
         logger.info("cPage :" + pageSize + " offset : " +  pagination.getOffset());
-        List<ProductDto> productList = productService.selectProductList(pageSize, pagination.getOffset(), title);
+        //List<ProductDto> productList = productService.selectProductList(pageSize, pagination.getOffset(), title);
+        List<ProductDto> productList = productService.selectProductList(pageSize, pagination.getOffset(), title, userId);
 
         logger.info("productList : " + productList.size());
         logger.info("EndPage : " + pagination.getEndPage() + "StartPage : " + pagination.getStartPage());

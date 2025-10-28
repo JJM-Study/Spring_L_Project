@@ -20,4 +20,6 @@ public class ProductDto {
 
         private String imageUrl;
 
+        private Boolean isInCart;
+
 }

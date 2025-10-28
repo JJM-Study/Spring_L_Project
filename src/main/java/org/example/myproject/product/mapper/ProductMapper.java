@@ -10,7 +10,8 @@ import java.util.List;
 
 @Mapper
 public interface ProductMapper {
-    List<ProductDto> selectProductList(int pageSize, int offset, String title);
+    //List<ProductDto> selectProductList(int pageSize, int offset, String title);
+    List<ProductDto> selectProductList(int pageSize, int offset, String title, String userId);
 
     ProductDetailDto selectProductDetail(String prodNo);
 
