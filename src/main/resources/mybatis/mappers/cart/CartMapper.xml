@@ -62,4 +62,15 @@
     <!--        <if test="orderType == 'desc'"> DESC </if>-->
     <!--    </when> SQL 인젝션 방지 차 고려. -->
 
+    <select id="isInCart" resultType="boolean">
+        SELECT COUNT(*) FROM order_cart
+        <where> AND prod_no = #{prodNo} <if test="userId != null">
+            AND user_id = #{userId}
+        </if>
+            <if test="userId == null">
+                AND user_id IS NULL
+            </if>
+        </where>
+    </select>
+
 </mapper>

@@ -89,7 +89,14 @@
                 </div>
                 <p>가격 : <span id="total-price">${itemList.price}</span></p>
                 <div class="orderBtn">
-                  <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
+                  <c:choose>
+                    <c:when test="${isInCart == false}">
+                        <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button class="btn btn-primary in-cart-btn" onclick="location.href='/cart/cartlist'">장바구니에 있음</button>
+                    </c:otherwise>
+                  </c:choose>
                   <button class="btn btn-primary btn-ord-now" data-prodno="${itemList.prodNo}">주문하기</button>
                </div>
            </div>

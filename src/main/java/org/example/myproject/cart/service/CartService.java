@@ -115,6 +115,11 @@ public class CartService {
         cartMapper.deleteCart(cartNo);
     }
 
+    public boolean isInCart(String prodNo, String userId)
+    {
+        return cartMapper.isInCart(prodNo, userId);
+    }
+
 }
 //
 //    public OrderRequestDto convertCartNosToOrderRequest(List<Long> cartNos) {

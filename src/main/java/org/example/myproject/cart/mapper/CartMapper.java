@@ -1,9 +1,11 @@
 package org.example.myproject.cart.mapper;
 
+import org.eclipse.tags.shaded.org.apache.xpath.operations.Bool;
 import org.example.myproject.cart.dto.CartDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.example.myproject.cart.dto.ChkCartItemDto;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -18,5 +20,7 @@ public interface CartMapper {
     List<CartDto> selectOrderCartItemsById(@Param("cartNos") List<Long> cartNos);
 
     ChkCartItemDto chkCartItem(Long cartNo);
+
+    boolean isInCart(@Param("prodNo") String prodNo, @Param("userId") String userId);
 
 }

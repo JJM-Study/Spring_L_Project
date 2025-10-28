@@ -22,7 +22,11 @@ public enum ErrorCode {
     // 인증
     REQUEST_LOGIN("A001", "로그인이 필요합니다. (커스텀 Business 예외)", HttpStatus.UNAUTHORIZED),
 
-    UNAUTHORIZED_ACCESS("A002", "해당 리소스에 접근할 권한이 없습니다.", HttpStatus.FORBIDDEN);
+    UNAUTHORIZED_ACCESS("A002", "해당 리소스에 접근할 권한이 없습니다.", HttpStatus.FORBIDDEN),
+
+
+    // 카트
+    IS_IN_CART("C001", "이미 장바구니에 있습니다.", HttpStatus.BAD_REQUEST);
 
     private final String code;
     private final String message;

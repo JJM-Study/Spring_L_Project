@@ -96,6 +96,11 @@ public class CartController {
 //            throw new BusinessException(ErrorCode.REQUEST_LOGIN);
 //        }
 
+        boolean isInCart = cartService.isInCart(cartDto.getProdNo().toString(), userId);
+        if (isInCart) {
+            throw new BusinessException(ErrorCode.IS_IN_CART);
+        }
+
 //        Integer qty = cartDto.getQty() == null || cartDto.getQty() <= 0 ? 1 : cartDto.getQty();
         if (cartDto.getQty() == null || cartDto.getQty() <= 0) {
             cartDto.setQty(1);

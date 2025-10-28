@@ -26,14 +26,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<Map<String, Object>> handleBusinessException(BusinessException e) {
 
+        ErrorCode errorCode = e.getErrorCode();
+
         Map<String, Object> body = new HashMap<>();
 
-        body.put("code", e.getErrorCode());
-        body.put("message", e.getMessage());
+        body.put("code", errorCode.getCode());
+        body.put("message", errorCode.getMessage());
+        
+//        body.put("code", e.getErrorCode());
+//        body.put("message", e.getMessage());
 
+        body.put("status", errorCode.getStatus().value());
 
         return ResponseEntity
-                .status(e.getErrorCode().getStatus())
+                //.status(e.getErrorCode().getStatus())
+                .status(errorCode.getStatus())
                 .body(body);
     }
 }

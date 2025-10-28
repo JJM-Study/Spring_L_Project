@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.controller.AuthController;
+import org.example.myproject.cart.service.CartService;
 import org.example.myproject.common.DateUtils;
 import org.example.myproject.config.Pagination;
 import org.example.myproject.product.dto.ProductDetailDto;
@@ -37,6 +38,10 @@ public class ProductController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    CartService cartService;
+
     @Autowired
     ObjectMapper objectMapper;
 
@@ -119,6 +124,21 @@ public class ProductController {
 
             logger.info("itemDetail : " + itemDetail);
 
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            // 익명 유저는 쿠키 식별을 통해서 인증하는 관련 메소드를 추가할 필요 있음.
+            String userId = null;
+
+            Object principal = authentication.getPrincipal();
+
+            if(principal instanceof UserDetails) {
+                userId = ((UserDetails) principal).getUsername();
+            }
+
+            boolean isInCart = cartService.isInCart(prodNo, userId);
+
+            model.addAttribute("isInCart", isInCart);
+
             model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-detail.jsp");
             model.addAttribute("pageTitle", itemDetail.getProdName());
             model.addAttribute("itemList", itemDetail);
@@ -127,11 +147,12 @@ public class ProductController {
             model.addAttribute("subImages", sendImageDTO.getSubImages());
             model.addAttribute("mainImages", sendImageDTO.getMainImage());
 
+            logger.info("isInCart :" + isInCart);
 //        return "product/product-detail";
 
         }
         catch(Exception e) {
-            logger.error("Exception : " + ProductController.class.getSimpleName() + "예외 발생");
+            logger.error("Exception : " + ProductController.class.getSimpleName() + "예외 발생" + e.getMessage());
         }
 
         return "layout/main-layout";

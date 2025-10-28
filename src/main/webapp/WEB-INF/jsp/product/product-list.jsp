@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/product/product-list.css">
+
 
 <%--<main class="flex-grow-1">--%>
 <script src="/js/product/product.js" defer></script>
@@ -45,8 +47,15 @@
             </a>
             </h5>
             <p class="card-text">${item.price}원</p>
-            <button class="btn btn-primary add-to-cart-btn" data-prodno="${item.prodNo}">장바구니 담기</button>
-            <input type="hidden" class="qty" value="1" />
+            <c:choose>
+                <c:when test="${item.isInCart==false}">
+                    <button class="btn btn-primary add-to-cart-btn" data-prodno="${item.prodNo}">장바구니 담기</button>
+                <input type="hidden" class="qty" value="1" />
+                </c:when>
+                <c:otherwise>
+                    <button class="btn btn-primary in-cart-btn" data-prodno="${item.prodNo}" onclick="location.href='/cart/cartlist'">장바구니에 있음</button>
+                </c:otherwise>
+            </c:choose>
           </div>
         </div>
       </div>
