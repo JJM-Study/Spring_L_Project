@@ -18,6 +18,9 @@
             <button type="button" id="sign-up">회원가입</button>
             <input type="hidden" name="_csrf" value="${_csrf.token}">
             <p>${errorMessage}</p>
+
+            <button type="button" class="btn" onclick="location.href='/home'">로그인 없이 이용하기</button>
+
         </form>
     </body>
 

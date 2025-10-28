@@ -1,12 +1,15 @@
 package org.example.myproject.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.controller.AuthController;
 import org.example.myproject.cart.service.CartService;
 import org.example.myproject.common.DateUtils;
 import org.example.myproject.config.Pagination;
+import org.example.myproject.error.BusinessException;
+import org.example.myproject.error.ErrorCode;
 import org.example.myproject.product.dto.ProductDetailDto;
 import org.example.myproject.product.dto.ProductDto;
 import org.example.myproject.product.dto.ProductImageDto;
@@ -99,7 +102,8 @@ public class ProductController {
     }
 
     @GetMapping("/detail/{prodNo}")
-    public String selectProductDetail(@PathVariable("prodNo") String prodNo, Model model) {
+    //public String selectProductDetail(@PathVariable("prodNo") String prodNo, Model model) {
+    public String selectProductDetail(@PathVariable("prodNo") String prodNo, Model model, HttpServletRequest request) {
 
         try {
 
@@ -133,6 +137,11 @@ public class ProductController {
 
             if(principal instanceof UserDetails) {
                 userId = ((UserDetails) principal).getUsername();
+            } else {
+                userId = (String) request.getAttribute("anonymous_user_id");
+                if (userId == null) {
+                    throw new BusinessException(ErrorCode.ANONYMOUS_NOT_FOUND);
+                }
             }
 
             boolean isInCart = cartService.isInCart(prodNo, userId);

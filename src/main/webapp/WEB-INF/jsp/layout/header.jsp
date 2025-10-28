@@ -22,7 +22,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <div class="container-fluid">
-            <a class="navbar-brand" href="/">ShopLegacy</a>
+            <a class="navbar-brand" href="/home">ShopLegacy</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNav" aria-controls="navbarNav"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -31,7 +31,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">홈</a>
+                        <a class="nav-link active" aria-current="page" href="/home">홈</a>
                     </li>
                      <li class="nav-item">
                         <a class="nav-link" href="/cart/cartlist">장바구니</a>
@@ -40,7 +40,7 @@
                         <a class="nav-link" href="/product/products">상품</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="/">메뉴</a>
+                        <a class="nav-link" href="/order/ordlist">주문내역</a>
                      </li>
                      <li class="nav-item">
                          <ul>

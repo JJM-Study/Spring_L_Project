@@ -10,7 +10,10 @@
         </li>
         <li>
             <sec:authorize access="isAuthenticated()" >
-                   <p>접속 유저 : <sec:authentication property="principal.username" /></p>
+               <p>접속 유저 : <sec:authentication property="principal.username" /></p>
+            </sec:authorize>
+            <sec:authorize access="isAnonymous()" >
+               <p>현재 비로그인 상태입니다.</p>
             </sec:authorize>
         </li>
     </ul>

@@ -24,6 +24,7 @@ public enum ErrorCode {
 
     UNAUTHORIZED_ACCESS("A002", "해당 리소스에 접근할 권한이 없습니다.", HttpStatus.FORBIDDEN),
 
+    ANONYMOUS_NOT_FOUND("A003", "익명 사용자를 찾을 수 없습니다.", HttpStatus.UNAUTHORIZED),
 
     // 카트
     IS_IN_CART("C001", "이미 장바구니에 있습니다.", HttpStatus.BAD_REQUEST);
