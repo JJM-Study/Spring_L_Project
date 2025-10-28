@@ -13,6 +13,15 @@ public class WebConfig {
         FilterRegistrationBean<XssFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new XssFilter());
         registrationBean.addUrlPatterns("/product/detail/*");
+        registrationBean.setOrder(2);
+        return registrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<AnonymousIdFilter> anonymousIdFilter() {
+        FilterRegistrationBean<AnonymousIdFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new AnonymousIdFilter());
+        registrationBean.addUrlPatterns("/*");
         registrationBean.setOrder(1);
         return registrationBean;
     }
