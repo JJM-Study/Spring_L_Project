@@ -49,10 +49,9 @@ public class AuthService {
 
             return getIdattribute.toString();
 
-        } else if (authentication instanceof UserDetails) {
+        } else if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
-            return userDetails.toString();
+            return userDetails.getUsername();
         } else {
             throw new BusinessException(ErrorCode.AUTHENTICATION_ERROR);
         }
