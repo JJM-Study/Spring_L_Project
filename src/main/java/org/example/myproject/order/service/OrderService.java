@@ -1,8 +1,11 @@
 package org.example.myproject.order.service;
 
 import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.myproject.auth.mapper.AuthMapper;
+import org.example.myproject.auth.service.AuthService;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.mapper.CartMapper;
 import org.example.myproject.error.BusinessException;
@@ -45,6 +48,9 @@ public class OrderService {
     OrderMapper orderMapper;
 
     @Autowired
+    AuthService authService;
+
+    @Autowired
     StockService stockService;
 
     private static final Logger logger = LogManager.getLogger(OrderService.class);
@@ -55,7 +61,7 @@ public class OrderService {
     // 2. 지금 보니 orderMaster 파라미터는 불필요하다. 장바구니가 안정화 되면, 제거하는 방향으로 리펙토링.
     @Transactional
 //    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails) {
-    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto) {
+    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto, HttpServletRequest request) {
 
         Map<Long, Integer> requestQuantities = orderDetails.stream()
                 .collect(Collectors.toMap(
@@ -98,27 +104,27 @@ public class OrderService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        String userId;
+        String userId = authService.getAuthenticUserId(request);
 
-        if (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof UserDetails)) {
-            logger.info("authentication: " + authentication);
-            logger.info("!authentication.isAuthenticated() : " + !authentication.isAuthenticated());
-            logger.info("!(authentication instanceof UserDetails) " + !(authentication instanceof UserDetails));
-
-            //throw new RuntimeException("로그인 필요");
-            throw new BusinessException(ErrorCode.REQUEST_LOGIN);
-        }
-
-
-
-
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            userId = ((UserDetails)authentication.getPrincipal()).getUsername();
-            logger.info("userId :" + userId);
-        } else {
-            throw new RuntimeException("사용자 정보 확인 불가.");
-        }
+//        if (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof UserDetails)) {
+//            logger.info("authentication: " + authentication);
+//            logger.info("!authentication.isAuthenticated() : " + !authentication.isAuthenticated());
+//            logger.info("!(authentication instanceof UserDetails) " + !(authentication instanceof UserDetails));
+//
+//            //throw new RuntimeException("로그인 필요");
+//            throw new BusinessException(ErrorCode.REQUEST_LOGIN);
+//        }
+//
+//
+//
+//
+//        Object principal = authentication.getPrincipal();
+//        if (principal instanceof UserDetails) {
+//            userId = ((UserDetails)authentication.getPrincipal()).getUsername();
+//            logger.info("userId :" + userId);
+//        } else {
+//            throw new RuntimeException("사용자 정보 확인 불가.");
+//        }
 
         orderMaster.setUserId(userId);
         orderMaster.setOrderNo(orderNo);

@@ -1,7 +1,9 @@
 package org.example.myproject.order.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.myproject.auth.service.AuthService;
 import org.example.myproject.auth.service.CustomUserDetailService;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.service.CartService;
@@ -39,9 +41,12 @@ public class OrderController {
     @Autowired
     CartService cartService;
 
+    @Autowired
+    AuthService authService;
+
     // 바로 주문 받기용임.
     @PostMapping("/from-cart")
-    public ResponseEntity<Map<String, Object>> orderFromCart(@RequestBody List<Long> cartNos) {
+    public ResponseEntity<Map<String, Object>> orderFromCart(@RequestBody List<Long> cartNos, HttpServletRequest request) {
         Map<String, Object> response = new HashMap<>();
         try {
 
@@ -54,7 +59,7 @@ public class OrderController {
             List<OrderDetailDto> orderDetails = (List<OrderDetailDto>) result.get("orderDetails");
 
             // service 추가
-            orderService.createOrder(order, orderDetails, cartDto);
+            orderService.createOrder(order, orderDetails, cartDto, request);
 
             response.put("success", true);
             response.put("message", "주문 성공 (결제 생략)");
@@ -76,7 +81,7 @@ public class OrderController {
     }
 
     @PostMapping("/order_prod")
-    public ResponseEntity<Map<String, Object>> orderNow(@RequestBody OrderRequestDto request) throws Exception {
+    public ResponseEntity<Map<String, Object>> orderNow(@RequestBody OrderRequestDto request, HttpServletRequest httpServletRequest) throws Exception {
         Map<String, Object> response = new HashMap<>();
         // 주문 시, 제품 번호를 읽는 것 외에도 다른 조치를 통해 멱등성 등 보장하는 방법에 대해서 고민할 것.
 
@@ -111,7 +116,7 @@ public class OrderController {
         // 지금 보니 createOrder 메소드의 order 파라미터는 불필요하다. 장바구니가 안정화 되면, 제거하는 방향으로 리펙토링.
         // 지금은 order.setAmount(qty); 정도만 넣어서 일단 넘기는 식으로 하자.
         //List.of로 감싸는 걸로...
-        String orderId = orderService.createOrder(order, List.of(orderDetail), Collections.emptyList());
+        String orderId = orderService.createOrder(order, List.of(orderDetail), Collections.emptyList(), httpServletRequest);
 
         logger.info("orderId" + orderId);
         //  success, message 등 키-값을 모듈 형태로 관리하는 방법은 없는 지 나중에 고민.

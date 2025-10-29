@@ -26,6 +26,8 @@ public enum ErrorCode {
 
     ANONYMOUS_NOT_FOUND("A003", "익명 사용자를 찾을 수 없습니다.", HttpStatus.UNAUTHORIZED),
 
+    AUTHENTICATION_ERROR("A004", "로그인 정보나 세션 정보가 유효하지 않습니다.", HttpStatus.UNAUTHORIZED),
+
     // 카트
     IS_IN_CART("C001", "이미 장바구니에 있습니다.", HttpStatus.BAD_REQUEST);
 

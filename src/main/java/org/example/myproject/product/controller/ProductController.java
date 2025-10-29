@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.controller.AuthController;
+import org.example.myproject.auth.service.AuthService;
 import org.example.myproject.cart.service.CartService;
 import org.example.myproject.common.DateUtils;
 import org.example.myproject.config.Pagination;
@@ -43,6 +44,9 @@ public class ProductController {
     ProductService productService;
 
     @Autowired
+    AuthService authService;
+
+    @Autowired
     CartService cartService;
 
     @Autowired
@@ -57,17 +61,20 @@ public class ProductController {
     // pPage = 현재 페이지 , pCount = 페이지 갯수.
     @GetMapping("/products")
     //public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "10") int pageSize, Model model) {
-    public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(required = false) String title, Model model) {
+    public String selectProductList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "10") int pageSize, @RequestParam(required = false) String title, Model model, HttpServletRequest request) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        Object principle = authentication.getPrincipal();
+//
+//        String userId = null;
+//
+//        if (principle instanceof UserDetails) {
+//            userId = ((UserDetails) principle).getUsername();
+//        }
 
-        Object principle = authentication.getPrincipal();
+        String userId = authService.getAuthenticUserId(request);
 
-        String userId = null;
-
-        if (principle instanceof UserDetails) {
-            userId = ((UserDetails) principle).getUsername();
-        }
 
 //        int listCnt = productService.selectProductCount();
         int listCnt = productService.selectProductCount(title);
@@ -128,21 +135,24 @@ public class ProductController {
 
             logger.info("itemDetail : " + itemDetail);
 
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//            // 익명 유저는 쿠키 식별을 통해서 인증하는 관련 메소드를 추가할 필요 있음.
+//            String userId = null;
+//
+//            Object principal = authentication.getPrincipal();
+//
+//            if(principal instanceof UserDetails) {
+//                userId = ((UserDetails) principal).getUsername();
+//            } else {
+//                userId = (String) request.getAttribute("anonymous_user_id");
+//                if (userId == null) {
+//                    throw new BusinessException(ErrorCode.ANONYMOUS_NOT_FOUND);
+//                }
+//            }
 
-            // 익명 유저는 쿠키 식별을 통해서 인증하는 관련 메소드를 추가할 필요 있음.
-            String userId = null;
+            String userId = authService.getAuthenticUserId(request);
 
-            Object principal = authentication.getPrincipal();
-
-            if(principal instanceof UserDetails) {
-                userId = ((UserDetails) principal).getUsername();
-            } else {
-                userId = (String) request.getAttribute("anonymous_user_id");
-                if (userId == null) {
-                    throw new BusinessException(ErrorCode.ANONYMOUS_NOT_FOUND);
-                }
-            }
 
             boolean isInCart = cartService.isInCart(prodNo, userId);
 

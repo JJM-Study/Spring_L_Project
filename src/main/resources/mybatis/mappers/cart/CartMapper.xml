@@ -10,7 +10,7 @@
     </insert>
 
     <delete id="deleteCart">
-        DELETE FROM order_cart where cart_no = ${cartNo}
+        DELETE FROM order_cart where cart_no = #{cartNo}
     </delete>
 
     <select id="selectOrderCartItemsById" resultType="org.example.myproject.cart.dto.CartDto">

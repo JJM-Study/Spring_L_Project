@@ -125,6 +125,24 @@
                 console.log("삭제 버튼을 찾을 수 없습니다.");
             }
         }
+
+   else {
+
+            // 에러 메세지 처리 모듈화 고민.
+
+                   const errorData = await response.json();
+
+                   let errorMessage = "삭제 중 알 수 없는 오류가 발생했습니다.";
+
+                   if (errorData && errorData.message) {
+                       errorMessage = errorData.message;
+                   } else if (response.statusText) {
+                       errorMessage = `오류 발생: ${response.status} ${response.statusText}`;
+                   }
+
+                   alert(errorMessage);
+               }
+
      } catch(error) {
         alert("에러 발생 : " + error);
         }
