@@ -24,7 +24,7 @@
     <select id="selectStockQty" resultType="org.example.myproject.stock.dto.StockQtyDto">
         SELECT
         prod_no,
-        prod_name AS prodNames,  stock_qty
+        prod_name AS prodNames, stock_qty
         FROM
         product_master
         WHERE

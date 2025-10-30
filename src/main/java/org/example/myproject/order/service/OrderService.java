@@ -147,12 +147,14 @@ public class OrderService {
     }
 
 
-    public List<OrderListDTO> orderList(int pageSize, int offset) {
-        return orderMapper.orderList(pageSize, offset);
+    //public List<OrderListDTO> orderList(int pageSize, int offset) {
+    public List<OrderListDTO> orderList(int pageSize, int offset, String userId) {
+        //return orderMapper.orderList(pageSize, offset);
+        return orderMapper.orderList(pageSize, offset, userId);
     }
 
-    public int selectOrdListCount() {
-        return orderMapper.selectOrdListCount();
+    public int selectOrdListCount(String userId) {
+        return orderMapper.selectOrdListCount(userId);
     };
 
 }

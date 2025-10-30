@@ -9,6 +9,9 @@ import java.util.List;
 public class ProductDetailDto {
     private Long prodNo;
     private String prodName;
+
+    private String sellerId;
+
     private Integer price;
     private Integer stockQty;
 

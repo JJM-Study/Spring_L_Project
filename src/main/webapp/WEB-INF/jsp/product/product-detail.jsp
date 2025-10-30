@@ -45,6 +45,9 @@
                   <tr>
                     <td>판매일 : ${itemList.salesDtFormatted}</td>
                   </tr>
+                  <tr>
+                    <td>판매자 : ${itemList.sellerId}</td>
+                  </tr>
                 </table>
             </div>
 

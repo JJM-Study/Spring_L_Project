@@ -8,6 +8,9 @@ import java.time.LocalDate;
 public class ProductDto {
         private Long prodNo;
         private String prodName;
+
+        private String sellerId;
+
         private Integer price;
         private Integer stockQty;
         private String status;

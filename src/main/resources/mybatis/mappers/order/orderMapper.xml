@@ -24,7 +24,9 @@
         select
         a.order_no as order_no,
         a.order_date as order_date,
+<!--        DATE_FORMAT(a.order_date, '%Y-%m-%d %H:%i:%s') as order_dt_formatted,-->
         c.prod_name as prod_name,
+        a.user_id as user_id,
         row_number() over (
         partition by a.order_no
         order by c.price desc, b.prod_no asc
@@ -36,15 +38,24 @@
         select
         order_no,
         order_date,
-        prod_name
+        prod_name,
+        user_id
         from ranked_products
         where rn = 1
+        <if test="userId != null">
+            and user_id = #{userId}
+        </if>
+        <if test="userId == null">
+            and user_id IS NULL
+        </if>
         limit ${pageSize} offset ${offset};
     </select>
 
 
     <select id="selectOrdListCount" resultType="int">
-        select count(*) from order_master;
+        select count(*), user_id
+        from order_master
+        where user_id = #{userId};
     </select>
 
 </mapper>

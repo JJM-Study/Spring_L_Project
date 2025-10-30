@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 @Data
 public class OrderListDTO {
     private String orderNo;
-    private LocalDateTime orderDate;
+    //private LocalDateTime orderDate;
+    private String orderDate;
     private String prodName;
+
+//    private String orderDtFormatted;
 }

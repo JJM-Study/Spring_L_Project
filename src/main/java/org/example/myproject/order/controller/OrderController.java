@@ -138,23 +138,26 @@ public class OrderController {
     }
 
     @GetMapping("/ordlist")
-    public String orderList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "30") int pageSize, Model model) {
+    public String orderList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "30") int pageSize, Model model, HttpServletRequest request) {
         List<OrderListDTO> orderList = new ArrayList<>();
 
 
-        int listCnt = orderService.selectOrdListCount();
+        String userId = authService.getAuthenticUserId(request);
+
+        //int listCnt = orderService.selectOrdListCount();
+        int listCnt = orderService.selectOrdListCount(userId);
 
         Pagination pagination = new Pagination(cPage, pageSize, listCnt);
 
-        orderList = orderService.orderList(pageSize, pagination.getOffset());
+        //orderList = orderService.orderList(pageSize, pagination.getOffset());
+        orderList = orderService.orderList(pageSize, pagination.getOffset(), userId);
+
 
         model.addAttribute("pageTitle", "상품 로그");
         model.addAttribute("pagination", pagination);
         model.addAttribute("orderList", orderList);
         model.addAttribute("pageUrl", "/order/ordlist");
         model.addAttribute("layoutBody", "/WEB-INF/jsp/order/order-list.jsp");
-
-
 
 
         return "layout/main-layout";
