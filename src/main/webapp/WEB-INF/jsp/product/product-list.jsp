@@ -8,22 +8,23 @@
 <script src="/js/product/product-list.js" defer></script>
 <section class="container mt-4">
 <div class="filter">
-      <div class="btn-group" role="group" aria-label="Page Size">
-        <ul>
-            <li>
-              <a href="#" class="btn-array btn btn-outline-primary" data-count="30">30</a>
-            </li>
-            <li>
-              <a href="#" class="btn-array btn btn-outline-primary" data-count="50">50</a>
-            </li>
-            <li>
-              <a href="#" class="btn-array btn btn-outline-primary" data-count="100">100</a>
-            </li>
-        </ul>
-      </div>
       <div>
         <input type="text" class="search-title"></input>
         <button class="search-title-btn">검색</button>
+      </div>
+      <div class="btn-group" role="group" aria-label="Page Size">
+              <span>페이지당 표시 건수 :</span>
+              <ul>
+                  <li>
+                    <a href="#" class="btn-array btn btn-outline-primary" data-count="30">30</a>
+                  </li>
+                  <li>
+                    <a href="#" class="btn-array btn btn-outline-primary" data-count="50">50</a>
+                  </li>
+                  <li>
+                    <a href="#" class="btn-array btn btn-outline-primary" data-count="100">100</a>
+                  </li>
+              </ul>
       </div>
   </div>
   <div class="row">
