@@ -138,7 +138,7 @@ public class OrderController {
     }
 
     @GetMapping("/ordlist")
-    public String orderList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "30") int pageSize, Model model, HttpServletRequest request) {
+    public String orderList(@RequestParam(defaultValue = "0") int cPage, @RequestParam(defaultValue = "20") int pageSize, Model model, HttpServletRequest request) {
         List<OrderListDTO> orderList = new ArrayList<>();
 
 

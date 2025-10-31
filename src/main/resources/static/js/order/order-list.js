@@ -22,3 +22,8 @@ function applyTruncatedClass() {
 }
 
 window.addEventListener('load', applyTruncatedClass);
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    emptyRowFilter("ordListTbody", pageSize);
+});
