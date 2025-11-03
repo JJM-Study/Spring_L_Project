@@ -21,6 +21,9 @@ flex-grow: 1;    /* 남은 세로 공간을 채우되, */
     align-items:flex-start;
 }
 
+
+
+
 .image-container {
     width: 50%;
     min-width: 500px;

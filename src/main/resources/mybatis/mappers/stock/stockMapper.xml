@@ -34,4 +34,9 @@
         </foreach>
         FOR UPDATE;
     </select>
+
+    <update id="decreaseStock">
+        update product_master set stock_qty = stock_qty - #{stockQty} where prod_no = #{prodNo} and stock_qty >= #{stockQty};
+    </update>
+
 </mapper>

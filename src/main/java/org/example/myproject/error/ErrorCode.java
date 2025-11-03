@@ -12,12 +12,16 @@ public enum ErrorCode {
     // MES 실무 당시 봤던 에러 코드 도입.
 
     // 주문
-    PRODUCT_ORDER_NOT_FOUND("O001", "주문 상품이 비어 있습니다.",  HttpStatus.NOT_FOUND),
+    PRODUCT_ORDER_FAILED("O001", "주문에 실패했습니다.", HttpStatus.BAD_REQUEST),
 
-    //
+    PRODUCT_ORDER_NOT_FOUND("O002", "주문 상품이 비어 있습니다.",  HttpStatus.NOT_FOUND),
+
+
+    // 재고
     STOCK_NOT_ENOUGH("S001", "상품의 재고가 없습니다.", HttpStatus.BAD_REQUEST),
 
     STOCK_NOT_ENOUGH_DETAIL("S002", "다음 상품들의 재고가 부족합니다: {0}", HttpStatus.BAD_REQUEST),
+
 
     // 인증
     REQUEST_LOGIN("A001", "로그인이 필요합니다. (커스텀 Business 예외)", HttpStatus.UNAUTHORIZED),

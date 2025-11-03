@@ -16,6 +16,7 @@ import org.example.myproject.order.dto.OrderListDTO;
 import org.example.myproject.order.dto.OrderRequestDto;
 import org.example.myproject.order.service.OrderService;
 import org.example.myproject.product.service.ProductService;
+import org.example.myproject.stock.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,9 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    StockService stockService;
 
     @Autowired
     ProductService productService;
@@ -113,11 +117,13 @@ public class OrderController {
         orderDetail.setPrice(price);
 
 
+        stockService.decreaseStock(prodNo, qty);
 
         // 지금 보니 createOrder 메소드의 order 파라미터는 불필요하다. 장바구니가 안정화 되면, 제거하는 방향으로 리펙토링.
         // 지금은 order.setAmount(qty); 정도만 넣어서 일단 넘기는 식으로 하자.
         //List.of로 감싸는 걸로...
         String orderId = orderService.createOrder(order, List.of(orderDetail), Collections.emptyList(), httpServletRequest);
+
 
         logger.info("orderId" + orderId);
         //  success, message 등 키-값을 모듈 형태로 관리하는 방법은 없는 지 나중에 고민.

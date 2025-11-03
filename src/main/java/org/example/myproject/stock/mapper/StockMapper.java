@@ -9,4 +9,7 @@ import java.util.List;
 public interface StockMapper {
 
     List<StockQtyDto> selectStockQty(List<Long> prodNo);
+
+    Integer decreaseStock(Long prodNo, Integer stockQty);
+
 }
