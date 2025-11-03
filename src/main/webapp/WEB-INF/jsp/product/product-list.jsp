@@ -8,7 +8,7 @@
 <script src="/js/product/product-list.js" defer></script>
 <section class="container mt-4">
 <div class="filter">
-      <div>
+      <div id="search-container">
         <input type="text" class="search-title"></input>
         <button class="search-title-btn">검색</button>
       </div>
@@ -31,23 +31,31 @@
     <c:forEach var="item" items="${itemList}">
       <div class="col-md-3 mb-4">
         <div class="card h-100">
-          <c:choose>
-            <c:when test="${empty item.imageUrl}">
-                <img src="" class="card-img-top" alt="기본 이미지">
-            </c:when>
-            <c:otherwise>
-                <a href="/product/detail/${item.prodNo}">
-                    <img src="${item.imageUrl}" class="card-img-top" alt="상품 이미지">
-                </a>
-            </c:otherwise>
-          </c:choose>
+          <div id="product-image-container">
+              <c:choose>
+                <c:when test="${empty item.imageUrl}">
+                    <a href="/product/detail/${item.prodNo}">
+                        <img src="/assets/images/No_Image.png" class="card-img-top product-image" alt="기본 이미지">
+                    </a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/product/detail/${item.prodNo}">
+                        <img src="${item.imageUrl}" class="card-img-top product-image" alt="상품 이미지">
+                    </a>
+                </c:otherwise>
+              </c:choose>
+          </div>
           <div class="card-body">
-            <h5 class="card-title">
-                <a href="/product/detail/${item.prodNo}" style="text-decoration: none;">
-            ${item.prodName}
-            </a>
-            </h5>
-            <p class="card-text">${item.price}원</p>
+            <div id="product-title-container">
+                <h5 class="card-title">
+                    <a href="/product/detail/${item.prodNo}" style="text-decoration: none;">
+                ${item.prodName}
+                </a>
+                </h5>
+            </div>
+            <div id="product-info-container">
+                <p class="card-text">${item.price}원</p>
+            </div>
             <c:choose>
                 <c:when test="${item.isInCart==false}">
                     <button class="btn btn-primary add-to-cart-btn" data-prodno="${item.prodNo}">장바구니 담기</button>

@@ -63,3 +63,8 @@ table, tr, td, th {
     white-space: normal;
     text-overflow:clip;
 }
+
+#ordListContainer {
+    min-height: 738px;
+    overflow-y:auto;
+}

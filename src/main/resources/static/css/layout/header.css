@@ -1,3 +1,19 @@
-.userInfo {
+.userInfo-div {
     color:white;
+}
+
+#userInfo-li {
+    display:flex;
+    align-items:center;
+}
+
+#header-container {
+    justify-content: space-between;
+    margin-right: 10px;
+}
+
+
+.userInfo-menu {
+    display:flex;
+    margin-right: 10px;
 }

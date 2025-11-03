@@ -15,12 +15,29 @@
     align-items : center;
 }
 
-.btn-group span {
 
+#search-container {
+    display:flex;
+    gap : 6px;
+    align-items:center;
+    justify-content:center;
 }
 
 .search-title-btn {
-    border: 1px solid #969696;
+    /* border: 1px solid #969696; */
+     background-color:#0d6efd;
+     color :#ffffff;
+     border: none;
+     border-radius:3px;
+     padding : 3px 5px;
+}
+
+.search-title-btn:hover {
+    filter: brightness(90%);
+}
+
+.product-image {
+    height: 100%;
 }
 
 .search-title {
@@ -49,4 +66,17 @@
     display: flex;
     align-items:center;
 justify-content: center;
+}
+
+#product-info-container {
+    margin: 10px 0;
+}
+
+#product-image-container {
+    height:250px;
+
+}
+
+#product-title-container {
+    height: 50px;
 }

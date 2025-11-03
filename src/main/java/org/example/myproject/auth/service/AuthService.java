@@ -52,7 +52,7 @@ public class AuthService {
         } else if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             return userDetails.getUsername();
-        } else {
+    } else {
             throw new BusinessException(ErrorCode.AUTHENTICATION_ERROR);
         }
 

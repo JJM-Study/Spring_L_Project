@@ -74,7 +74,8 @@ public class OrderController {
             return ResponseEntity.status(e.getErrorCode().getStatus()).body(response);
 
         } catch (Exception e) {
-             response.put("success", false);
+            response.put("success", false);
+            response.put("message", e.getMessage());
             logger.info("주문 실패" + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }

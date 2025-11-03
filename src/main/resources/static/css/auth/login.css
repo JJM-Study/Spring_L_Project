@@ -1,11 +1,15 @@
 body {
-
+    min-height: 100vh;
+    margin: 0;
+    overflow-y: hidden;
 }
 
 body > div {
-    margin:auto;
+    margin: auto;
     width: 500px;
-    border : 1px solid black;
+    margin-top : 50vh;
+    transform: translateY(-50%);
+/*    border : 1px solid black; */
     padding : 50px;
 
     flex-shrink: 0;
@@ -30,6 +34,15 @@ label {
     align-items:center;
     width: 100%;
     margin: 10px;
+    border : 1px solid black;
+    border-radius : 5px;
+    padding : 5px 0;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+label:focus-within {
+    border-color: border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 i {
@@ -44,7 +57,60 @@ i {
     align-items:center;
 }
 
-#id-input {
+#input-user-info label input {
+    width: 100%;
+    margin-left:10px;
+    /* padding : 10px 5px; */
+    border : none;
+    outline: none;
+    font-size : 20px;
+
+}
+
+#remember-me-container {
+    display:flex;
+    justify-content:flex-start;
+    width: 100%;
+    gap : 5px;
+}
+
+button {
+    border-radius : 5px;
+    font-size : 16px;
+    padding: 8px 16px;
+}
+
+
+button:hover {
+    filter: brightness(90%);
+}
+
+button:active {
+    filter : filter: brightness(80%);
+}
+
+#loginBtn {
+    background-color:#0d6efd;
+    color :#ffffff;
+    border-color:#0d6efd;
+}
+
+#sign-up {
+background-color: #ffc107;
+    border: 2px solid #ffc107;
+    color: #212529;
+}
+
+#anonymousMod {
+   background-color: transparent;
+       border: 2px solid #0d6efd;
+       color: #0d6efd;
+}
+
+
+
+
+/* #id-input {
     width: 100%;
     margin-left:10px;
     padding : 10px 5px;
@@ -56,5 +122,5 @@ i {
     margin-left:10px;
     padding : 10px 5px;
 }
-
+*/
 

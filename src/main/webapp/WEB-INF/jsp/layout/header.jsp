@@ -28,7 +28,7 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse" id="header-container">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/home">홈</a>
@@ -42,28 +42,27 @@
                      <li class="nav-item">
                         <a class="nav-link" href="/order/ordlist">주문내역</a>
                      </li>
+                </ul>
+                <ul class="navbar-nav userInfo-menu">
                      <li class="nav-item">
-                         <ul>
                              <sec:authorize access="isAuthenticated()">
                                     <a class="nav-link logout" href="#">로그아웃</a>
                              </sec:authorize>
                              <sec:authorize access="isAnonymous()">
                                    <a class="nav-link" href="/login">로그인</a>
                              </sec:authorize>
-                         </ul>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="/errorrrr">전역 에러 테스트용</a>
+                        <%-- <a class="nav-link" href="/errorrrr">전역 에러 테스트용</a> --%>
                      </li>
-                     <li class="nav-item">
+                     <li class="nav-item" id="userInfo-li">
                          <sec:authorize access="isAuthenticated()">
-                            <div class="userInfo">
+                            <div class="userInfo-div">
                                 안녕하세요! <sec:authentication property="principal.username" />님!
                                 <%-- 드롭다운 추가해서, 유저 ID 클릭 시 로그아웃 버튼이 나오도록 하는 방법 고민. --%>
                             </div>
                          </sec:authorize>
                      </li>
-
                 </ul>
             </div>
           </div>

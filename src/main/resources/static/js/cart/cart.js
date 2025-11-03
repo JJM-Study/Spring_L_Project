@@ -22,9 +22,12 @@ const inputQty = document.querySelector(".qty");
                }).then((data) => {
 //                       debugger;
                        if (data.success) {
+                           this.style.opacity = 0.5;
+                           this.innerText = '장바구니에 있음';
                            if (confirm("담기 성공했습니다. 장바구니로 이동하시겠습니까?")) {
                                window.location.href = "/cart/cartlist";
                            }
+
                        } else {
                            alert("담기 실패 : " + data.message);
                        }

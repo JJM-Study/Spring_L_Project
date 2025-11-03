@@ -12,7 +12,7 @@ pBtn.addEventListener("click", ()=> {
 
 mBtn.addEventListener("click", ()=> {
     let qty = parseInt(pd_inputQty.value) || 0;
-    if(qty > 0) qty--;
+    if(qty > 1) qty--;
     pd_inputQty.value = qty;
     calculation();
 });

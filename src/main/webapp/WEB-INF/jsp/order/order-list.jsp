@@ -1,11 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="/js/common/emptyRowFilter.js" defer></script>
 <script src="/js/order/order-list.js" defer></script>
 <link href="/css/order/order-list.css" rel="stylesheet">
 
 <section>
-  <div>
+  <div id="ordListContainer">
       <table>
          <thead>
             <tr>
@@ -36,7 +35,6 @@
                                  <jsp:param name="pageSize" value="${pagination.pageSize}" />
                               </jsp:include>
                            </c:if> --%>
-
                    </c:when>
                    <c:otherwise>
                         <tr>

@@ -101,6 +101,7 @@ public class CartService {
             return result;
 
         } catch (Exception e) {
+            //logger.info("CartService Error" + e.getMessage());
             logger.info("CartService Error" + e.getMessage());
             return result;
         }

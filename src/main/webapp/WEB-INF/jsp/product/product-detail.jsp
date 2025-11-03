@@ -17,9 +17,16 @@
         <div class="info-container">
             <div class="image-container">
                    <div class="main-image-container">
-                       <img src="${mainImages.imageUrl}"
-                             alt="${'메인 상품 이미지'}"
-                             class="card-img-top"/>
+                       <c:choose>
+                           <c:when test="${mainImages.imageUrl != null}">
+                               <img src="${mainImages.imageUrl}"
+                                     alt="${'메인 상품 이미지'}"
+                                     class="card-img-top"/>
+                           </c:when>
+                           <c:otherwise>
+                              <img src="/assets/images/No_Image.png" alt="메인 상품 이미지" class="cart-img-top"/>
+                           </c:otherwise>
+                       </c:choose>
                    </div>
                    <div class="image-sub-container">
                        <ul class="sub-list">

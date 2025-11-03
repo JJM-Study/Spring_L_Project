@@ -1,7 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/cart/cartlist.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <%--<main class="flex-grow-1">--%>
 <div class="container mt-4">
@@ -17,8 +19,8 @@
 <table class="w-100 table table-bordered list-table">
     <thead>
         <tr>
-            <th><input type="checkbox" id="selectAll" onClick="toggleAll(this)"></th>
-            <th>
+            <th class="cart-th"><input type="checkbox" id="selectAll" onClick="toggleAll(this)"></th>
+            <th id="cart-th-no">
                 <a href="javascript:void(0);" onClick="toggleOrderType('cart_no')">
                     카트번호
                     <c:if test="${orderColumn == 'cart_no'}">
@@ -51,7 +53,7 @@
                     </c:if>
                 </a>
             </th>
-            <th>
+            <th id="th-del" class="cart-th">
                삭제
             </th>
         </tr>
@@ -61,11 +63,11 @@
             <c:when test="${not empty cartList}">
                 <c:forEach var="cart" items="${cartList}">
                     <tr>
-                        <td><input type="checkbox" name="cartItem" value="${cart.cartNo}"></td>
+                        <td class="cart-td"><input type="checkbox" name="cartItem" value="${cart.cartNo}"></td>
                         <td>${cart.cartNo}</td>
                         <td>${cart.prodName}</td>
                         <td>${cart.qty}</td>
-                        <td><button id="del-cart-${cart.cartNo}" onClick="delCart(this.value)" value="${cart.cartNo}"><i class="bi bi-trash"></i></button></td>
+                        <td class="cart-td"><button id="del-cart-${cart.cartNo}" class="del-cart-btn" onClick="delCart(this.value)" value="${cart.cartNo}"><i class="bi bi-trash"></i></button></td>
                     </tr>
                 </c:forEach>
             </c:when>
@@ -78,7 +80,7 @@
     </tbody>
 </table>
 
-    <input type="button" onClick="submitOrder()" id="btn_orderSubmit" value="주문하기"></input>
+    <input type="button" class="btn btn-primary" onClick="submitOrder()" id="btn_orderSubmit" value="주문하기"></input>
 
     </div>
 </div>

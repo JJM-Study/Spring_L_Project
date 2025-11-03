@@ -1,0 +1,33 @@
+.cart-th {
+    text-align : center;
+}
+
+th a {
+    display:flex;
+    justify-content : center;
+    text-decoration-line:none;
+}
+
+#cart-th-no {
+    width: 1%;
+    white-space: nowrap;
+    box-sizing: content-box;
+
+}
+
+#cart-th-no a {
+    white-space: nowrap;
+}
+
+td {
+    text-align:center;
+}
+
+.del-cart-btn {
+    border: none;
+    background : none;
+}
+
+.cart-td {
+    text-align : center;
+}
