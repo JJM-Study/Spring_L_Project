@@ -73,4 +73,16 @@
         </where>
     </select>
 
+    <select id="selectCartCount" resultType="int">
+        select count(*) from order_cart where cart_no = #{cartNo};
+    </select>
+
+    <delete id="deleteCartBulk">
+        DELETE FROM order_cart
+        WHERE cart_no IN
+        <foreach collection="list" item="cartNo" open="(" close=")" separator=",">
+            #{cartNo}
+        </foreach>
+    </delete>
+
 </mapper>

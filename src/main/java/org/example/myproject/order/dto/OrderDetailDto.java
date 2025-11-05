@@ -1,10 +1,16 @@
 package org.example.myproject.order.dto;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDetailDto {
     private Long orderDetailNo;
     private String orderNo;

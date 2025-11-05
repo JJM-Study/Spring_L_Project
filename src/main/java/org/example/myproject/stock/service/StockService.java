@@ -2,13 +2,16 @@ package org.example.myproject.stock.service;
 
 import org.example.myproject.error.BusinessException;
 import org.example.myproject.error.ErrorCode;
+import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.stock.dto.StockQtyDto;
 import org.example.myproject.stock.mapper.StockMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StockService {
@@ -16,8 +19,9 @@ public class StockService {
     @Autowired
     StockMapper stockMapper;
 
-    public List<StockQtyDto> selectStockQty(List<Long> prodNo) {
-        return stockMapper.selectStockQty(prodNo);
+    //public List<StockQtyDto> selectStockQty(List<Long> prodNo) {
+    public List<StockQtyDto> selectStockQty(Map<Long, Integer> requestQuantities) {
+        return stockMapper.selectStockQty(requestQuantities);
     }
 
 
@@ -29,6 +33,17 @@ public class StockService {
         if (result <= 0) {
             throw new BusinessException(ErrorCode.STOCK_NOT_ENOUGH);
         }
+
+    }
+
+
+    public void decreaseStockBulk(List<OrderDetailDto> orderDetailDto) {
+
+
+        stockMapper.decreaseStockBulk(orderDetailDto);
+
+        //Integer updatedRows = stockMapper.decreaseStockBulk(orderDetailDto);
+        // 차후 필요하면 받은 updatedRows로 처리 로직을 추가든지 할 것.
 
     }
 

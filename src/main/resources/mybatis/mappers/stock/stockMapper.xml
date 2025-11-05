@@ -21,16 +21,37 @@
 <!--</mapper>-->
 
 <mapper namespace="org.example.myproject.stock.mapper.StockMapper">
+<!--    <select id="selectStockQty" resultType="org.example.myproject.stock.dto.StockQtyDto">-->
+<!--        SELECT-->
+<!--        prod_no,-->
+<!--        prod_name AS prodNames,-->
+<!--        stock_qty AS stockQty-->
+<!--        FROM-->
+<!--        product_master-->
+<!--        WHERE-->
+<!--        prod_no IN-->
+<!--        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">-->
+<!--            #{item}-->
+<!--        </foreach>-->
+<!--        FOR UPDATE;-->
+<!--    </select>-->
+
     <select id="selectStockQty" resultType="org.example.myproject.stock.dto.StockQtyDto">
         SELECT
-        prod_no,
-        prod_name AS prodNames, stock_qty
+        pm.prod_no,
+        pm.prod_name AS prodNames,
+        pm.stock_qty AS stockQty,
+        CASE pm.prod_no
+        <foreach item="value" index="key" collection="requestMap">
+            WHEN #{key} THEN #{value}
+        </foreach>
+        END AS requestQty
         FROM
-        product_master
+        product_master pm
         WHERE
-        prod_no IN
-        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-            #{item}
+        pm.prod_no IN
+        <foreach item="value" index="key" collection="requestMap" open="(" separator="," close=")">
+            #{key}
         </foreach>
         FOR UPDATE;
     </select>
@@ -39,4 +60,20 @@
         update product_master set stock_qty = stock_qty - #{stockQty} where prod_no = #{prodNo} and stock_qty >= #{stockQty};
     </update>
 
+
+    <update id="decreaseStockBulk" parameterType="java.util.List">
+        UPDATE product_master
+        SET stock_qty = stock_qty -
+        (
+        <foreach collection="list" item="item" separator=" " open="CASE prod_no" close="END">
+            WHEN #{item.prodNo} THEN #{item.qty}
+        </foreach>
+        )
+
+        WHERE prod_no IN
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item.prodNo}
+        </foreach>
+
+    </update>
 </mapper>

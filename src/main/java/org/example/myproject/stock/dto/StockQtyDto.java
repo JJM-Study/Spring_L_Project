@@ -7,4 +7,5 @@ public class StockQtyDto {
     private Long prodNo;
     private String prodNames;
     private Integer stockQty;
+    private Integer requestQty;
 }

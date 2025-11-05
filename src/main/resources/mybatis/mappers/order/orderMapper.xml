@@ -17,7 +17,18 @@
         (#{order.orderNo}, #{order.prodNo}, #{order.qty}, #{order.price})
     </insert>
 
-
+    <insert id="insertOrderDetailBulk">
+        INSERT INTO order_detail (order_no, prod_no, qty, price)
+        VALUES
+        <foreach collection="list" item="order" separator=",">
+            (
+            #{order.orderNo},
+            #{order.prodNo},
+            #{order.qty},
+            #{order.price}
+            )
+        </foreach>
+    </insert>
 
     <select id="orderList" resultType="org.example.myproject.order.dto.OrderListDTO">
         with ranked_products as (
@@ -58,4 +69,10 @@
         where user_id = #{userId};
     </select>
 
+    <!-- 테스트용 -->
+    <select id="selectCountByOrderNo" resultType="int">
+        select count(*)
+        from order_master
+        where order_no = #{orderNo}
+    </select>
 </mapper>

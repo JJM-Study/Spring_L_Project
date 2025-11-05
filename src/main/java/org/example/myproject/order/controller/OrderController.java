@@ -117,8 +117,6 @@ public class OrderController {
         orderDetail.setPrice(price);
 
 
-        stockService.decreaseStock(prodNo, qty);
-
         // 지금 보니 createOrder 메소드의 order 파라미터는 불필요하다. 장바구니가 안정화 되면, 제거하는 방향으로 리펙토링.
         // 지금은 order.setAmount(qty); 정도만 넣어서 일단 넘기는 식으로 하자.
         //List.of로 감싸는 걸로...
@@ -140,6 +138,9 @@ public class OrderController {
         model.addAttribute("orderId", orderId);
         logger.info("check orderId=" + orderId);
         model.addAttribute("layoutBody", "/WEB-INF/jsp/order/order-conform.jsp");
+
+//        orderService.
+        // 여기에 주문 세부 정보를 조회하는 서비스 추가.
 
         return "layout/main-layout";
     }

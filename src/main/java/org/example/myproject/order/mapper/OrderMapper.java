@@ -19,4 +19,10 @@ public interface OrderMapper {
 
     int selectOrdListCount(String userId);
 
+    void insertOrderDetailBulk(List<OrderDetailDto> orderDetails);
+
+    // 일단 테스트용
+    int selectCountByOrderNo(String orderNo);
+
+
 }

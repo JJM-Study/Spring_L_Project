@@ -197,7 +197,8 @@
 
            data: JSON.stringify(selectedItems),
            success: function(data) {
-               console.log(data),
+               debugger;
+               console.log("Item_Info :" + data),
                alert(data.message);
                location.href = "/order/result?orderId=" + data.orderId;
            },

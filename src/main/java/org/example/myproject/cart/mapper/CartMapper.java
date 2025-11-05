@@ -23,4 +23,9 @@ public interface CartMapper {
 
     boolean isInCart(@Param("prodNo") String prodNo, @Param("userId") String userId);
 
+    // 테스트
+    int selectCartCount(int cartNo);
+
+
+    void deleteCartBulk(List<Long> cartNos);
 }
