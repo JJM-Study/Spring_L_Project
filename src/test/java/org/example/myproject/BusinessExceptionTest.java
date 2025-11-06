@@ -2,12 +2,15 @@ package org.example.myproject;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.assertj.core.api.Assertions;
 import org.example.myproject.auth.mapper.AuthMapper;
 import org.example.myproject.auth.service.AuthService;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.dto.ChkCartItemDto;
 import org.example.myproject.cart.mapper.CartMapper;
 import org.example.myproject.cart.service.CartService;
+import org.example.myproject.error.BusinessException;
+import org.example.myproject.error.ErrorCode;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
 import org.example.myproject.order.mapper.OrderMapper;
@@ -27,7 +30,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.Assert;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import java.util.List;
 
@@ -104,9 +110,23 @@ public class BusinessExceptionTest {
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
 
 
-        String orderId = orderService.createOrder(orderMaster ,orderDetails, cartList, mockHttpServletRequest);
+        BusinessException exception = assertThrows(BusinessException.class, () -> {
+            orderService.createOrder(orderMaster, orderDetails, cartList, mockHttpServletRequest);
+        });
 
-        logger.info("orderId : " + orderId);
+
+        assertEquals(ErrorCode.STOCK_NOT_ENOUGH_DETAIL, exception.getErrorCode());
+
+
+
+
+        logger.info("Exception ErrorCode: " + exception.getErrorCode());
+        logger.info("Exception Message: " + exception.getMessage());
+//        String orderId = orderService.createOrder(orderMaster ,orderDetails, cartList, mockHttpServletRequest);
+//
+
+
+//        logger.info("orderId : " + orderId);
 
 
         //orderService.createOrder(1L, 81);
