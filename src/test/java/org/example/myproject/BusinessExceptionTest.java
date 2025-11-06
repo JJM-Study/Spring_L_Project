@@ -2,8 +2,12 @@ package org.example.myproject;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.example.myproject.auth.mapper.AuthMapper;
+import org.example.myproject.auth.service.AuthService;
 import org.example.myproject.cart.dto.CartDto;
+import org.example.myproject.cart.dto.ChkCartItemDto;
 import org.example.myproject.cart.mapper.CartMapper;
+import org.example.myproject.cart.service.CartService;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
 import org.example.myproject.order.mapper.OrderMapper;
@@ -15,11 +19,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.slf4j.Logger;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.assertj.MockMvcTester;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.mockito.ArgumentMatchers.any;
 import java.util.List;
 
 import java.util.Map;
@@ -28,10 +37,12 @@ import java.util.stream.Collectors;
 //import static jdk.internal.org.jline.reader.impl.LineReaderImpl.CompletionType.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 //
 //import java.util.logging.LogManager;
 //import java.util.logging.Logger;
 
+// 동시성 테스트 고민.
 
 @SpringBootTest
 public class BusinessExceptionTest {
@@ -102,23 +113,7 @@ public class BusinessExceptionTest {
 
     }
 
-
-    @Autowired
-    CartMapper cartMapper;
-
-    @Test
-    @WithMockUser("MockTester1")
-    @DisplayName("장바구니 삭제 권한에 따른 예외 처리")
-    void DeleteAccessTestExceptionTest() {
-        logger.info("UserId Missmatching 에 따른 예외 검사 Start : ");
-
-
-        Long cartNo = 1L;
-        MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
-
-        cartMapper.deleteCart(cartNo);
-
-    }
+// 다음엔 PRODUCT_ORDER_NOT_FOUND (주문 상품이 비어있습니다 O002) 정도 검증하는 게 좋을 듯.
 
 
 }
