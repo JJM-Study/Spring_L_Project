@@ -84,7 +84,7 @@ public class OrderService {
 
                     return dto.getStockQty() < requestedQty;
                 })
-                .map(StockQtyDto::getProdNames)
+                .map(StockQtyDto::getProdName)
                 .toList();
 
 

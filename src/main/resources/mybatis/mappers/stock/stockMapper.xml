@@ -39,7 +39,7 @@
     <select id="selectStockQty" resultType="org.example.myproject.stock.dto.StockQtyDto">
         SELECT
         pm.prod_no,
-        pm.prod_name AS prodNames,
+        pm.prod_name AS prodName,
         pm.stock_qty AS stockQty,
         CASE pm.prod_no
         <foreach item="value" index="key" collection="requestMap">

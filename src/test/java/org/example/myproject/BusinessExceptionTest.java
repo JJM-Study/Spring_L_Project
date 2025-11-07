@@ -16,6 +16,7 @@ import org.example.myproject.order.dto.OrderDto;
 import org.example.myproject.order.mapper.OrderMapper;
 import org.example.myproject.order.service.OrderNumberGeneratorService;
 import org.example.myproject.order.service.OrderService;
+import org.example.myproject.stock.dto.StockQtyDto;
 import org.example.myproject.stock.mapper.StockMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,8 @@ import org.springframework.util.Assert;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.Map;
@@ -72,18 +75,51 @@ public class BusinessExceptionTest {
     @WithMockUser("MockTester1")
     void StockExceptionTest() {
 
-        Map<Long, Integer> Map_Product_QTY = Map.of(
-                1L, 90,
-                2L, 100,
-                3L, 70,
-                4L, 80,
-                5L, 100
-        );
+//        Map<Long, Integer> Map_Product_QTY = Map.of(
+//                1L, 90,
+//                2L, 100,
+//                3L, 70,
+//                4L, 80,
+//                5L, 100
+//        );
+
+        Map<Long, Integer> Map_Product_QTY = new HashMap<>();
+        Map_Product_QTY.put(1L, 90);
+        Map_Product_QTY.put(2L, 100);
+        Map_Product_QTY.put(3L, 70);
+        Map_Product_QTY.put(4L, 80);
+        Map_Product_QTY.put(5L, 100);
 
 
         final String MOKED_ORDER_NO = "ORD20251103-0011";
 
         logger.info("재고 부족 예외 테스트 Start : ");
+
+        List<Long> prodNos = Map_Product_QTY.keySet().stream().toList();
+
+        List<StockQtyDto> prodInfo = orderMapper.productStockList(prodNos);
+
+        Map<String, Integer> required = prodInfo.stream()
+                .filter(dto -> dto.getProdName() != null)
+                .collect(Collectors.toMap(
+                StockQtyDto::getProdName,
+                        dto -> Map_Product_QTY.getOrDefault(dto.getProdNo(), 0),
+                        (oldValue, newValue) -> newValue
+        ));
+
+        Map<String, Integer> prodInfoMap = prodInfo.stream().
+                filter(dto -> dto.getProdName() != null)
+                .collect(Collectors.toMap(
+                StockQtyDto::getProdName,
+                StockQtyDto::getStockQty,
+                        (oldValue, newValue) -> newValue
+
+                ));
+
+        logger.info("요구 재고량 :" + required);
+        logger.info("실제 재고량 :" + prodInfoMap);
+
+
         when(orderNumberGeneratorService.generateOrderNumber()).thenReturn(MOKED_ORDER_NO);
 
 

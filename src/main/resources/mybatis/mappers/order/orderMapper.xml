@@ -75,4 +75,14 @@
         from order_master
         where order_no = #{orderNo}
     </select>
+
+    <select id ="productStockList" resultType="org.example.myproject.stock.dto.StockQtyDto">
+        select prod_no, prod_name, stock_qty
+        from product_master
+        where prod_no in
+        <foreach item="prodNo" collection="prodNos" open="(" separator="," close=")">
+             #{prodNo}
+        </foreach>
+    </select>
+
 </mapper>
