@@ -85,4 +85,9 @@
         </foreach>
     </select>
 
+
+    <select id="selectOrderNum" resultType="String">
+        select * from order_master where order_no = #{orderNo}
+    </select>
+
 </mapper>

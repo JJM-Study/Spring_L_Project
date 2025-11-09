@@ -59,9 +59,6 @@ public class OrderServiceTransactionTest {
     CartMapper cartMapper;
 
     @MockBean
-    StockService StockService;
-
-    @MockBean
     OrderNumberGeneratorService orderNumberGeneratorService;
 
     @Test
@@ -86,10 +83,10 @@ public class OrderServiceTransactionTest {
         logger.info("차감 전 재고 : " + stockQty.get(0).getProdName() + " = 남은 수량 : " + stockQty.get(0).getStockQty());
 
 
-        logger.info("====== 차감 시작 : ======");
-        stockMapper.decreaseStockBulk(orderDetailDtoList);
-        stockQty = stockMapper.selectStockQty(Map.of(prodNo, qty));
-        logger.info("차감 후 재고 : " + stockQty.get(0).getProdName() + " = 남은 수량 : " + stockQty.get(0).getStockQty());
+        //logger.info("====== 차감 시작 : ======");
+        //stockMapper.decreaseStockBulk(orderDetailDtoList);
+        //stockQty = stockMapper.selectStockQty(Map.of(prodNo, qty));
+        //logger.info("차감 후 재고 : " + stockQty.get(0).getProdName() + " = 남은 수량 : " + stockQty.get(0).getStockQty());
 
 
         when(orderNumberGeneratorService.generateOrderNumber())
@@ -102,13 +99,22 @@ public class OrderServiceTransactionTest {
 //        doThrow(new RuntimeException("네트워크 끊김 가정"))
 //                .when(cartMapper).deleteCartBulk();
         doThrow(new RuntimeException()).when(cartMapper).deleteCartBulk(anyList());
+        logger.info("의도적 RuntimeException");
 
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
 
+        CartDto cartDto = CartDto.builder().prodNo(prodNo).qty(qty).build();
 
         Throwable thrown = catchThrowable(() ->
-            orderService.createOrder(order, orderDetailDtoList, null, mockHttpServletRequest)
+            orderService.createOrder(order, orderDetailDtoList, List.of(cartDto), mockHttpServletRequest)
         );
+
+        stockQty = stockMapper.selectStockQty(Map.of(prodNo, qty));
+
+        logger.info("롤백 후 재고 : " + stockQty.get(0).getProdName() + " = 남은 수량 : " + stockQty.get(0).getStockQty());
+        logger.info("주문번호 " + MockedOrderNo + "," + " 주문 생성(롤백) 여부 :" + orderService.selectOrderNum(MockedOrderNo));
+        logger.info("====== 롤백 테스트 종료 : ======");
+
 
 
     }

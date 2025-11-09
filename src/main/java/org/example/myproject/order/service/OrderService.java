@@ -145,9 +145,17 @@ public class OrderService {
 
         orderDetails.forEach((details -> details.setOrderNo(orderNo)));
 
+
         orderMapper.insertOrderDetailBulk(orderDetails);
 
         stockService.decreaseStockBulk(orderDetails); // for문 안 쓰고 좀 더 효율적으로 일괄 처리하도록 리팩토링 함. 2025/11/04
+
+        /*=== 통합 테스트용 ===*/
+        List<StockQtyDto> stockQtyDtos = stockService.selectStockQty(requestQuantities);
+
+        logger.info("차감 후 재고 : " + stockQtyDtos.get(0).getProdName() + " = 남은 수량 : " + stockQtyDtos.get(0).getStockQty());
+        /*========================*/
+
 
 //        for (CartDto cartNos : cartDto) {
 //            Long cartNo = cartNos.getCartNo();
@@ -172,5 +180,10 @@ public class OrderService {
     public int selectOrdListCount(String userId) {
         return orderMapper.selectOrdListCount(userId);
     };
+
+    // 주문번호 조회
+    public String selectOrderNum(String orderNo) {
+        return orderMapper.selectOrderNum(orderNo);
+    }
 
 }

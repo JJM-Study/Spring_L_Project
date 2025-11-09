@@ -29,4 +29,6 @@ public interface OrderMapper {
 
     List<StockQtyDto> productStockList(@Param("prodNos") List<Long> prodNos);
 
+    String selectOrderNum(String orderNo);
+
 }
