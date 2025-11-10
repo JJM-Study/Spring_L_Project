@@ -47,4 +47,10 @@ public class StockService {
 
     }
 
+
+    /* 임시 테스트용 */
+    public void updateProdStock(StockQtyDto stock) {
+        stockMapper.updateProdStock(stock);
+    }
+
 }

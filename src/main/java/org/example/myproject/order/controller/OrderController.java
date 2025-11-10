@@ -20,6 +20,7 @@ import org.example.myproject.stock.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -62,8 +63,12 @@ public class OrderController {
             logger.info("order (OrderController): " + order);
             List<OrderDetailDto> orderDetails = (List<OrderDetailDto>) result.get("orderDetails");
 
+            // 2025/11/10 추가 HttpServletRequest 방식에서 컨트롤러에서 직접 Id 전달하는 방식으로 수정함.  // 동시성 테스트 불편.
+            String userId = authService.getAuthenticUserId(request);
+
             // service 추가
-            orderService.createOrder(order, orderDetails, cartDto, request);
+            //orderService.createOrder(order, orderDetails, cartDto, request);
+            orderService.createOrder(order, orderDetails, cartDto, userId);
 
             response.put("success", true);
             response.put("message", "주문 성공 (결제 생략)");
@@ -116,11 +121,13 @@ public class OrderController {
         orderDetail.setQty(qty);
         orderDetail.setPrice(price);
 
-
+        // 2025/11/10 추가
+        String usreId = authService.getAuthenticUserId(httpServletRequest);
         // 지금 보니 createOrder 메소드의 order 파라미터는 불필요하다. 장바구니가 안정화 되면, 제거하는 방향으로 리펙토링.
         // 지금은 order.setAmount(qty); 정도만 넣어서 일단 넘기는 식으로 하자.
         //List.of로 감싸는 걸로...
-        String orderId = orderService.createOrder(order, List.of(orderDetail), Collections.emptyList(), httpServletRequest);
+        //String orderId = orderService.createOrder(order, List.of(orderDetail), Collections.emptyList(), httpServletRequest);
+        String orderId = orderService.createOrder(order, List.of(orderDetail), Collections.emptyList(), usreId);
 
 
         logger.info("orderId" + orderId);

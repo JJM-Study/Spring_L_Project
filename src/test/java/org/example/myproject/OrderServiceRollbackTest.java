@@ -75,6 +75,7 @@ public class OrderServiceRollbackTest {
         OrderDto orderMaster = OrderDto.builder().build();
         List<CartDto> cartList = List.of(CartDto.builder().cartNo(1L).build());
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
+        String userId = mockRequest.getUserPrincipal().getName();
         Map<Long, Integer> targetStock = Map.of(1L, 81);
 
         // 1. ★ 별도 트랜잭션에서 초기 재고 조회 (명확한 로그)
@@ -101,7 +102,8 @@ public class OrderServiceRollbackTest {
         // 4. ★ 주문 생성 로직 실행 (예외 발생 기대)
         logger.info("=== [주문 시작] 재고 {}개 차감 예정 ===", 81);
         Assertions.assertThrows(RuntimeException.class, () -> {
-            orderService.createOrder(orderMaster, validOrderDetails, cartList, mockRequest);
+            //orderService.createOrder(orderMaster, validOrderDetails, cartList, mockRequest);
+            orderService.createOrder(orderMaster, validOrderDetails, cartList, userId);
         });
         logger.info("=== [예외 발생 확인] 트랜잭션 롤백 예정 ===");
 

@@ -16,8 +16,9 @@ public enum ErrorCode {
 
     PRODUCT_ORDER_NOT_FOUND("O002", "주문 상품이 비어 있습니다.",  HttpStatus.NOT_FOUND),
 
+    PRODUCT_ORDER_EXISTENCE("0003", "해당 주문번호가 이미 존재합니다.", HttpStatus.CONFLICT),
 
-    // 재고
+        // 재고
     STOCK_NOT_ENOUGH("S001", "상품의 재고가 없습니다.", HttpStatus.BAD_REQUEST),
 
     STOCK_NOT_ENOUGH_DETAIL("S002", "다음 상품들의 재고가 부족합니다: {0}", HttpStatus.BAD_REQUEST),

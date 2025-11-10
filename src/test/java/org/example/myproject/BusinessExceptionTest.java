@@ -144,10 +144,12 @@ public class BusinessExceptionTest {
                 ).collect(Collectors.toList());
 
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
+        String userId = mockHttpServletRequest.getUserPrincipal().getName();
 
 
         BusinessException exception = assertThrows(BusinessException.class, () -> {
-            orderService.createOrder(orderMaster, orderDetails, cartList, mockHttpServletRequest);
+            //orderService.createOrder(orderMaster, orderDetails, cartList, mockHttpServletRequest);
+            orderService.createOrder(orderMaster, orderDetails, cartList, userId);
         });
 
 

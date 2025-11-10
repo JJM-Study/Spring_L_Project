@@ -19,4 +19,8 @@ public interface StockMapper {
 
     void decreaseStockBulk(List<OrderDetailDto> orderDetailDto);
 
+
+    // 임시 테스트용
+    void updateProdStock(@Param("stock") StockQtyDto stock);
+
 }

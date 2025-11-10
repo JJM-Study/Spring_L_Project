@@ -76,4 +76,11 @@
         </foreach>
 
     </update>
+
+    <!-- 일단 테스트용도 -->
+
+    <update id="updateProdStock">
+        update product_master set stock_qty = #{stock.stockQty} where prod_no = #{stock.prodNo};
+    </update>
+
 </mapper>

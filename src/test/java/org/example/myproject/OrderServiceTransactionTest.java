@@ -102,11 +102,13 @@ public class OrderServiceTransactionTest {
         logger.info("의도적 RuntimeException");
 
         MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
+        String userId = mockHttpServletRequest.getUserPrincipal().getName();
 
         CartDto cartDto = CartDto.builder().prodNo(prodNo).qty(qty).build();
 
         Throwable thrown = catchThrowable(() ->
-            orderService.createOrder(order, orderDetailDtoList, List.of(cartDto), mockHttpServletRequest)
+            //orderService.createOrder(order, orderDetailDtoList, List.of(cartDto), mockHttpServletRequest)
+                orderService.createOrder(order, orderDetailDtoList, List.of(cartDto), userId)
         );
 
         stockQty = stockMapper.selectStockQty(Map.of(prodNo, qty));

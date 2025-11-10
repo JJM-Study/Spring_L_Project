@@ -62,7 +62,8 @@ public class OrderService {
     // 3. 결제 도입 시엔 현재 메소드는 먼저 결제 후 주문하는 preCreateOrder로 리펙토링하고, conform 메소드를 따로 만들어 처리하는 방법으로 고민. 선 결제 시에도 OrderCrate 후 상태값을 남김. -> 결제 완료 상태일 경우 conform에서 바로 처리.
     @Transactional
 //    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails) {
-    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto, HttpServletRequest request) {
+    //public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto, HttpServletRequest request) {
+    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto, String userId) {
 
         Map<Long, Integer> requestQuantities = orderDetails.stream()
                 .collect(Collectors.toMap(
@@ -108,7 +109,7 @@ public class OrderService {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        String userId = authService.getAuthenticUserId(request);
+//        String userId = authService.getAuthenticUserId(request);
 
 //        if (authentication == null || !authentication.isAuthenticated() || !(authentication.getPrincipal() instanceof UserDetails)) {
 //            logger.info("authentication: " + authentication);
@@ -134,6 +135,7 @@ public class OrderService {
         orderMaster.setOrderNo(orderNo);
         logger.info("orderMaster :" + orderMaster);
 
+        // 주문 번호 존재 여부 체크에 따른 비즈니스 예외 추가 필요.
         orderMapper.insertOrderMaster(orderMaster);
 
 
@@ -153,7 +155,7 @@ public class OrderService {
         /*=== 통합 테스트용 ===*/
         List<StockQtyDto> stockQtyDtos = stockService.selectStockQty(requestQuantities);
 
-        logger.info("차감 후 재고 : " + stockQtyDtos.get(0).getProdName() + " = 남은 수량 : " + stockQtyDtos.get(0).getStockQty());
+        logger.info("차감 후 재고 : " + stockQtyDtos.get(0).getProdName() + ", 남은 수량 : " + stockQtyDtos.get(0).getStockQty());
         /*========================*/
 
 
