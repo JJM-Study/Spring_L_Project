@@ -117,8 +117,10 @@ public class ProductController {
             Safelist safelist = Safelist.basicWithImages();
 
             ProductDetailDto itemDetail = productService.selectProductDetail(prodNo);
-
-            itemDetail.setDetailDesc(Jsoup.clean(itemDetail.getDetailDesc(), safelist));
+            if(itemDetail.getDetailDesc() != null) {
+                itemDetail.setDetailDesc(Jsoup.clean(itemDetail.getDetailDesc(), safelist));
+            }
+            logger.info("itemDetail" + itemDetail);
 //        logger.info("imageList :" + imageList.get);
 
 //        String itemDetailJson = gson.toJson(itemDetail);

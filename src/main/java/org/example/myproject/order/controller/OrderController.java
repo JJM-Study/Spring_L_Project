@@ -115,7 +115,7 @@ public class OrderController {
         OrderDto order = new OrderDto();
         // UserDetail DTO
         order.setTotalAmount(qty);
-
+        order.setTotalPrice((long) totalPrice);
         OrderDetailDto orderDetail = new OrderDetailDto();
         orderDetail.setProdNo(prodNo);
         orderDetail.setQty(qty);
@@ -144,6 +144,11 @@ public class OrderController {
     public String ordResult(@RequestParam("orderId") String orderId, Model model) {
         model.addAttribute("orderId", orderId);
         logger.info("check orderId=" + orderId);
+
+//        orderService.selectOrderNum()
+//
+//        model.addAttribute()
+
         model.addAttribute("layoutBody", "/WEB-INF/jsp/order/order-conform.jsp");
 
 //        orderService.

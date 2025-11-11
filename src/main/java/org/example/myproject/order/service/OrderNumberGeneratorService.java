@@ -32,7 +32,7 @@ public class OrderNumberGeneratorService {
 
     @Transactional
     public String generateOrderNumber() {
-        logger.info("generateOrderNumber");
+        //logger.info("generateOrderNumber");
 
         try {
 

@@ -1,17 +1,14 @@
 package org.example.myproject.order.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.example.myproject.product.dto.ProductDto;
+import org.example.myproject.product.dto.ProductImageDto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class OrderDto {
+public class OrderInfoDto {
     private String orderNo;
     private String userId;
     private LocalDate orderDate;
@@ -20,10 +17,9 @@ public class OrderDto {
     private Long totalPrice;
     private Integer totalAmount;
     private String delYn;
-    private LocalDate crtDt;
-    private LocalDate updDt;
-    private LocalDate delDt;
 
-//    private String orderDtFormatted;
+    private List<OrderInfoProductDto> orderInfoProductDtos;
+
+//    private List<ProductImageDto> productImageDtoList;
 
 }

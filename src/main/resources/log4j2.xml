@@ -13,17 +13,24 @@
 
         <!--  SQL 로그 출력  -->
 
-        <Logger name="org.example.myproject" level="debug" additivity="true">
+        <Logger name="org.example.myproject" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 
-        <Logger name="org.apache.ibatis" level="debug" additivity="true">
+        <Logger name="org.apache.ibatis" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="org.mybatis.spring" level="debug" additivity="true">
+
+        <Logger name="org.mybatis.spring.transaction" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="java.sql" level="debug" additivity="true">
+
+<!--        <Logger name="org.mybatis.spring" level="debug" additivity="false">-->
+        <Logger name="org.mybatis.spring" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+<!--        <Logger name="java.sql" level="debug" additivity="false">-->
+        <Logger name="java.sql" level="debug" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <!-- 본인 매퍼 패키지 -->
@@ -35,7 +42,7 @@
             <AppenderRef ref="Console"/>
         </Logger>
 
-        <Logger name="org.example.myproject.auth.mapper" level="debug" additivity="true">
+        <Logger name="org.example.myproject.auth.mapper" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 

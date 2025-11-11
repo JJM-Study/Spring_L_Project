@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.example.myproject.order.dto.OrderInfoDto;
 import org.example.myproject.order.dto.OrderListDTO;
 import org.example.myproject.stock.dto.StockQtyDto;
 
@@ -26,6 +27,8 @@ public interface OrderMapper {
 
     // 일단 테스트용
     int selectCountByOrderNo(String orderNo);
+
+    List<OrderInfoDto> selectOrderInfo(String userId, String orderNo);
 
     List<StockQtyDto> productStockList(@Param("prodNos") List<Long> prodNos);
 

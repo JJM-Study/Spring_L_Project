@@ -72,12 +72,22 @@ public class CartService {
             Map<Long, Integer> productPriceMap = productPriceList.stream()
                     .collect(Collectors.toMap(ProductPriceDto::getProdNo, ProductPriceDto::getPrice));
 
+            long totalPrice = cartItems.stream().mapToLong(cartItem -> {
+                Long prodNo = cartItem.getProdNo();
+
+                int price = productPriceMap.getOrDefault(prodNo, 0);
+
+
+                return (long) cartItem.getQty() * price;
+                    }).sum();
 
             // 주문 생성
             CartDto cartItem = cartItems.get(0);
             OrderDto order = new OrderDto();
             order.setOrderDate(LocalDate.now());
+            order.setTotalPrice(totalPrice);
             int totalAmount = cartItems.stream().mapToInt(CartDto::getQty).sum();
+
             order.setTotalAmount(totalAmount);
             order.setUserId(cartItem.getUserId());
 //            order.setOrderStatus("ORDERED");

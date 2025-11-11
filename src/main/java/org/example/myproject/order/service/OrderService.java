@@ -133,7 +133,7 @@ public class OrderService {
 
         orderMaster.setUserId(userId);
         orderMaster.setOrderNo(orderNo);
-        logger.info("orderMaster :" + orderMaster);
+//        logger.info("orderMaster :" + orderMaster);
 
         // 주문 번호 존재 여부 체크에 따른 비즈니스 예외 추가 필요.
         orderMapper.insertOrderMaster(orderMaster);

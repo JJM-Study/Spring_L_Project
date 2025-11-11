@@ -60,7 +60,7 @@ public class OrderServiceConcurrencyTest {
         logger.info("=== Thread 통한 동시성 검증 시작 {} 명 동시 주문. ===", THREAD_COUNT);
 
         List<StockQtyDto> checkStock = stockService.selectStockQty(Map.of(TEST_PROD_NO, requiredStock));
-        logger.info("주문 실행 전 남은 재고 \n 상품명 : {}, 재고 : {} " , checkStock.get(0).getProdName(), checkStock.get(0).getStockQty());
+        logger.info("주문 실행 전 남은 재고 :\n=== 상품명 : {}, 재고 : {} ===" , checkStock.get(0).getProdName(), checkStock.get(0).getStockQty());
 
         for (int i = 0 ; i < THREAD_COUNT; i++) {
             final int userIdIndex = i;
@@ -108,7 +108,7 @@ public class OrderServiceConcurrencyTest {
 
         logger.info("=== 동시성 검증 완료. 최종 재고 확인 필요. ===");
         checkStock = stockService.selectStockQty(Map.of(TEST_PROD_NO, requiredStock));
-        logger.info("주문 실행 후 남은 재고 \n 상품명 : {}, 재고 : {} " , checkStock.get(0).getProdName(), checkStock.get(0).getStockQty());
+        logger.info("주문 실행 후 남은 재고 :\n상품명 : {}, 재고 : {} " , checkStock.get(0).getProdName(), checkStock.get(0).getStockQty());
 
 
     }

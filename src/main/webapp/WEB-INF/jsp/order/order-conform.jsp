@@ -8,6 +8,9 @@
         <h2>주문 완료</h2>
         <p>주문번호 ${orderId}</p>
         <a href="/order/ordlist">주문 리스트 확인</a>
+
+
+        <>
     </section>
 
 

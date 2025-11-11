@@ -4,9 +4,9 @@
 <mapper namespace="org.example.myproject.order.mapper.OrderMapper">
     <insert id="insertOrderMaster" parameterType="org.example.myproject.order.dto.OrderDto">
         insert into order_master
-        (order_no, user_id, total_amount)
+        (order_no, user_id, total_amount, total_price)
         values
-        (#{order.orderNo}, #{order.userId}, #{order.totalAmount});
+        (#{order.orderNo}, #{order.userId}, #{order.totalAmount}, #{order.totalPrice});
     </insert>
 
 
@@ -89,5 +89,42 @@
     <select id="selectOrderNum" resultType="String">
         select * from order_master where order_no = #{orderNo}
     </select>
+
+    <select id="selectOrderInfo" resultMap="OrderInfoWithProductsMap">
+        select a.order_no, b.prod_no, c.prod_name, a.user_id, a.order_status, a.payment_method, a.total_amount, a.order_date, a.total_price
+        from order_master as a
+        Inner JOIN order_detail as b on a.order_no = b.order_no
+        Inner JOIN product_master as c on b.prod_no = c.prod_no
+        Inner JOIN product_image as d on d.prod_no = c.prod_no
+        where a.user_id = #{userId} and a.order_no = #{orderNo};
+    </select>
+
+
+    <resultMap id="OrderInfoWithProductsMap"  type="org.example.myproject.order.dto.OrderInfoDto">
+        <id property="orderNo" column="order_no" />
+        <result property="userId" column="user_id" />
+        <result property="orderStatus" column="order_status" />
+        <result property="paymentMethod" column="payment_method" />
+        <result property="totalAmount" column="total_amount" />
+        <result property="orderDate" column="order_date" />
+        <result property="totalPrice" column="total_price" />
+
+        <collection property="productDtos" ofType="org.example.myproject.product.dto.ProductDto">
+            <result property="prodNo" column="prod_no"/>
+            <result property="prodName" column="prod_name"/>
+
+            <!-- productDto에 차라리 imageList를 추가했어야 했는 듯. 초기 설계 미스? 고민 필요. -->
+            <!--<collection property="productImageDtoList" ofType="org.example.myproject.product.dto.ProductImageDto">
+                <result property="imageUrl" column="image_url" />
+                <result property="isMain" column="is_main" />
+                <result property="sortOrder" column="sort_order" />
+            </collection>-->
+
+        </collection>
+        
+    </resultMap>
+
+
+    <select id="select"
 
 </mapper>
