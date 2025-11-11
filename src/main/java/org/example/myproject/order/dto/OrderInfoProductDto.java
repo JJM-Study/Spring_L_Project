@@ -3,6 +3,7 @@ package org.example.myproject.order.dto;
 import lombok.Data;
 import org.example.myproject.product.dto.ProductDetailDto;
 import org.example.myproject.product.dto.ProductDto;
+import org.example.myproject.product.dto.ProductImageDto;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,12 +16,13 @@ public class OrderInfoProductDto {
     private String prodName;
     private String sellerId;
     private Integer price;
-    private String status;
+    private Integer stockQty;
+    private String prodStatus;
 //    private LocalDate salesDt; 굳이 상품 판매일자가 여기에 필요할까?
 
     private String delYn;
 
     // 확장성 고려해서 단순 imageUrl (isMain = 1)가 아니라 subImage까지 가져오는 방식으로 하자.
-    List<ProductDetailDto> ImageList;
+    List<ProductImageDto> imageList;
 
 }

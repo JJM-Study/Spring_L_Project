@@ -13,7 +13,7 @@ public class ProductDto {
 
         private Integer price;
         private Integer stockQty;
-        private String status;
+        private String prodStatus;
         private LocalDate salesDt;
 
         private LocalDate crtDt;

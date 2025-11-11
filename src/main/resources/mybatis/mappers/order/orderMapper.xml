@@ -90,17 +90,20 @@
         select * from order_master where order_no = #{orderNo}
     </select>
 
-    <select id="selectOrderInfo" resultMap="OrderInfoWithProductsMap">
+
+    <!-- === 두 개를 Service에서 조립하자. === -->
+
+    <select id="selectOrderInfo" resultMap="OrderInfoMap">
         select a.order_no, b.prod_no, c.prod_name, a.user_id, a.order_status, a.payment_method, a.total_amount, a.order_date, a.total_price
         from order_master as a
-        Inner JOIN order_detail as b on a.order_no = b.order_no
-        Inner JOIN product_master as c on b.prod_no = c.prod_no
-        Inner JOIN product_image as d on d.prod_no = c.prod_no
+        INNER JOIN order_detail as b on a.order_no = b.order_no
+        INNER JOIN product_master as c on b.prod_no = c.prod_no
+<!--        LEFT JOIN product_image as d on d.prod_no = c.prod_no-->
         where a.user_id = #{userId} and a.order_no = #{orderNo};
     </select>
 
 
-    <resultMap id="OrderInfoWithProductsMap"  type="org.example.myproject.order.dto.OrderInfoDto">
+    <resultMap id="OrderInfoMap"  type="org.example.myproject.order.dto.OrderInfoDto">
         <id property="orderNo" column="order_no" />
         <result property="userId" column="user_id" />
         <result property="orderStatus" column="order_status" />
@@ -109,7 +112,7 @@
         <result property="orderDate" column="order_date" />
         <result property="totalPrice" column="total_price" />
 
-        <collection property="productDtos" ofType="org.example.myproject.product.dto.ProductDto">
+        <collection property="orderInfoProductDtos" ofType="org.example.myproject.order.dto.OrderInfoProductDto">
             <result property="prodNo" column="prod_no"/>
             <result property="prodName" column="prod_name"/>
 
@@ -121,10 +124,35 @@
             </collection>-->
 
         </collection>
-        
+
     </resultMap>
 
+    <select id="selectOrdProdImage" resultType="org.example.myproject.product.dto.ProductImageDto" >
+        select a.prod_no, b.is_main, b.image_url, b.sort_order from product_master as a
+        inner join product_image as b on a.prod_no = b.prod_no
+        where a.prod_no in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
-    <select id="select"
+
+<!--    <resultMap id="OrderProdWithImageMap" type="org.example.myproject.order.dto.OrderInfoProductDto">-->
+<!--        <id property="prodNo" column="prod_no" />-->
+<!--        <result property="prodName" column="prod_name" />-->
+<!--        <result property="price" column="price" />-->
+<!--        <result property="stockQty" column="stock_qty" />-->
+<!--        <result property="prodStatus" column="prod_status"/>-->
+
+<!--        <collection property="imageList" ofType="org.example.myproject.product.dto.ProductImageDto">-->
+<!--            <result property="prodNo" column="prod_no" />-->
+<!--            <result property="imageUrl" column="image_url" />-->
+<!--            <result property="isMain" column="is_main" />-->
+<!--            <result property="sortOrder" column="sort_order"/>-->
+<!--        </collection>-->
+<!--    </resultMap>-->
+
+
+    <!-- ====== -->
 
 </mapper>
