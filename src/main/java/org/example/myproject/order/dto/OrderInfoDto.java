@@ -18,7 +18,7 @@ public class OrderInfoDto {
     private Integer totalAmount;
     private String delYn;
 
-    private List<OrderInfoProductDto> orderInfoProductDtos;
+    private List<OrderInfoProductDto> ordInfoProdList;
 
 //    private List<ProductImageDto> productImageDtoList;
 

@@ -10,10 +10,7 @@ import org.example.myproject.cart.service.CartService;
 import org.example.myproject.config.Pagination;
 import org.example.myproject.error.BusinessException;
 import org.example.myproject.error.ErrorCode;
-import org.example.myproject.order.dto.OrderDetailDto;
-import org.example.myproject.order.dto.OrderDto;
-import org.example.myproject.order.dto.OrderListDTO;
-import org.example.myproject.order.dto.OrderRequestDto;
+import org.example.myproject.order.dto.*;
 import org.example.myproject.order.service.OrderService;
 import org.example.myproject.product.service.ProductService;
 import org.example.myproject.stock.service.StockService;
@@ -141,7 +138,7 @@ public class OrderController {
     }
 
     @GetMapping("/result")
-    public String ordResult(@RequestParam("orderId") String orderId, Model model) {
+    public String ordResult(@RequestParam("orderId") String orderId, Model model, HttpServletRequest request) {
         model.addAttribute("orderId", orderId);
         logger.info("check orderId=" + orderId);
 
@@ -149,10 +146,16 @@ public class OrderController {
 //
 //        model.addAttribute()
 
+        String userId = authService.getAuthenticUserId(request);
+
         model.addAttribute("layoutBody", "/WEB-INF/jsp/order/order-conform.jsp");
 
 //        orderService.
         // 여기에 주문 세부 정보를 조회하는 서비스 추가.
+         OrderInfoDto orderInfo = orderService.orderDetails(orderId, userId);
+
+         model.addAttribute("orderInfo", orderInfo);
+         logger.info("orderInfo :" + orderInfo);
 
         return "layout/main-layout";
     }

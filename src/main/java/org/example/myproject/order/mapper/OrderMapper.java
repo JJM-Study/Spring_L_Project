@@ -26,13 +26,11 @@ public interface OrderMapper {
     // 일단 테스트용
     int selectCountByOrderNo(String orderNo);
 
-    List<OrderInfoDto> selectOrderInfo(String orderNo, String userId);
+    OrderInfoDto selectOrderInfo(String orderNo, String userId);
 
     List<StockQtyDto> productStockList(@Param("prodNos") List<Long> prodNos);
 
     String selectOrderNum(String orderNo);
 
-    // 2025/11/11 수정 필요.
-    List<ProductImageDto> selectOrdProdImage(@Param("list") List<Long> prodNo);
 
 }

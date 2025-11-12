@@ -87,4 +87,13 @@
         select * from product_master WHERE prod_no = #{prodNo};
     </select>
 
+    <select id="selectImagesByProdNos" resultType="org.example.myproject.product.dto.ProductImageDto" >
+        select a.prod_no, b.is_main, b.image_url, b.sort_order from product_master as a
+        inner join product_image as b on a.prod_no = b.prod_no
+        where a.prod_no in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

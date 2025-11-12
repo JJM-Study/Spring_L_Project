@@ -10,12 +10,14 @@ import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.mapper.CartMapper;
 import org.example.myproject.error.BusinessException;
 import org.example.myproject.error.ErrorCode;
-import org.example.myproject.order.dto.OrderListDTO;
+import org.example.myproject.order.dto.*;
 import org.example.myproject.order.mapper.OrderMapper;
 import org.example.myproject.order.mapper.OrderSequenceMapper;
-import org.example.myproject.order.dto.OrderDetailDto;
-import org.example.myproject.order.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
+import org.example.myproject.product.dto.ProductDto;
+import org.example.myproject.product.dto.ProductImageDto;
+import org.example.myproject.product.mapper.ProductMapper;
+import org.example.myproject.product.service.ProductService;
 import org.example.myproject.stock.dto.StockQtyDto;
 import org.example.myproject.stock.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,9 @@ public class OrderService {
 
     @Autowired
     StockService stockService;
+
+    @Autowired
+    ProductService productService;
 
     private static final Logger logger = LogManager.getLogger(OrderService.class);
 
@@ -188,4 +193,41 @@ public class OrderService {
         return orderMapper.selectOrderNum(orderNo);
     }
 
+    public OrderInfoDto selectOrderInfo(String orderNo, String userId) {
+        return orderMapper.selectOrderInfo(orderNo, userId);
+    }
+
+    // 2025/11/12 추가
+    // 최적화를 위해 주문 결과에 보이는 OrderNo에 따른
+    // prodNos와 prodNos에 따른 Image들을 각각 불러와서 service 조립 연습.
+   public OrderInfoDto orderDetails(String orderNo, String userId) {
+        OrderInfoDto orderInfo = selectOrderInfo(orderNo, userId);
+
+
+        if (orderInfo == null || orderInfo.getOrdInfoProdList() == null || orderInfo.getOrdInfoProdList().isEmpty()) {
+            return orderInfo;
+        }
+
+        List<Long> prodNos = orderInfo.getOrdInfoProdList().stream()
+                .map(OrderInfoProductDto::getProdNo)
+                .distinct()
+                .toList();
+
+
+        List<ProductImageDto> allImages = productService.selectImagesByProdNos(prodNos);
+
+
+        Map<Long, List<ProductImageDto>> imageMap = allImages.stream()
+                .collect(Collectors.groupingBy(ProductImageDto::getProdNo));
+
+        orderInfo.getOrdInfoProdList().forEach(product -> {
+            List<ProductImageDto> imageList = imageMap.get(product.getProdNo());
+            product.setImageList(imageList = imageMap.get(product.getProdNo()));
+        });
+
+        return orderInfo;
+
+
+
+    };
 }

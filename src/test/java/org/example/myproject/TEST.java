@@ -6,6 +6,7 @@ import org.example.myproject.order.dto.OrderInfoDto;
 import org.example.myproject.order.dto.OrderInfoProductDto;
 import org.example.myproject.order.mapper.OrderMapper;
 import org.example.myproject.product.dto.ProductImageDto;
+import org.example.myproject.product.mapper.ProductMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class TEST {
     @Autowired
     OrderMapper orderMapper;
 
+    @Autowired
+    ProductMapper productMapper;
+
     private static final Logger logger = LogManager.getLogger(TEST.class);
 
     @Test
@@ -36,10 +40,10 @@ public class TEST {
 
         List<Long> prodNos = productImageDto.stream().map(ProductImageDto::getProdNo).toList();
 
-        List<OrderInfoDto> orderInfoDtos = orderMapper.selectOrderInfo("ORD20251111-2603", "ANON-7004e94b-327e-4ebe-ba4a-eeffb6ea30f0");
+        OrderInfoDto orderInfoDtos = orderMapper.selectOrderInfo("ORD20251111-2603", "ANON-7004e94b-327e-4ebe-ba4a-eeffb6ea30f0");
         logger.info("orderInfoDtos : {} ", orderInfoDtos);
 
-        List<ProductImageDto> orderInfoProductDtos = orderMapper.selectOrdProdImage(prodNos);
-        logger.info("orderInfoProductDtos : {} ", orderInfoProductDtos);
+        List<ProductImageDto> productImageList = productMapper.selectImagesByProdNos(prodNos);
+        logger.info("ProductImageDto : {} ", productImageList);
     }
 }

@@ -61,4 +61,8 @@ public class ProductService {
         return productMapper.selectNowOrdProduct(prodNo);
     }
 
+    public List<ProductImageDto> selectImagesByProdNos(List<Long> prodNo) {
+        return productMapper.selectImagesByProdNos(prodNo);
+    }
+
 }

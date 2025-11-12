@@ -178,4 +178,5 @@ public class ProductController {
 
         return "layout/main-layout";
     }
+
 }

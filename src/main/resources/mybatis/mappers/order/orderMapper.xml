@@ -94,7 +94,7 @@
     <!-- === 두 개를 Service에서 조립하자. === -->
 
     <select id="selectOrderInfo" resultMap="OrderInfoMap">
-        select a.order_no, b.prod_no, c.prod_name, a.user_id, a.order_status, a.payment_method, a.total_amount, a.order_date, a.total_price
+        select a.order_no, b.prod_no, c.prod_name, b.qty as order_qty, a.user_id, a.order_status, a.payment_method, a.total_amount, a.order_date, c.price, a.total_price
         from order_master as a
         INNER JOIN order_detail as b on a.order_no = b.order_no
         INNER JOIN product_master as c on b.prod_no = c.prod_no
@@ -112,10 +112,11 @@
         <result property="orderDate" column="order_date" />
         <result property="totalPrice" column="total_price" />
 
-        <collection property="orderInfoProductDtos" ofType="org.example.myproject.order.dto.OrderInfoProductDto">
+        <collection property="ordInfoProdList" ofType="org.example.myproject.order.dto.OrderInfoProductDto">
             <result property="prodNo" column="prod_no"/>
             <result property="prodName" column="prod_name"/>
-
+            <result property="price" column="price"/>
+            <result property="orderQty" column="order_qty" />
             <!-- productDto에 차라리 imageList를 추가했어야 했는 듯. 초기 설계 미스? 고민 필요. -->
             <!--<collection property="productImageDtoList" ofType="org.example.myproject.product.dto.ProductImageDto">
                 <result property="imageUrl" column="image_url" />
@@ -126,16 +127,6 @@
         </collection>
 
     </resultMap>
-
-    <select id="selectOrdProdImage" resultType="org.example.myproject.product.dto.ProductImageDto" >
-        select a.prod_no, b.is_main, b.image_url, b.sort_order from product_master as a
-        inner join product_image as b on a.prod_no = b.prod_no
-        where a.prod_no in
-        <foreach item="item" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </select>
-
 
 <!--    <resultMap id="OrderProdWithImageMap" type="org.example.myproject.order.dto.OrderInfoProductDto">-->
 <!--        <id property="prodNo" column="prod_no" />-->

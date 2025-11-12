@@ -16,6 +16,7 @@ public class OrderInfoProductDto {
     private String prodName;
     private String sellerId;
     private Integer price;
+    private Integer orderQty; // 개별 아이템 마다의 주문 수량
     private Integer stockQty;
     private String prodStatus;
 //    private LocalDate salesDt; 굳이 상품 판매일자가 여기에 필요할까?
