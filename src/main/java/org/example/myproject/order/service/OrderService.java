@@ -80,6 +80,18 @@ public class OrderService {
         //List<Long> prodNos = new ArrayList<>(requestQuantities.keySet());
         List<StockQtyDto> stock = stockService.selectStockQty(requestQuantities);
 
+        // 2025/11/13 일단 추가.
+        Map<Long, StockQtyDto> stockMap = stock.stream()
+                .collect(Collectors.toMap(StockQtyDto::getProdNo, dto -> dto));
+
+        orderDetails.forEach(details -> {
+            Long prodNo = details.getProdNo();
+            StockQtyDto stockData = stockMap.get(prodNo);
+
+            if (stockData != null) {
+                details.setProdType(stockData.getProdType());
+            }
+        });
 
         //List<StockQtyDto> stock = stockService.selectStockQty(prodNos, requestQty);
 

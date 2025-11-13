@@ -18,14 +18,15 @@
     </insert>
 
     <insert id="insertOrderDetailBulk">
-        INSERT INTO order_detail (order_no, prod_no, qty, price)
+        INSERT INTO order_detail (order_no, prod_no, qty, price, prod_type)
         VALUES
         <foreach collection="list" item="order" separator=",">
             (
             #{order.orderNo},
             #{order.prodNo},
             #{order.qty},
-            #{order.price}
+            #{order.price},
+            #{order.prodType}
             )
         </foreach>
     </insert>
@@ -94,7 +95,7 @@
     <!-- === 두 개를 Service에서 조립하자. === -->
 
     <select id="selectOrderInfo" resultMap="OrderInfoMap">
-        select a.order_no, b.prod_no, c.prod_name, b.qty as order_qty, a.user_id, a.order_status, a.payment_method, a.total_amount, a.order_date, c.price, a.total_price
+        select a.order_no, b.prod_no, c.prod_name, b.qty as order_qty, a.user_id, a.order_status, a.payment_method, a.total_amount, a.order_date, c.price, a.total_price, b.prod_type
         from order_master as a
         INNER JOIN order_detail as b on a.order_no = b.order_no
         INNER JOIN product_master as c on b.prod_no = c.prod_no
@@ -117,6 +118,7 @@
             <result property="prodName" column="prod_name"/>
             <result property="price" column="price"/>
             <result property="orderQty" column="order_qty" />
+            <result property="prodType" column="prod_type" />
             <!-- productDto에 차라리 imageList를 추가했어야 했는 듯. 초기 설계 미스? 고민 필요. -->
             <!--<collection property="productImageDtoList" ofType="org.example.myproject.product.dto.ProductImageDto">
                 <result property="imageUrl" column="image_url" />

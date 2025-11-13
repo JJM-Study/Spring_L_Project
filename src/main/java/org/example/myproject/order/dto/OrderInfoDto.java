@@ -1,8 +1,11 @@
 package org.example.myproject.order.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 import org.example.myproject.product.dto.ProductDto;
 import org.example.myproject.product.dto.ProductImageDto;
+import org.example.myproject.product.enums.ProductType;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,6 +20,7 @@ public class OrderInfoDto {
     private Long totalPrice;
     private Integer totalAmount;
     private String delYn;
+
 
     private List<OrderInfoProductDto> ordInfoProdList;
 

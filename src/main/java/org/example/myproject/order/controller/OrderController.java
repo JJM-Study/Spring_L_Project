@@ -158,7 +158,7 @@ public class OrderController {
          String defaultImage = "/assets/images/No_Image.png";
 
          for (OrderInfoProductDto item : orderInfo.getOrdInfoProdList()) {
-
+             logger.info("item : {}", item);
              String mainPath = item.getImageList().stream()
                      .filter(img -> Boolean.TRUE.equals(img.getIsMain()))
                      .findFirst()

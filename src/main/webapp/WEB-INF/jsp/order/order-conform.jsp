@@ -31,6 +31,7 @@
                     <th class="th-prod-name">상품명</th>
                     <th>상품 가격</th>
                     <th>주문 수량</th>
+                    <th>상품 타입</th>
                 </thread>
                 <tbody>
                     <c:forEach var="item" items="${orderInfo.ordInfoProdList}">
@@ -47,6 +48,7 @@
                             </td>
                             <td class="td-price">${item.price}</td>
                             <td class="td-ord-qty">${item.orderQty}</td>
+                            <td>${item.prodType}</td>
                         </tr>
                     </c:forEach>
                 </tbody>

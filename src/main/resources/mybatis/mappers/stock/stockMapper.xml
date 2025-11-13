@@ -41,6 +41,7 @@
         pm.prod_no,
         pm.prod_name AS prodName,
         pm.stock_qty AS stockQty,
+        pm.prod_type AS prodType,
         CASE pm.prod_no
         <foreach item="value" index="key" collection="requestMap">
             WHEN #{key} THEN #{value}

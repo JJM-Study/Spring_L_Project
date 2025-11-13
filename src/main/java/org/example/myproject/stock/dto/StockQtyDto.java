@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.myproject.product.enums.ProductType;
 
 @Data
 @Builder
@@ -14,4 +15,5 @@ public class StockQtyDto {
     private String prodName;
     private Integer stockQty;
     private Integer requestQty;
+    private ProductType prodType;
 }
