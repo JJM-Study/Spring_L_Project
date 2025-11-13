@@ -26,4 +26,7 @@ public class OrderInfoProductDto {
     // 확장성 고려해서 단순 imageUrl (isMain = 1)가 아니라 subImage까지 가져오는 방식으로 하자.
     List<ProductImageDto> imageList;
 
+    // 나중에 subImages를 가져올 수도 있으니까, mainImage 추가. service에서 조립하자.
+    String mainImgPath;
+
 }

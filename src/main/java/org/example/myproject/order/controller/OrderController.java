@@ -12,6 +12,7 @@ import org.example.myproject.error.BusinessException;
 import org.example.myproject.error.ErrorCode;
 import org.example.myproject.order.dto.*;
 import org.example.myproject.order.service.OrderService;
+import org.example.myproject.product.dto.ProductImageDto;
 import org.example.myproject.product.service.ProductService;
 import org.example.myproject.stock.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,6 +154,20 @@ public class OrderController {
 //        orderService.
         // 여기에 주문 세부 정보를 조회하는 서비스 추가.
          OrderInfoDto orderInfo = orderService.orderDetails(orderId, userId);
+
+         String defaultImage = "/assets/images/No_Image.png";
+
+         for (OrderInfoProductDto item : orderInfo.getOrdInfoProdList()) {
+
+             String mainPath = item.getImageList().stream()
+                     .filter(img -> Boolean.TRUE.equals(img.getIsMain()))
+                     .findFirst()
+                     .map(ProductImageDto::getImageUrl)
+                     .orElse(defaultImage);
+
+             item.setMainImgPath(mainPath);
+         }
+
 
          model.addAttribute("orderInfo", orderInfo);
          logger.info("orderInfo :" + orderInfo);
