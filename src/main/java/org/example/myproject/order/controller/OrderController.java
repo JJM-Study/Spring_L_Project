@@ -158,8 +158,13 @@ public class OrderController {
          String defaultImage = "/assets/images/No_Image.png";
 
          for (OrderInfoProductDto item : orderInfo.getOrdInfoProdList()) {
-             logger.info("item : {}", item);
-             String mainPath = item.getImageList().stream()
+
+             List<ProductImageDto> checkImageList = (item.getImageList() != null) ? item.getImageList() : Collections.emptyList();
+
+//             logger.info("item : {}", item);
+             logger.info("item : {}", checkImageList);
+             //String mainPath = item.getImageList().stream()
+             String mainPath = checkImageList.stream()
                      .filter(img -> Boolean.TRUE.equals(img.getIsMain()))
                      .findFirst()
                      .map(ProductImageDto::getImageUrl)
