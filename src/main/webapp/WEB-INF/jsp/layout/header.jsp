@@ -30,9 +30,9 @@
             </button>
             <div class="collapse navbar-collapse" id="header-container">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/home">홈</a>
-                    </li>
+                     <%-- <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/library/my">내 서재</a>
+                     </li> --%>
                      <li class="nav-item">
                         <a class="nav-link" href="/cart/cartlist">장바구니</a>
                      </li>
@@ -41,6 +41,9 @@
                      </li>
                      <li class="nav-item">
                         <a class="nav-link" href="/order/ordlist">주문내역</a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/library/my">내 서재</a>
                      </li>
                 </ul>
                 <ul class="navbar-nav userInfo-menu">

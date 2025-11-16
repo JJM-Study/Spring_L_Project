@@ -1,0 +1,52 @@
+#div-item-list ul {
+    list-style:none;
+}
+
+
+#div-item-list {
+    margin: auto;
+    width: 1200px;
+
+}
+
+.div-item {
+  border: 1px solid black;
+  height : 120px;
+}
+
+.div-item-img {
+   display:flex;
+   height: 100px;
+   width: 100px;
+}
+
+.div-item-info {
+    display: flex;
+    gap : 10px;
+    align-items:center;
+}
+
+
+.div-item-img > img {
+    height 100%;
+    object-fit : fill;
+}
+
+.div-item {
+    box-sizing : border-box;
+    display: flex;
+    justify-content: space-between;
+    padding : 5px;
+    align-items:center;
+}
+
+
+.div-download {
+    display:flex;
+    align-items: center;
+    margin-right:10px;
+}
+
+ul > li {
+    margin-bottom: 2px;
+}

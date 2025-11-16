@@ -1,4 +1,4 @@
-package org.example.myproject.libarary.enums
+package org.example.myproject.library.enums
 
 
 // 파일 승인 여부
