@@ -2,23 +2,25 @@ package org.example.myproject.file.controller;
 
 import org.example.myproject.file.dto.FileUploadDto;
 import org.example.myproject.file.dto.FileUploadRequestDto;
-import org.example.myproject.file.service.FileUploadService;
+import org.example.myproject.file.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class FileUploadController {
+public class FileController {
 
     @Autowired
-    FileUploadService fileUploadService;
+    FileService fileService;
 
     @PostMapping("/api/file/uploadFromUrl")
     public ResponseEntity<String>fileUploadFromUrl(@RequestBody FileUploadRequestDto dto) {
-        int result = fileUploadService.uploadFileFromUrl(dto);
+        int result = fileService.uploadFileFromUrl(dto);
 
         if (result > 0) {
             return ResponseEntity.ok("Url Upload Succeed!!");
@@ -30,7 +32,7 @@ public class FileUploadController {
 
     @PostMapping("/api/file/upload")
     public ResponseEntity<String>fileUpload(@RequestBody FileUploadDto dto) {
-        int result = fileUploadService.uploadFile(dto);
+        int result = fileService.uploadFile(dto);
 
         if (result > 0) {
             return ResponseEntity.ok("");
@@ -38,4 +40,5 @@ public class FileUploadController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
         }
     }
+
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.myproject.file.mapper.FileMapper">
+
+    <select id="selectFileById" resultType="org.example.myproject.file.dto.FileMasterDto">
+        select
+        file_id,
+        domain_type,
+        domain_id,
+        file_purpose,
+        file_status,
+        approval_status,
+        original_filename,
+        stored_filename,
+        reg_dt,
+        upd_dt
+        from file_master
+        where file_id = #{fileId};
+    </select>
+
+</mapper>

@@ -35,13 +35,14 @@ public class LibraryController extends AbstractBaseController {
 
         String userId = authService.getAuthenticUserId(request);
 
+
+
         List<MyLibraryItemsDto> libraryList = libraryService.selectMyLibraryItems(userId);
 
         model.addAttribute("library",libraryList);
 
         return layout("/library/my-library.jsp", model);
     }
-
 
     // 나중에 아이템의 detail에 대해서 볼 수 있도록 하기 위해 view 추가 고민.
 //    @GetMapping("/detail/{prodNo}")

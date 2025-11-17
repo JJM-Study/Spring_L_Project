@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.myproject.product.mapper.ProductFileMapper">
+
+<!--    <select id="downloadFile" resultType="">-->
+<!--    select-->
+<!--        a.lyb_no,-->
+<!--        b.prod_name,-->
+<!--        b.seller_id,-->
+<!--        c.domain_type,-->
+<!--        c.file_purpose,-->
+<!--        c.original_filename,-->
+<!--        c.file_id,-->
+<!--        c.file_status,-->
+<!--        c.reg_dt-->
+<!--        from user_library as a-->
+<!--            inner join product_master as b on a.prod_no = b.prod_no-->
+<!--            LEFT join file_master as c on c.domain_id = a.prod_no and c.file_purpose = "RELEASE" and c.domain_type = "PRODUCT" and file_status="ACTIVE";-->
+<!--    </select>-->
+
+    <select id="checkDownloadFile" resultType="org.example.myproject.product.dto.ProductCheckFileDto">
+        select
+        a.prod_no,
+        b.file_id,
+        b.original_filename,
+        b.file_status,
+        b.file_purpose,
+        b.approval_status
+        from user_library as a
+        left join file_master as b on b.domain_type = "PRODUCT" and b.domain_id = a.prod_no
+<!--        where a.user_id = 'ANON-7004e94b-327e-4ebe-ba4a-eeffb6ea30f0'-->
+        where a.user_id = #{userId}
+        and a.prod_no = #{prodNo}
+    </select>
+
+
+</mapper>

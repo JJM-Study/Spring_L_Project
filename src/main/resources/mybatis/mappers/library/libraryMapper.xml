@@ -3,6 +3,23 @@
 
 <mapper namespace="org.example.myproject.library.mapper.LibraryMapper">
     <select id="selectMyLibraryItems" resultType="org.example.myproject.library.dto.MyLibraryItemsDto">
-        select * from user_library
+<!--        select * from user_library-->
+        select
+            a.lyb_no,
+            b.prod_name,
+            b.seller_id,
+            c.domain_type,
+            c.file_purpose,
+            c.original_filename,
+            c.file_id,
+            c.file_status,
+            c.reg_dt
+        from user_library as a
+        inner join product_master as b on a.prod_no = b.prod_no
+        LEFT join file_master as c on c.domain_id = a.prod_no
+        and c.file_purpose = "RELEASE"
+        and c.domain_type = "PRODUCT"
+<!--        and file_status="ACTIVE";-->
+        where a.user_id = #{userId}
     </select>
 </mapper>
