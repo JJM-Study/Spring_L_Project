@@ -16,6 +16,7 @@ public class CartDto {
     private String userId;
     private Long prodNo;
     private String prodName;
+    private String prodType;
     private String ordNo;
     private Integer qty;
     private LocalDate crtDt;

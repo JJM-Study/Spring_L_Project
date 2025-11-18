@@ -88,6 +88,12 @@ public class OrderController {
         }
     }
 
+    /* DIGITAL TYPE 유무에 따라 수량이 1개 이상인지
+       그리고 라이브러리에 현재  들어있으면 카트나 주문 넣기 불가.
+       각각 ErrorCode 추가 후
+       메소드를 따로 작성해서 cart와 order 처리 메소드에 각각 더하여 백엔드에서 이중 방어 하는 것 잊지 말 것.
+     */
+
     @PostMapping("/order_prod")
     public ResponseEntity<Map<String, Object>> orderNow(@RequestBody OrderRequestDto request, HttpServletRequest httpServletRequest) throws Exception {
         Map<String, Object> response = new HashMap<>();

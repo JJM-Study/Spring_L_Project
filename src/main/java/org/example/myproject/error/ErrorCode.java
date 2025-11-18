@@ -18,6 +18,8 @@ public enum ErrorCode {
 
     PRODUCT_ORDER_EXISTENCE("0003", "해당 주문번호가 이미 존재합니다.", HttpStatus.CONFLICT),
 
+    IS_IN_LYB("O004", "이미 소유 중인 상품입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+
         // 재고
     STOCK_NOT_ENOUGH("S001", "상품의 재고가 없습니다.", HttpStatus.BAD_REQUEST),
 

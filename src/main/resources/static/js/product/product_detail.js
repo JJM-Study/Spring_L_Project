@@ -3,6 +3,10 @@ const mBtn = document.querySelector("#mBtn");
 let pd_inputQty = document.querySelector(".qty");
 const orderBtn = document.querySelector(".btn-ord-now");
 
+
+let pd_isInLyb = itemData.dataset.isInLyb;
+let pd_prodType = itemData.dataset.prodType;
+
 pBtn.addEventListener("click", ()=> {
     let qty = parseInt(pd_inputQty.value) || 0;
     qty++;  // 여기에는 나중에 max 값을 받아오든 해서 할 것.
@@ -17,41 +21,44 @@ mBtn.addEventListener("click", ()=> {
     calculation();
 });
 
-orderBtn.addEventListener("click", (event) => {
-    const prodNo = event.currentTarget.dataset.prodno;
-    const qty = parseInt(pd_inputQty.value);
-    console.log("prodNo : " + prodNo);
-    console.log("qty : " + qty);
+if(orderBtn) {
+    orderBtn.addEventListener("click", (event) => {
+        const prodNo = event.currentTarget.dataset.prodno;
+        const qty = parseInt(pd_inputQty.value);
+        console.log("prodNo : " + prodNo);
+        console.log("qty : " + qty);
 
-    const priceElement = document.getElementById("total-price").innerText;
-    const totalPrice = parseInt(priceElement.replace(/[^0-9]/g, ''));
+        const priceElement = document.getElementById("total-price").innerText;
+        const totalPrice = parseInt(priceElement.replace(/[^0-9]/g, ''));
 
 
 
-//    debugger;
-    console.log("totalPrice" + totalPrice);
+    //    debugger;
+        console.log("totalPrice" + totalPrice);
 
-    fetch("/order/order_prod", {
-        method: "POST",
-        headers: {
-            'content-type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify({
-            "prodNo": prodNo,
-            "qty": qty,
-            "totalPrice": totalPrice
+        fetch("/order/order_prod", {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({
+                "prodNo": prodNo,
+                "qty": qty,
+                "totalPrice": totalPrice
+                })
+            }).then((res) => {
+                return res.json();
+            }).then((data) => {
+                if(data.success) {
+                    location.href = "/order/result?orderId=" + data.orderId;
+                } else {
+                    alert("주문 실패");
+                }
             })
-        }).then((res) => {
-            return res.json();
-        }).then((data) => {
-            if(data.success) {
-                location.href = "/order/result?orderId=" + data.orderId;
-            } else {
-                alert("주문 실패");
-            }
         })
-    })
+
+}
 
 pd_inputQty.addEventListener("input", () => {
     calculation();
@@ -86,5 +93,21 @@ window.addEventListener('pageshow', function(event) {
     console.log("pd_inputQty :" + parseInt(pd_inputQty.value));
     console.log("Loaded 실행 확인");
     calculation();
+
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const itemData = document.getElementById("itemData");
+
+    if (pd_isInLyb == "true") {
+        pBtn.disabled=true;
+        mBtn.disabled=true;
+        pd_inputQty.disabled=true;
+    }
+    else if (pd_prodType == "DIGITAL") {
+        pBtn.disabled=true;
+        mBtn.disabled=true;
+        pd_inputQty.disabled=true;
+    }
 
 });

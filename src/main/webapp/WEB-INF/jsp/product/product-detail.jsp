@@ -97,17 +97,27 @@
                     <input type="number" class="qty" value="1" min="1"/>
                     <button id="mBtn" type="button">-</button>
                 </div>
+                <c:if test="${itemList.prodType == 'DIGITAL' and itemList.isInLyb == false}">
+                    <p>다운로드 상품은 수량 선택 불가</p>
+                </c:if>
                 <p>가격 : <span id="total-price">${itemList.price}</span></p>
                 <div class="orderBtn">
                   <c:choose>
-                    <c:when test="${isInCart == false}">
-                        <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
-                    </c:when>
-                    <c:otherwise>
-                        <button class="btn btn-primary in-cart-btn" onclick="location.href='/cart/cartlist'">장바구니에 있음</button>
-                    </c:otherwise>
+                      <c:when test="${itemList.isInLyb==true}">
+                        <button class="btn btn-primary in-cart-btn" onclick="location.href='/library/my'">소유 중인 상품</button>
+                      </c:when>
+                      <c:otherwise>
+                          <c:choose>
+                            <c:when test="${isInCart == false}">
+                                <button class="btn btn-primary add-to-cart-btn" data-prodno="${itemList.prodNo}">장바구니 담기</button>
+                            </c:when>
+                            <c:otherwise>
+                                <button class="btn btn-primary in-cart-btn" onclick="location.href='/cart/cartlist'">장바구니에 있음</button>
+                            </c:otherwise>
+                          </c:choose>
+                          <button class="btn btn-primary btn-ord-now" data-prodno="${itemList.prodNo}">주문하기</button>
+                      </c:otherwise>
                   </c:choose>
-                  <button class="btn btn-primary btn-ord-now" data-prodno="${itemList.prodNo}">주문하기</button>
                </div>
            </div>
         </div>
@@ -117,6 +127,11 @@
 
             <input type="hidden" id="console" value='${itemDetailJson}'>
 
+
+        <div id="itemData"
+            data-is-in-lyb=${itemList.isInLyb}
+            data-prod-type=${itemList.prodType}>
+        </div>
 <%--</main>--%>
 
 

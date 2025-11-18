@@ -15,8 +15,20 @@ th a {
 
 }
 
+#cart-th-name {
+    width: 70%;
+}
+
 #cart-th-no a {
     white-space: nowrap;
+}
+
+#cart-th-del {
+    width: 1%;
+}
+
+th {
+white-space: nowrap;
 }
 
 td {

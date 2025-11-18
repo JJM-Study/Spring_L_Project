@@ -25,7 +25,7 @@
     <!-- 카트 리스트 조회 -->
     <select id="selectOrderCartList" resultType="org.example.myproject.cart.dto.CartDto">
         SELECT a.cart_no, a.user_id, a.prod_no, a.qty, a.crt_dt, a.upd_dt, a.del_yn, a.del_dt,
-        b.prod_name
+        b.prod_name, b.prod_type
         FROM order_cart a
         LEFT JOIN product_master b
         ON a.prod_no = b.prod_no
@@ -45,6 +45,9 @@
             </when>
             <when test="orderColumn == 'qty'">
                 ORDER BY a.qty ${orderType}
+            </when>
+            <when test="orderColumn == 'prod_type'">
+                ORDER BY a.prod_type ${prodType}
             </when>
             <otherwise>
                 ORDER BY a.cart_no ${orderType}

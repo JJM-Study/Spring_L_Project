@@ -31,7 +31,7 @@
                     </c:if>
                 </a>
             </th>
-            <th>
+            <th id="cart-th-name">
                 <a href="javascript:void(0);" onClick="toggleOrderType('prod_name')">
                     제품명
                     <c:if test="${orderColumn == 'prod_name'}">
@@ -39,6 +39,17 @@
                             <c:when test="${orderType == 'asc'}">▲</c:when>
                             <c:otherwise>▼</c:otherwise>
                         </c:choose>
+                    </c:if>
+                </a>
+            </th>
+            <th>
+                <a href="javascript:void(0);" onClick="toggleOrderType('prod_type')">
+                    상품 종류
+                    <c:if test="${orderColumn == 'prod_type'}">
+                        <c:choose>
+                            <c:when test="${orderType == 'asc'}">▲</c:when>
+                                <c:otherwise>▼</c:otherwise>
+                                </c:choose>
                     </c:if>
                 </a>
             </th>
@@ -53,7 +64,7 @@
                     </c:if>
                 </a>
             </th>
-            <th id="th-del" class="cart-th">
+            <th id="cart-th-del" class="cart-th">
                삭제
             </th>
         </tr>
@@ -66,6 +77,19 @@
                         <td class="cart-td"><input type="checkbox" name="cartItem" value="${cart.cartNo}"></td>
                         <td>${cart.cartNo}</td>
                         <td>${cart.prodName}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${cart.prodType == 'DIGITAL'}">
+                                    다운로드 상품
+                                </c:when>
+                                <c:when test="${cart.prodType == 'PHYSICAL'}">
+                                    배송 상품
+                                </c:when>
+                                <c:otherwise>
+                                    기타 상품
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                         <td>${cart.qty}</td>
                         <td class="cart-td"><button id="del-cart-${cart.cartNo}" class="del-cart-btn" onClick="delCart(this.value)" value="${cart.cartNo}"><i class="bi bi-trash"></i></button></td>
                     </tr>
@@ -73,7 +97,7 @@
             </c:when>
             <c:otherwise>
                 <tr>
-                    <td colspan="5" class="text-center">비어있습니다</td>
+                    <td colspan="6" class="text-center">비어있습니다</td>
                 </tr>
             </c:otherwise>
         </c:choose>
@@ -153,8 +177,20 @@
 
     function toggleOrderType(column) {
         let newOrderType ="asc";
-        if (currentOrderColumn === column && currentOrderType === "asc") {
-            newOrderType = "desc";
+        //if (currentOrderColumn === column && currentOrderType === "asc") {
+        //    newOrderType = "desc";
+        //}
+
+        if (currentOrderColumn === column) {
+
+            newOrderType = (currentOrderType === 'asc') ? 'desc' : 'asc';
+
+        } else {
+
+                if (column === 'prod_type') {
+                     newOrderType = 'desc';
+                }
+
         }
 
         document.getElementById("orderColumn").value = column;
