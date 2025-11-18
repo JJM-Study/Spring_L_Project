@@ -6,10 +6,12 @@
 <mapper namespace="org.example.myproject.product.mapper.ProductMapper">
 
     <select id="selectProductList" resultType="org.example.myproject.product.dto.ProductDto">
-        select a.prod_no, a.prod_name, a.price, a.stock_qty, a.crt_dt, a.del_dt, b.image_url, c.prod_no IS NOT NULL AS is_in_cart
+<!--        select a.prod_no, a.prod_name, a.price, a.stock_qty, a.crt_dt, a.del_dt, b.image_url, c.prod_no IS NOT NULL AS is_in_cart-->
+        select a.prod_no, a.prod_name, a.price, a.prod_type, a.stock_qty, a.crt_dt, a.del_dt, b.image_url, c.prod_no IS NOT NULL AS is_in_cart, d.prod_no IS NOT NULL as is_in_lyb
         from product_master a
         left join product_image b on a.prod_no = b.prod_no AND b.is_main = 1
         left join order_cart c on a.prod_no = c.prod_no AND c.user_id = #{userId}
+        left join user_library d on a.prod_no = d.prod_no and d.user_id = #{userId}
         where a.del_yn = 0
         <if test="title != '' and title != null">
             AND prod_name LIKE CONCAT('%', #{title}, '%')
@@ -25,13 +27,16 @@
     <!--        where a.del_yn = 'N' and a.prod_no = #{prodNo}-->
     <!--    </select>-->
 
-    <select id="selectProductDetail" resultMap="ProductDetailMap" parameterType="string">
+    <select id="selectProductDetail" resultMap="ProductDetailMap">
         select a.prod_no, a.prod_name, a.price, a.stock_qty, a.crt_dt, a.del_dt, a.sales_dt,
         b.image_url, b.is_main, b.sort_order, c.detail_desc, c.notice, c.shipping_info, c.additional_info,
-        a.seller_id
+        a.seller_id, a.prod_type, d.prod_no IS NOT NULL as is_in_lyb
         from product_master a
         left join product_image b on a.prod_no = b.prod_no
         left join product_detail c on a.prod_no = c.prod_no
+
+        left join user_library d on a.prod_no = d.prod_no and a.prod_type != "PHYSICAL" and d.user_id = #{userId}
+
         where a.del_yn = 0 and a.prod_no = #{prodNo}
         order by b.sort_order
     </select>
@@ -40,6 +45,8 @@
         <id property="prodNo" column="prod_no" />
         <result property="prodName" column="prod_name" />
         <result property="price"    column="price" />
+
+        <result property="prodType" column="prod_type" />
 
         <result property="sellerId" column="seller_id" />
 
@@ -54,6 +61,8 @@
         <result property="notice" column="notice" />
         <result property="shippingInfo" column="shipping_info" />
         <result property="additionalInfo" column="additional_info" />
+
+        <result property="isInLyb" column="is_in_lyb" />
 
         <!-- imageUrl은 리스트니까 collection 사용 -->
         <collection property="imageList" ofType="org.example.myproject.product.dto.ProductImageDto">

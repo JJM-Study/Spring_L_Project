@@ -6,6 +6,7 @@
 <!--        select * from user_library-->
         select
             a.lyb_no,
+            b.prod_no,
             b.prod_name,
             b.seller_id,
             c.domain_type,
@@ -13,13 +14,31 @@
             c.original_filename,
             c.file_id,
             c.file_status,
-            c.reg_dt
+            a.reg_dt as lyb_reg_dt,
+            d.image_url
         from user_library as a
         inner join product_master as b on a.prod_no = b.prod_no
+        LEFT join product_image as d on d.prod_no = a.prod_no and d.is_main = 1
         LEFT join file_master as c on c.domain_id = a.prod_no
         and c.file_purpose = "RELEASE"
         and c.domain_type = "PRODUCT"
 <!--        and file_status="ACTIVE";-->
         where a.user_id = #{userId}
     </select>
+
+    <!-- 2025/11/18 추가 -->
+    <insert id="insertLibraryItems">
+        insert into
+            user_library (
+                prod_no, user_id
+            )
+        values
+        <foreach item="prodNo" collection="prodNos" separator=",">
+            (
+            #{prodNo},
+            #{userId}
+            )
+        </foreach>
+    </insert>
+
 </mapper>

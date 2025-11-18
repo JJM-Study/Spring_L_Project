@@ -17,7 +17,12 @@ public class LibraryService {
     @Autowired
     LibraryMapper libraryMapper;
 
+
     public List<MyLibraryItemsDto> selectMyLibraryItems(String userId) {
         return libraryMapper.selectMyLibraryItems(userId);
+    }
+
+    public int insertLibraryItems(List<Long> prodNos, String userId) {
+        return libraryMapper.insertLibraryItems(prodNos, userId);
     }
 }

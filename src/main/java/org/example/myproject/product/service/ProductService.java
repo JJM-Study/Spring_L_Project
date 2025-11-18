@@ -21,9 +21,9 @@ public class ProductService {
         return productMapper.selectProductList(pageSize, offset, title, userId);
     }
 
-    public ProductDetailDto selectProductDetail(String prodNo) {
+    public ProductDetailDto selectProductDetail(String prodNo, String userId) {
 
-        return productMapper.selectProductDetail(prodNo);
+        return productMapper.selectProductDetail(prodNo, userId);
     }
 
     public List<ProductPriceDto> selectProductPrice(List<Long> prodNo) {

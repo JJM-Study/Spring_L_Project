@@ -114,9 +114,11 @@ public class ProductController {
 
         try {
 
+            String userId = authService.getAuthenticUserId(request);
+
             Safelist safelist = Safelist.basicWithImages();
 
-            ProductDetailDto itemDetail = productService.selectProductDetail(prodNo);
+            ProductDetailDto itemDetail = productService.selectProductDetail(prodNo, userId);
             if(itemDetail.getDetailDesc() != null) {
                 itemDetail.setDetailDesc(Jsoup.clean(itemDetail.getDetailDesc(), safelist));
             }
@@ -152,8 +154,6 @@ public class ProductController {
 //                    throw new BusinessException(ErrorCode.ANONYMOUS_NOT_FOUND);
 //                }
 //            }
-
-            String userId = authService.getAuthenticUserId(request);
 
 
             boolean isInCart = cartService.isInCart(prodNo, userId);

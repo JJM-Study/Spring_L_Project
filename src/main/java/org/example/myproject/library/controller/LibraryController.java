@@ -35,8 +35,6 @@ public class LibraryController extends AbstractBaseController {
 
         String userId = authService.getAuthenticUserId(request);
 
-
-
         List<MyLibraryItemsDto> libraryList = libraryService.selectMyLibraryItems(userId);
 
         model.addAttribute("library",libraryList);

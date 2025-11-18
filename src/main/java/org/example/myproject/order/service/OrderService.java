@@ -10,6 +10,7 @@ import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.mapper.CartMapper;
 import org.example.myproject.error.BusinessException;
 import org.example.myproject.error.ErrorCode;
+import org.example.myproject.library.service.LibraryService;
 import org.example.myproject.order.dto.*;
 import org.example.myproject.order.mapper.OrderMapper;
 import org.example.myproject.order.mapper.OrderSequenceMapper;
@@ -51,6 +52,9 @@ public class OrderService {
 
     @Autowired
     AuthService authService;
+
+    @Autowired
+    LibraryService libraryService;
 
     @Autowired
     StockService stockService;
@@ -186,6 +190,13 @@ public class OrderService {
             cartMapper.deleteCartBulk(cartNos);
         }
 
+        List<Long> prodNos = orderDetails.stream().map(OrderDetailDto::getProdNo).toList();
+
+        this.completeOrder(prodNos, userId);
+
+        // 주문 내 아이템 개수에 따라 라이브러리 추가도 복수가 되어야 함을 깜박함..
+
+
         return orderNo;
     }
 
@@ -242,4 +253,15 @@ public class OrderService {
 
 
     };
+
+    @Transactional
+    public void completeOrder(List<Long> prodNos, String userId) {
+
+        int result = libraryService.insertLibraryItems(prodNos, userId);
+
+        if(prodNos.size() > result) {
+            throw new BusinessException(ErrorCode.FAIL_ADD_LIBRARY);
+        }
+    }
+
 }

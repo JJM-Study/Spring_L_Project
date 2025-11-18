@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface LibraryMapper {
     List<MyLibraryItemsDto> selectMyLibraryItems(String userId);
+
+    int insertLibraryItems(List<Long> prodNos, String userId);
 }

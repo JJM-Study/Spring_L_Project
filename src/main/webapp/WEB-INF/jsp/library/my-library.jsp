@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<%@ include file="/WEB-INF/views/common/header.jsp" %>--%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/library/my-library.css">
-
+<script src="/js/library/my-library.js" defer></script>
 
 <section>
     <h1>내 서재</h1>
@@ -12,15 +12,24 @@
              <li>
                 <div class="div-item">
                     <div class="div-item-info">
-                        <div class="div-item-img"><img src="/assets/images/No_Image.png" /></div>
+                        <div class="div-item-img">
+                            <c:choose>
+                                <c:when test="${item.imageUrl == null}">
+                                    <img src="/assets/images/No_Image.png" alt="상품 이미지" />
+                                </c:when>
+                                <c:otherwise>
+                                    <img src="${item.imageUrl}" alt="상품 이미지" />
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                         <div class="div-item-detail">
-                            <h3>Title</h3>
-                            <p>seller</p>
-                            <p>purchase-date</p>
+                            <h3><a href="/product/detail/${item.prodNo}">${item.prodName}</a></h3>
+                            <p>${item.sellerId}</p>
+                            <p>${item.lybRegDt}</p>
                         </div>
                     </div>
                     <div class="div-download">
-                        <button type="button" class="btn-download btn btn-primary">Download</button>
+                        <button type="button" class="btn-download btn btn-primary" onclick="downloadFile('${item.prodNo}')">Download</button>
                     </div>
                 </div>
              </li>

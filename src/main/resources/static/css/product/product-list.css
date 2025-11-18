@@ -68,15 +68,20 @@
 justify-content: center;
 }
 
-#product-info-container {
+.product-info-container {
     margin: 10px 0;
 }
 
-#product-image-container {
+.product-image-container {
     height:250px;
 
 }
 
-#product-title-container {
-    height: 50px;
+.product-title-container {
+    height: 40px;
 }
+
+/* .product-title-container > .card-title {
+    margin-top : -5px;
+    margin-bottom : 0px;
+} */

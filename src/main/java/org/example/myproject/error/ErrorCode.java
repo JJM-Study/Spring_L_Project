@@ -38,7 +38,10 @@ public enum ErrorCode {
 
 
     // 파일
-    FILE_NOT_FOUND("F001", "파일을 찾지 못했습니다.", HttpStatus.NOT_FOUND);
+    FILE_NOT_FOUND("F001", "파일을 찾지 못했습니다.", HttpStatus.NOT_FOUND),
+
+    // 라이브러리
+    FAIL_ADD_LIBRARY("L001", "라이브러리 추가에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String code;
     private final String message;

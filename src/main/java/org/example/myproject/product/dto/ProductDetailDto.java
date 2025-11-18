@@ -10,6 +10,8 @@ public class ProductDetailDto {
     private Long prodNo;
     private String prodName;
 
+    private String prodType;
+
     private String sellerId;
 
     private Integer price;
@@ -28,6 +30,8 @@ public class ProductDetailDto {
     private String additionalInfo;
 
     private String salesDtFormatted;
+
+    private Boolean isInLyb;
 
     private List<ProductImageDto> imageList;
 

@@ -1,3 +1,4 @@
 function downloadFile(prodNo) {
-   location.href ="";
+   console.log("prodNo : " + prodNo);
+   location.href =`/product/file/${prodNo}/download`;
 }

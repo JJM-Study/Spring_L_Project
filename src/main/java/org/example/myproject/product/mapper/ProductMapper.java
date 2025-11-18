@@ -14,7 +14,7 @@ public interface ProductMapper {
     //List<ProductDto> selectProductList(int pageSize, int offset, String title);
     List<ProductDto> selectProductList(int pageSize, int offset, String title, String userId);
 
-    ProductDetailDto selectProductDetail(String prodNo);
+    ProductDetailDto selectProductDetail(String prodNo, String userId);
 
     List<ProductPriceDto> selectProductPrice(@Param("prodNos") List<Long> prodNos);
 

@@ -20,6 +20,14 @@
    width: 100px;
 }
 
+.div-item-detail {
+    padding-top : 8px;
+}
+
+.div-item-detail > h3 > a {
+    text-decoration: none;
+}
+
 .div-item-info {
     display: flex;
     gap : 10px;
@@ -50,3 +58,5 @@
 ul > li {
     margin-bottom: 2px;
 }
+
+.product-info-container >

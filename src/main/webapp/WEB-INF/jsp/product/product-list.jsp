@@ -31,7 +31,7 @@
     <c:forEach var="item" items="${itemList}">
       <div class="col-md-3 mb-4">
         <div class="card h-100">
-          <div id="product-image-container">
+          <div class="product-image-container">
               <c:choose>
                 <c:when test="${empty item.imageUrl}">
                     <a href="/product/detail/${item.prodNo}">
@@ -46,17 +46,33 @@
               </c:choose>
           </div>
           <div class="card-body">
-            <div id="product-title-container">
+            <div class="product-title-container">
                 <h5 class="card-title">
                     <a href="/product/detail/${item.prodNo}" style="text-decoration: none;">
                 ${item.prodName}
                 </a>
                 </h5>
             </div>
-            <div id="product-info-container">
+            <div class="product-info-container">
                 <p class="card-text">${item.price}원</p>
+                <p class="card-text">
+                    <c:choose>
+                        <c:when test="${item.prodType == 'DIGITAL'}">
+                            다운로드 상품
+                        </c:when>
+                        <c:when test="${item.prodType == 'PHYSICAL'}">
+                            배송 상품
+                        </c:when>
+                        <c:otherwise>
+                            기타
+                        </c:otherwise>
+                    </c:choose>
+                </p>
             </div>
             <c:choose>
+                <c:when test="${item.isInLyb==true}">
+                    <button class="btn btn-primary in-cart-btn" data-prodno="${item.prodNo}" onclick="location.href='/library/my'">소유 중 상품</button>
+                </c:when>
                 <c:when test="${item.isInCart==false}">
                     <button class="btn btn-primary add-to-cart-btn" data-prodno="${item.prodNo}">장바구니 담기</button>
                 <input type="hidden" class="qty" value="1" />
