@@ -15,6 +15,7 @@ import org.example.myproject.order.dto.*;
 import org.example.myproject.order.mapper.OrderMapper;
 import org.example.myproject.order.mapper.OrderSequenceMapper;
 import lombok.RequiredArgsConstructor;
+import org.example.myproject.product.dto.ProductCommonDto;
 import org.example.myproject.product.dto.ProductDto;
 import org.example.myproject.product.dto.ProductImageDto;
 import org.example.myproject.product.mapper.ProductMapper;
@@ -190,9 +191,13 @@ public class OrderService {
             cartMapper.deleteCartBulk(cartNos);
         }
 
-        List<Long> prodNos = orderDetails.stream().map(OrderDetailDto::getProdNo).toList();
+        List<OrderCompleteDto> orderCompleteDtos = orderDetails.stream()
+                .map(detail -> OrderCompleteDto.builder()
+                .prodNo(detail.getProdNo())
+                .qty(detail.getQty())
+                        .build()).toList();
 
-        this.completeOrder(prodNos, userId);
+        this.completeOrder(orderCompleteDtos, userId);
 
         // 주문 내 아이템 개수에 따라 라이브러리 추가도 복수가 되어야 함을 깜박함..
 
@@ -255,13 +260,34 @@ public class OrderService {
     };
 
     @Transactional
-    public void completeOrder(List<Long> prodNos, String userId) {
+    public void completeOrder(List<OrderCompleteDto> orderCompleteDto, String userId) {
 
-        int result = libraryService.insertLibraryItems(prodNos, userId);
+        // 재사용성 생각해서 귀찮아도 그냥 파라미터 따로 제외해서 하자.
+        List<Long> prodNos = orderCompleteDto.stream().map(OrderCompleteDto::getProdNo).toList();
 
-        if(prodNos.size() > result) {
+        int result1 = libraryService.insertLibraryItems(prodNos, userId);
+
+        // 재고 차감과 판매수 업데이트 각각 용도에 따른 명확한 역할 분리냐, 아니면 한 번
+        // 호출로 여러 테이블을 업데이트하여 부하를 줄이느냐 중 고민..
+
+
+        if(prodNos.size() > result1) {
             throw new BusinessException(ErrorCode.FAIL_ADD_LIBRARY);
         }
+
+        List<ProductCommonDto.QtyUpdate> qtyUpdate = orderCompleteDto.stream()
+                .map(item -> ProductCommonDto.QtyUpdate.builder()
+                        .prodNo(item.getProdNo())
+                        .qty(item.getQty())
+                        .build())
+                .toList();
+
+        int result2 = productService.updateSalesCount(qtyUpdate);
+
+        if(prodNos.size() > result2) {
+            throw new BusinessException(ErrorCode.FAIL_ADD_LIBRARY);
+        }
+
     }
 
 }

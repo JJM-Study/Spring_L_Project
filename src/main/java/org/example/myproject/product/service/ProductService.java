@@ -69,4 +69,8 @@ public class ProductService {
         return productMapper.displayBestProducts(userId);
     }
 
+    public int updateSalesCount(List<ProductCommonDto.QtyUpdate> qtyUpdates) {
+        return productMapper.updateSalesCount(qtyUpdates);
+    }
+
 }

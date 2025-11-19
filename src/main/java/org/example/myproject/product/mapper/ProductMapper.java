@@ -24,4 +24,6 @@ public interface ProductMapper {
 
 
     List<ProductBestsellerDto> displayBestProducts(String userId);
+
+    int updateSalesCount(@Param("list") List<ProductCommonDto.QtyUpdate> qtyUpdates);
 }

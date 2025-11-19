@@ -126,7 +126,15 @@
         left join order_cart as e on a.prod_no = e.prod_no and e.user_id = #{userId}
         where a.sales_dt > date_sub(NOW(), INTERVAL 10 YEAR)
         order by b.sales_count desc, b.rating desc, a.sales_dt desc
+        LIMIT 0, 10
     </select>
 
 
+    <update id="updateSalesCount">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE product_status
+            SET sales_count = sales_count + #{item.qty}
+            WHERE prod_no = #{item.prodNo}
+        </foreach>
+    </update>
 </mapper>
