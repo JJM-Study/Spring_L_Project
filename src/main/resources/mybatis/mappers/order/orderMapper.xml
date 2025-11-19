@@ -39,6 +39,7 @@
 <!--        DATE_FORMAT(a.order_date, '%Y-%m-%d %H:%i:%s') as order_dt_formatted,-->
         c.prod_name as prod_name,
         a.user_id as user_id,
+        c.prod_type as prod_type,
         row_number() over (
         partition by a.order_no
         order by c.price desc, b.prod_no asc
@@ -51,7 +52,8 @@
         order_no,
         order_date,
         prod_name,
-        user_id
+        user_id,
+        prod_type
         from ranked_products
         where rn = 1
         <if test="userId != null">
@@ -60,6 +62,7 @@
         <if test="userId == null">
             and user_id IS NULL
         </if>
+        order by order_date desc
         limit ${pageSize} offset ${offset};
     </select>
 

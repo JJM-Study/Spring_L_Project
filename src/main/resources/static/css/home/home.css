@@ -1,0 +1,24 @@
+#div-best {
+    background-color: #28B4B4;
+    width : 100%;
+    height: 300px;
+}
+
+.product-title-container h6 {
+
+}
+
+.product-title-container {
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    overflow : hidden;
+    text-overflow: ellipsis;
+}
+
+.product-info-container .card-text {
+    font-size: 0.9rem;
+}
+

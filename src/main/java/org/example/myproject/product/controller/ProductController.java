@@ -11,10 +11,7 @@ import org.example.myproject.common.DateUtils;
 import org.example.myproject.config.Pagination;
 import org.example.myproject.error.BusinessException;
 import org.example.myproject.error.ErrorCode;
-import org.example.myproject.product.dto.ProductDetailDto;
-import org.example.myproject.product.dto.ProductDto;
-import org.example.myproject.product.dto.ProductImageDto;
-import org.example.myproject.product.dto.SendImageDTO;
+import org.example.myproject.product.dto.*;
 import org.example.myproject.product.service.ProductService;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
@@ -177,6 +174,11 @@ public class ProductController {
         }
 
         return "layout/main-layout";
+    }
+
+    @GetMapping("/best")
+    public List<ProductBestsellerDto> displayBestProducts(String userId) {
+        return productService.displayBestProducts(userId);
     }
 
 }

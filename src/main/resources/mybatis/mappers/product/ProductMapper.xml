@@ -105,4 +105,28 @@
         </foreach>
     </select>
 
+    <!-- 2025.11.19 Best Seller 추가 -->
+    <select id="displayBestProducts" resultType="org.example.myproject.product.dto.ProductBestsellerDto">
+        select
+            b.sales_count,
+            b.rating,
+            a.sales_dt,
+            a.prod_no,
+            a.prod_name,
+            a.prod_type,
+            a.price,
+            a.seller_id,
+            c.image_url,
+            e.cart_no IS NOT NULL isInCart,
+            d.prod_no IS NOT NULL as isInLyb
+        from product_master as a
+        inner join product_status as b on a.prod_no = b.prod_no
+        left join product_image as c on a.prod_no = c.prod_no and c.is_main = 1
+        left join user_library as d on a.prod_no = d.prod_no and d.user_id = #{userId}
+        left join order_cart as e on a.prod_no = e.prod_no and e.user_id = #{userId}
+        where a.sales_dt > date_sub(NOW(), INTERVAL 10 YEAR)
+        order by b.sales_count desc, b.rating desc, a.sales_dt desc
+    </select>
+
+
 </mapper>

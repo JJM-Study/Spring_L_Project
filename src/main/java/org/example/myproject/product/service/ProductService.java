@@ -65,4 +65,8 @@ public class ProductService {
         return productMapper.selectImagesByProdNos(prodNo);
     }
 
+    public List<ProductBestsellerDto> displayBestProducts(String userId) {
+        return productMapper.displayBestProducts(userId);
+    }
+
 }

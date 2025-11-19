@@ -12,6 +12,7 @@ public class OrderListDTO {
     //private LocalDateTime orderDate;
     private String orderDate;
     private String prodName;
+    private String prodType;
 
 //    private String orderDtFormatted;
 }

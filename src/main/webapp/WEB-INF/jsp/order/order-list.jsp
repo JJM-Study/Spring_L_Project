@@ -11,6 +11,7 @@
                 <th id="ord-date">주문일</th>
                 <th id="ord-no">주문번호</th>
                 <th id="ord-prod">주문 상품</th>
+                <th id="ord-type">상품 종류</th>
             </tr>
          </thead>
          <tbody id="ordListTbody">
@@ -22,6 +23,19 @@
                                   <td class="ord-date">${order.orderDate}</td>
                                   <td class="ord-no">${order.orderNo}</td>
                                   <td class="ord-prod">${order.prodName}</td>
+                                  <td class="ord-type">
+                                  <c:choose>
+                                            <c:when test="${order.prodType == 'DIGITAL'}">
+                                                다운로드
+                                            </c:when>
+                                            <c:when test="${order.prodType == 'PHYSICAL'}">
+                                                배송
+                                            </c:when>
+                                            <c:otherwise>
+                                                기타
+                                            </c:otherwise>
+                                  </c:choose>
+                                  </td>
                                </tr>
                            <%--    <c:set var="currentDataCount" value="${status.count}" /> --%>
                            </c:forEach>
@@ -38,7 +52,7 @@
                    </c:when>
                    <c:otherwise>
                         <tr>
-                            <td colspan="3">주문 내역이 없습니다.</td>
+                            <td colspan="4">주문 내역이 없습니다.</td>
                         </tr>
                    </c:otherwise>
                </c:choose>

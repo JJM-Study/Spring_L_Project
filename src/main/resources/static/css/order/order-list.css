@@ -8,7 +8,8 @@ section {
 
 section > div {
     margin: 10px;
-    width : 600px;
+    /* width : 600px; */
+    width : 720px;
 
 
 }
@@ -35,6 +36,10 @@ table, tr, td, th {
 
 #ord-prod {
     width: auto;
+}
+
+#ord-type {
+    width: 100px;
 }
 
 
