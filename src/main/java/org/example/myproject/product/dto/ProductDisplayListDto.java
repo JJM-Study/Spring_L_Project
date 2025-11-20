@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ProductBestsellerDto {
+public class ProductDisplayListDto {
     private Long salesCount;
     private Double rating;
     private LocalDateTime salesDt;
@@ -17,5 +17,7 @@ public class ProductBestsellerDto {
     private String imageUrl;
     private Boolean isInCart;
     private Boolean isInLyb;
+
+    private String listType;
 
 }

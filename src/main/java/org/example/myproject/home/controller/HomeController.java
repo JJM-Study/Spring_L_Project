@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.service.AuthService;
-import org.example.myproject.product.dto.ProductBestsellerDto;
+import org.example.myproject.product.dto.ProductDisplayListDto;
 import org.example.myproject.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,10 +28,14 @@ public class HomeController {
 
         String userId = authService.getAuthenticUserId(request);
 
-        List<ProductBestsellerDto> bestProducts = productService.displayBestProducts(userId);
+        List<ProductDisplayListDto> bestProducts = productService.displayProductList(userId, "BEST");
         logger.info("bestProducts : " + bestProducts);
         model.addAttribute("layoutBody", "/WEB-INF/jsp/home.jsp");
         model.addAttribute("bestList", bestProducts);
+
+        List<ProductDisplayListDto> latestProducts = productService.displayProductList(userId, "latest");
+
+        model.addAttribute("latestList", latestProducts);
         logger.info("home test");
         return "layout/main-layout";
     }

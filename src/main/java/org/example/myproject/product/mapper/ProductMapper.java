@@ -23,7 +23,7 @@ public interface ProductMapper {
     List<ProductImageDto> selectImagesByProdNos(@Param("list") List<Long> prodNo);
 
 
-    List<ProductBestsellerDto> displayBestProducts(String userId);
+    List<ProductDisplayListDto> displayProductList(String userId, String listType);
 
     int updateSalesCount(@Param("list") List<ProductCommonDto.QtyUpdate> qtyUpdates);
 }

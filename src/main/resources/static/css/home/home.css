@@ -1,9 +1,20 @@
+section {
+  overflow-x : scroll;
+  scrollbar-width: none;
+}
+
+section::-webkit-scrollbar {
+    display: none;
+}
+
 .div-prod {
-    background-color: #28B4B4;
+    border-radius:5px;
+    background-color: #f5f7fa;
     /* height: 350px; */
     display:flex;
     align-items:center;
-width: fit-content;
+    width: fit-content;
+    text-align: center;
 }
 
 .div-prod-parent {
@@ -19,6 +30,7 @@ width: fit-content;
     display:flex;
         gap : 5px;
         width: fit-content;
+
 }
 
 .ul-prod > li {
@@ -28,7 +40,7 @@ width: fit-content;
 
     /* 1. li의 너비를 고정 값으로 설정 (예: 150px) */
     width: 140px;
-
+    height: fit-content;
     /* 2. 또는 Flexbox를 사용하여 유연하게 설정 */
     /* flex-basis: 150px; */
 }
@@ -64,4 +76,41 @@ width: fit-content;
 
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.rank-no {
+    border-radius:5px;
+    margin-bottom : 5px;
+    color: #333;
+}
+
+/* 1위 골드 */
+.rank-gold {
+    background-color: #FFD700;
+    color: #333;
+}
+
+/* 2위 실버 */
+.rank-silver {
+    background-color: #C0C0C0;
+    color: #333;
+}
+
+/* 3위 브론즈 */
+.rank-bronze {
+    background-color: #CD7F32;
+    color: #333;
+}
+
+.prod-list-title {
+    width: 100%;
+    background-color:#f5f7fa;
+    margin-bottom : 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color : #212529;
+}
+
+.div-prod-list {
+width: fit-content;
 }

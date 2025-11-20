@@ -176,9 +176,9 @@ public class ProductController {
         return "layout/main-layout";
     }
 
-    @GetMapping("/best")
-    public List<ProductBestsellerDto> displayBestProducts(String userId) {
-        return productService.displayBestProducts(userId);
-    }
+//    @GetMapping("/best")
+//    public List<ProductBestsellerDto> displayProductList(String userId) {
+//        return productService.displayBestProducts(userId, "best");
+//    }
 
 }

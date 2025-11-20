@@ -5,7 +5,9 @@
 <script src="/js/library/my-library.js" defer></script>
 
 <section>
+    <div id="my-lyb-head">
     <h1>내 서재</h1>
+    </div>
     <div id="div-item-list">
       <ul>
          <c:forEach var="item" items="${library}" >

@@ -2,10 +2,13 @@
     list-style:none;
 }
 
+#my-lyb-head {
+    margin: 20px;
+}
 
 #div-item-list {
     margin: auto;
-    width: 1200px;
+    width: 100%;
 
 }
 

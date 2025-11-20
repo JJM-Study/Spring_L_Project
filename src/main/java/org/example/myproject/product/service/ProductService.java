@@ -65,8 +65,8 @@ public class ProductService {
         return productMapper.selectImagesByProdNos(prodNo);
     }
 
-    public List<ProductBestsellerDto> displayBestProducts(String userId) {
-        return productMapper.displayBestProducts(userId);
+    public List<ProductDisplayListDto> displayProductList(String userId, String listType) {
+        return productMapper.displayProductList(userId, listType);
     }
 
     public int updateSalesCount(List<ProductCommonDto.QtyUpdate> qtyUpdates) {

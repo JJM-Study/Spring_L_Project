@@ -105,8 +105,10 @@
         </foreach>
     </select>
 
+    <!-- 홈페이지에 보여줄 상품 리스트를 동적 쿼리를 통해서 구분할 지,
+    단일 책임 원칙에 따른 별도 SQL 추가할 지 고민하다가, 유지보수성 고려. 여기 합치는 걸로. -->
     <!-- 2025.11.19 Best Seller 추가 -->
-    <select id="displayBestProducts" resultType="org.example.myproject.product.dto.ProductBestsellerDto">
+    <select id="displayProductList" resultType="org.example.myproject.product.dto.ProductDisplayListDto">
         select
             b.sales_count,
             b.rating,
@@ -124,9 +126,20 @@
         left join product_image as c on a.prod_no = c.prod_no and c.is_main = 1
         left join user_library as d on a.prod_no = d.prod_no and d.user_id = #{userId}
         left join order_cart as e on a.prod_no = e.prod_no and e.user_id = #{userId}
-        where a.sales_dt > date_sub(NOW(), INTERVAL 10 YEAR)
-        order by b.sales_count desc, b.rating desc, a.sales_dt desc
+        <choose>
+            <when test="listType == 'BEST'">
+                where
+                    a.sales_dt > date_sub(NOW(), INTERVAL 10 YEAR)
+                order by
+                    b.sales_count desc, b.rating desc, a.sales_dt desc
+            </when>
+            <otherwise>
+                order by
+                    a.sales_dt desc, a.prod_no desc
+            </otherwise>
+        </choose>
         LIMIT 0, 10
+
     </select>
 
 
