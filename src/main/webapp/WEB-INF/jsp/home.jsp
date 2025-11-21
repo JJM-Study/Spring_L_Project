@@ -22,6 +22,14 @@
             </sec:authorize> --%>
 
             <p>1. 메인 배너나 캐러셀</p>
+
+            <c:forEach var="item" items="${banners}">
+
+                <img src="${item.imageUrl}" width=100px height=100px />
+
+            </c:forEach>
+
+
             <div class="div-prod-list">
                 <div class="px-2 py-1 prod-list-title">TOP 10</div>
                 <div class="px-2 py-2 div-prod">
@@ -96,18 +104,13 @@
 
             <p>3. 신규 출시 상품</p>
             <div class="div-prod-list">
-                            <div class="px-2 py-1 prod-list-title">TOP 10</div>
+                            <div class="px-2 py-1 prod-list-title">최신 상품</div>
                             <div class="px-2 py-2 div-prod">
-                             <%-- 라이브러리 사용 가능성, SEO, 스크린 리더 등 감안. --%>
                                 <ul class="list-unstyled ul-prod">
-                                    <c:forEach var="item" items="${latestList}" varStatus="status">
+                                    <c:forEach var="item" items="${latestList}">
                                         <li>
-                                            <div class="rank-no
-                                                <c:if test="${status.count == 1}">rank-gold</c:if>
-                                                <c:if test="${status.count == 2}">rank-silver</c:if>
-                                                <c:if test="${status.count == 3}">rank-bronze</c:if>
-                                            ">
-                                                <strong>${status.count}</strong>
+                                            <div class="div-sales-dt">
+                                                <span>${item.salesDtStr}<span>
                                             </div>
                                             <div class="card h-100 custom-best-card">
                                               <div class="product-image-container">

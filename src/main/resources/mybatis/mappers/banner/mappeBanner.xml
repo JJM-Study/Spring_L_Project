@@ -6,7 +6,7 @@
 <!--배너 설계 domain_type="BANNER", domain_id=banner_id (파일 테이블에서의 banner에 대한 일방적 참조.), domain_type="BANNER_PC or BANNER_CO or BANNER_MO"-->
 <!-- 이렇게 설계하면 모바일, PC 를 위한 각각 파일 첨부 대응이 가능하니까 편함.-->
 <mapper namespace="org.example.myproject.banner.mapper.BannerMapper">
-    <select id="selectHomeBanners">
+    <select id="selectHomeBanners" resultType="org.example.myproject.banner.dto.BannerDto">
         SELECT a.banner_id, a.link_url, a.start_date, a.end_date, b.original_filename, b.stored_filename
         FROM banner as a
         inner join file_master as b

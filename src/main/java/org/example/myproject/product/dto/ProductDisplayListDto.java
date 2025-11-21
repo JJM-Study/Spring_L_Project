@@ -3,6 +3,7 @@ package org.example.myproject.product.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 public class ProductDisplayListDto {
@@ -20,4 +21,10 @@ public class ProductDisplayListDto {
 
     private String listType;
 
+
+    public String getSalesDtStr() {
+        if (salesDt == null) return "";
+
+        return salesDt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
 }

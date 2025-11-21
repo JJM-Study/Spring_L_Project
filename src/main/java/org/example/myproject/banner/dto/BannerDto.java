@@ -12,4 +12,11 @@ public class BannerDto {
     private LocalDateTime endDate;
     private String originalFilename;
     private String storedFilename;
+    private String domainUrl;
+
+
+    public String getImageUrl() {
+        return this.domainUrl + "/" + this.storedFilename;
+    }
+
 }

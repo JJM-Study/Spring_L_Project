@@ -73,4 +73,6 @@ public class ProductService {
         return productMapper.updateSalesCount(qtyUpdates);
     }
 
+    
+
 }
