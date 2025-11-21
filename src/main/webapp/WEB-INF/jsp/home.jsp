@@ -3,12 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="/css/home/home.css">
+
 <script src="/js/cart/cart.js" defer></script>
+<script src="/js/home/home.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
 
 <!DOCTYPE html>
 
 <section>
+    <div class="div-main">
     <ul>
         <%-- <li>
             <p>MAIN HOME</p>
@@ -21,14 +27,29 @@
                <p>현재 비로그인 상태입니다.</p>
             </sec:authorize> --%>
 
-            <p>1. 메인 배너나 캐러셀</p>
+            <div class="div-style-swiper">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <c:forEach var="item" items="${banners}">
+                            <div class="swiper-slide">
+                                <a href="#">
+                                    <img src="${item.imageUrl}" />
+                                </a>
+                            </div>
+                        </c:forEach>
+                    </div>
 
-            <c:forEach var="item" items="${banners}">
+                   <!-- If we need pagination -->
+                    <div class="swiper-pagination"></div>
 
-                <img src="${item.imageUrl}" width=100px height=100px />
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
 
-            </c:forEach>
 
+
+                </div>
+            </div>
 
             <div class="div-prod-list">
                 <div class="px-2 py-1 prod-list-title">TOP 10</div>
@@ -102,7 +123,6 @@
                 </ul>
             </div>
 
-            <p>3. 신규 출시 상품</p>
             <div class="div-prod-list">
                             <div class="px-2 py-1 prod-list-title">최신 상품</div>
                             <div class="px-2 py-2 div-prod">
@@ -172,4 +192,5 @@
 
         </li>
     </ul>
+    </div>
 </section>

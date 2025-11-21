@@ -1,6 +1,7 @@
 section {
   overflow-x : scroll;
   scrollbar-width: none;
+  display:flex;
 }
 
 section::-webkit-scrollbar {
@@ -113,4 +114,28 @@ section::-webkit-scrollbar {
 
 .div-prod-list {
 width: fit-content;
+}
+
+
+/* swiper */
+
+
+.div-style-swiper {
+    width: 800px;
+    margin: 20px auto;
+}
+
+.swiper {
+  /* width: 600px; */
+  width: 100%;
+  height: 300px;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center;
+    background-color: #f4f4f4;
 }
