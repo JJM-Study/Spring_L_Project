@@ -26,7 +26,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.slf4j.Logger;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
@@ -67,7 +69,7 @@ public class BusinessExceptionTest {
     @Autowired
     OrderService orderService;
 
-    @Mock
+    @MockBean
     OrderNumberGeneratorService orderNumberGeneratorService;
 
     @Test
@@ -143,8 +145,9 @@ public class BusinessExceptionTest {
                         .build()
                 ).collect(Collectors.toList());
 
-        MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
-        String userId = mockHttpServletRequest.getUserPrincipal().getName();
+        //MockHttpServletRequest mockHttpServletRequest = new MockHttpServletRequest();
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        //String userId = mockHttpServletRequest.getUserPrincipal().getName();
 
 
         BusinessException exception = assertThrows(BusinessException.class, () -> {

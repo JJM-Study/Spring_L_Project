@@ -4,26 +4,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.myproject.auth.controller.AuthController;
 import org.example.myproject.auth.service.AuthService;
 import org.example.myproject.cart.service.CartService;
 import org.example.myproject.common.DateUtils;
 import org.example.myproject.config.Pagination;
-import org.example.myproject.error.BusinessException;
-import org.example.myproject.error.ErrorCode;
 import org.example.myproject.product.dto.*;
 import org.example.myproject.product.service.ProductService;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/product")
@@ -132,7 +122,7 @@ public class ProductController {
 
             itemDetail.setSalesDtFormatted(DateUtils.formatLocalDateTime(itemDetail.getSalesDt()));
 
-            SendImageDTO sendImageDTO = productService.isMainImage(itemDetail);
+            SendImageDto sendImageDTO = productService.isMainImage(itemDetail);
 
             logger.info("itemDetail : " + itemDetail);
 

@@ -38,9 +38,9 @@ public class ProductService {
     }
 
     // 2025/10/25 추가. main, sub 이미지 분류 위함.
-    public SendImageDTO isMainImage(ProductDetailDto detailDto) {
+    public SendImageDto isMainImage(ProductDetailDto detailDto) {
 
-        SendImageDTO sendImageDTO = new SendImageDTO();
+        SendImageDto sendImageDTO = new SendImageDto();
         List<ProductImageDto> subImages = new ArrayList<>();
 
 

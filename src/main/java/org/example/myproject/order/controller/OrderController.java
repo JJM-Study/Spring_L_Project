@@ -141,7 +141,7 @@ public class OrderController {
         response.put("orderId", orderId);
 
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/result")

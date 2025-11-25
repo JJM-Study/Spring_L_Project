@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class SendImageDTO {
+public class SendImageDto {
     private ProductImageDto mainImage;
     private List<ProductImageDto> subImages;
 }
