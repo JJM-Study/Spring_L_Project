@@ -172,7 +172,11 @@ public class OrderService {
 
         orderMapper.insertOrderDetailBulk(orderDetails);
 
-        stockService.decreaseStockBulk(orderDetails); // for문 안 쓰고 좀 더 효율적으로 일괄 처리하도록 리팩토링 함. 2025/11/04
+        Integer updatedStock = stockService.decreaseStockBulk(orderDetails); // for문 안 쓰고 좀 더 효율적으로 일괄 처리하도록 리팩토링 함. 2025/11/04
+
+        if(updatedStock < orderDetails.size()) {
+            throw new BusinessException(ErrorCode.STOCK_NOT_ENOUGH_CONCURRENCY);
+        }
 
         /*=== 통합 테스트용 ===*/
         List<StockQtyDto> stockQtyDtos = stockService.selectStockQty(requestQuantities);

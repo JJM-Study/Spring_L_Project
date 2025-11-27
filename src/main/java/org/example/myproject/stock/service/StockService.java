@@ -37,10 +37,10 @@ public class StockService {
     }
 
 
-    public void decreaseStockBulk(List<OrderDetailDto> orderDetailDto) {
+    public Integer decreaseStockBulk(List<OrderDetailDto> orderDetailDto) {
 
 
-        stockMapper.decreaseStockBulk(orderDetailDto);
+        return stockMapper.decreaseStockBulk(orderDetailDto);
 
         //Integer updatedRows = stockMapper.decreaseStockBulk(orderDetailDto);
         // 차후 필요하면 받은 updatedRows로 처리 로직을 추가든지 할 것.

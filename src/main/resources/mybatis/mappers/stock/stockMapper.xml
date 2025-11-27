@@ -54,7 +54,8 @@
         <foreach item="value" index="key" collection="requestMap" open="(" separator="," close=")">
             #{key}
         </foreach>
-        FOR UPDATE;
+<!--        원자성 업데이트 방식으로 바꿔봤음. -->
+<!--        FOR UPDATE;-->
     </select>
 
     <update id="decreaseStock">
@@ -75,6 +76,15 @@
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item.prodNo}
         </foreach>
+
+
+        <!-- 2025/11/27 추가 -->
+        AND stock_qty >=
+        (
+        <foreach collection="list" item="item" separator=" " open="CASE prod_no" close="END">
+            WHEN #{item.prodNo} THEN #{item.qty}
+        </foreach>
+        )
 
     </update>
 

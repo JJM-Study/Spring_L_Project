@@ -13,11 +13,11 @@
 
         <!--  SQL 로그 출력  -->
 
-        <Logger name="org.example.myproject" level="debug" additivity="false">
+        <Logger name="org.example.myproject" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 
-        <Logger name="org.apache.ibatis" level="debug" additivity="false">
+        <Logger name="org.apache.ibatis" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 
@@ -26,19 +26,19 @@
         </Logger>
 
 <!--        <Logger name="org.mybatis.spring" level="debug" additivity="false">-->
-        <Logger name="org.mybatis.spring" level="debug" additivity="false">
+        <Logger name="org.mybatis.spring" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 <!--        <Logger name="java.sql" level="debug" additivity="false">-->
-        <Logger name="java.sql" level="debug" additivity="false">
+        <Logger name="java.sql" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <!-- 본인 매퍼 패키지 -->
-        <Logger name="org.example.myproject.product.mapper" level="debug" additivity="false">
+        <Logger name="org.example.myproject.product.mapper" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 
-        <Logger name="org.example.myproject.order.mapper" level="debug" additivity="false">
+        <Logger name="org.example.myproject.order.mapper" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 

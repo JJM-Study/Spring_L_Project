@@ -17,7 +17,7 @@ public interface StockMapper {
 
     Integer decreaseStock(Long prodNo, Integer stockQty);
 
-    void decreaseStockBulk(List<OrderDetailDto> orderDetailDto);
+    Integer decreaseStockBulk(List<OrderDetailDto> orderDetailDto);
 
 
     // 임시 테스트용

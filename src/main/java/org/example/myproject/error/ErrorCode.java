@@ -27,6 +27,8 @@ public enum ErrorCode {
 
     STOCK_UPDATE_FAILED("S003", "재고 업데이트가 실패했습니다.", HttpStatus.BAD_REQUEST),
 
+    STOCK_NOT_ENOUGH_CONCURRENCY("SOO4", "동시성으로 인해서 재고가 부족해졌습니다.", HttpStatus.BAD_REQUEST),
+
     // 인증
     REQUEST_LOGIN("A001", "로그인이 필요합니다. (커스텀 Business 예외)", HttpStatus.UNAUTHORIZED),
 

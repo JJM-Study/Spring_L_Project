@@ -2,6 +2,7 @@ package org.example.myproject;
 
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.error.BusinessException;
+import org.example.myproject.library.mapper.LibraryMapper;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
 import org.example.myproject.order.service.OrderService;
@@ -26,6 +27,8 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @SpringBootTest
 public class OrderServiceConcurrencyTest {
@@ -39,17 +42,23 @@ public class OrderServiceConcurrencyTest {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    LibraryMapper libraryMapper;
+
     private static Logger logger = LoggerFactory.getLogger(OrderServiceConcurrencyTest.class);
 
-    private final int THREAD_COUNT = 100;
+    //private final int THREAD_COUNT = 100;
+    private final int THREAD_COUNT = 20;
     private final Long TEST_PROD_NO = 100L; // 테스트할 상품 번호.
-    private final Integer INITIAL_STOCK_QTY = 1200; // 초기 재고 설정용 // updateStock 추가 고려
+    //private final Integer INITIAL_STOCK_QTY = 1200; // 초기 재고 설정용 // updateStock 추가 고려
+    private final Integer INITIAL_STOCK_QTY = 10; // 초기 재고 설정용 // updateStock 추가 고려
 
     @Test
     @WithMockUser("ConcurrencyTester")
     @DisplayName("동시에 여러 주문 요청 시 재고 차감 및 동시성 검증")
     void concurrentOrderTest() throws InterruptedException {
         Integer requiredStock = 1;
+        String user = "user";
 
         ExecutorService executorService = Executors.newFixedThreadPool(32);
         CountDownLatch latch = new CountDownLatch(THREAD_COUNT);
@@ -62,13 +71,21 @@ public class OrderServiceConcurrencyTest {
         List<StockQtyDto> checkStock = stockService.selectStockQty(Map.of(TEST_PROD_NO, requiredStock));
         logger.info("주문 실행 전 남은 재고 :\n=== 상품명 : {}, 재고 : {} ===" , checkStock.get(0).getProdName(), checkStock.get(0).getStockQty());
 
+
+            List<String> users = IntStream.range(0, THREAD_COUNT)
+                            .mapToObj(i -> user + i)
+                                    .toList();
+
+
+        libraryMapper.deleteLibraries(users);
+
         for (int i = 0 ; i < THREAD_COUNT; i++) {
             final int userIdIndex = i;
             executorService.submit(() -> {
                 try {
                     //MockHttpServletRequest mockRequest = new MockHttpServletRequest();
                     //mockRequest.setUserPrincipal(() -> "user" + userIdIndex);
-                    String userId = "user" + userIdIndex;
+                    String userId = user + userIdIndex;
 
                     //String userId = mockRequest.getUserPrincipal().getName();
                     Integer price = productService.selectNowOrdProduct(TEST_PROD_NO).getPrice();
@@ -110,6 +127,9 @@ public class OrderServiceConcurrencyTest {
         checkStock = stockService.selectStockQty(Map.of(TEST_PROD_NO, requiredStock));
         logger.info("주문 실행 후 남은 재고 :\n상품명 : {}, 재고 : {} " , checkStock.get(0).getProdName(), checkStock.get(0).getStockQty());
 
+        orderService
+
+        libraryMapper.deleteLibraries(users);
 
     }
 }

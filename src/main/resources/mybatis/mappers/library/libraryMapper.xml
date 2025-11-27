@@ -41,4 +41,13 @@
         </foreach>
     </insert>
 
+
+    <delete id="deleteLibraries">
+        delete from user_library
+        where user_id in
+        <foreach item="user" collection="users" separator="," open="(" close=")">
+            #{user}
+        </foreach>
+    </delete>
+
 </mapper>

@@ -10,4 +10,8 @@ public interface LibraryMapper {
     List<MyLibraryItemsDto> selectMyLibraryItems(String userId);
 
     int insertLibraryItems(List<Long> prodNos, String userId);
+
+
+    /*--- 2025/11/27 테스트용 추가 ---*/
+    void deleteLibraries(List<String> users);
 }
