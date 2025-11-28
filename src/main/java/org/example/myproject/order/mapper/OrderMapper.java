@@ -33,4 +33,9 @@ public interface OrderMapper {
     String selectOrderNum(String orderNo);
 
 
+    // === 이하 테스트 용도. 공식 사용하게 되면 따로 분류 ===
+    List<OrderInfoDto> selectOrders(String status);
+
+    void deleteOrders(String status);
+
 }

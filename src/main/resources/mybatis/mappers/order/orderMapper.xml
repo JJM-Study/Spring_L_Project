@@ -5,8 +5,10 @@
     <insert id="insertOrderMaster" parameterType="org.example.myproject.order.dto.OrderDto">
         insert into order_master
         (order_no, user_id, total_amount, total_price)
+<!--        (order_no, user_id, total_amount, total_price, order_status)-->
         values
-        (#{order.orderNo}, #{order.userId}, #{order.totalAmount}, #{order.totalPrice});
+        (#{order.orderNo}, #{order.userId}, #{order.totalAmount}, #{order.totalPrice})
+<!--        (#{order.orderNo}, #{order.userId}, #{order.totalAmount}, #{order.totalPrice}, #{order.orderStatus});-->
     </insert>
 
 
@@ -132,6 +134,16 @@
         </collection>
 
     </resultMap>
+
+<!--    // === 이하 테스트 용도. 공식 사용하게 되면 따로 분류 ===-->
+
+    <select id="selectOrders" resultType="org.example.myproject.order.dto.OrderInfoDto">
+        select order_no, user_id, order_date from order_master where order_status = #{status}
+    </select>
+
+    <delete id="deleteOrders">
+        delete from order_master where order_status = #{status}
+    </delete>
 
 <!--    <resultMap id="OrderProdWithImageMap" type="org.example.myproject.order.dto.OrderInfoProductDto">-->
 <!--        <id property="prodNo" column="prod_no" />-->

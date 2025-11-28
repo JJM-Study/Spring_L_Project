@@ -5,6 +5,9 @@ import org.example.myproject.error.BusinessException;
 import org.example.myproject.library.mapper.LibraryMapper;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
+import org.example.myproject.order.dto.OrderInfoDto;
+import org.example.myproject.order.dto.OrderListDTO;
+import org.example.myproject.order.mapper.OrderMapper;
 import org.example.myproject.order.service.OrderService;
 import org.example.myproject.product.service.ProductService;
 import org.example.myproject.stock.dto.StockQtyDto;
@@ -45,13 +48,16 @@ public class OrderServiceConcurrencyTest {
     @Autowired
     LibraryMapper libraryMapper;
 
+    @Autowired
+    OrderMapper orderMapper;
+
     private static Logger logger = LoggerFactory.getLogger(OrderServiceConcurrencyTest.class);
 
     //private final int THREAD_COUNT = 100;
-    private final int THREAD_COUNT = 20;
+    private final int THREAD_COUNT = 10;
     private final Long TEST_PROD_NO = 100L; // 테스트할 상품 번호.
     //private final Integer INITIAL_STOCK_QTY = 1200; // 초기 재고 설정용 // updateStock 추가 고려
-    private final Integer INITIAL_STOCK_QTY = 10; // 초기 재고 설정용 // updateStock 추가 고려
+    private final Integer INITIAL_STOCK_QTY = 5; // 초기 재고 설정용 // updateStock 추가 고려
 
     @Test
     @WithMockUser("ConcurrencyTester")
@@ -89,7 +95,7 @@ public class OrderServiceConcurrencyTest {
 
                     //String userId = mockRequest.getUserPrincipal().getName();
                     Integer price = productService.selectNowOrdProduct(TEST_PROD_NO).getPrice();
-                    OrderDto orderDto = OrderDto.builder().orderDate(LocalDate.now()).totalAmount(requiredStock).userId(userId).build();
+                    OrderDto orderDto = OrderDto.builder().orderDate(LocalDate.now()).totalAmount(requiredStock).userId(userId).orderStatus("TEST").build();
                     List<OrderDetailDto> orderDetails = List.of(OrderDetailDto.builder().prodNo(TEST_PROD_NO).qty(requiredStock).price(price).build());
                     List<CartDto> cartDto = List.of(CartDto.builder().prodNo(TEST_PROD_NO).qty(requiredStock).userId(userId).build());
 
@@ -125,11 +131,34 @@ public class OrderServiceConcurrencyTest {
 
         logger.info("=== 동시성 검증 완료. 최종 재고 확인 필요. ===");
         checkStock = stockService.selectStockQty(Map.of(TEST_PROD_NO, requiredStock));
-        logger.info("주문 실행 후 남은 재고 :\n상품명 : {}, 재고 : {} " , checkStock.get(0).getProdName(), checkStock.get(0).getStockQty());
+        logger.info("주문 실행 후 남은 재고 = 상품명 : {}, 재고 : {}" , checkStock.get(0).getProdName(), checkStock.get(0).getStockQty());
 
-        orderService
+
+        List<OrderInfoDto> orderInfoDtos = orderMapper.selectOrders("TEST");
+
 
         libraryMapper.deleteLibraries(users);
+
+        Integer successCount = orderInfoDtos.size();
+
+        Integer failedCount = THREAD_COUNT - successCount;
+
+
+        logger.info("총 {} 건 중 {}건 성공, {}건 롤백", THREAD_COUNT, successCount, failedCount);
+
+
+
+        logger.info("--- 성공적으로 커밋된 주문 정보 ---");
+
+        orderInfoDtos.forEach(order -> {
+//            logger.info("OrderNo: {} | UserID: {} | TotalPrice: {}",
+            logger.info("OrderNo: {} | UserID: {}",
+                    order.getOrderNo(),
+                    order.getUserId());
+//                    order.getTotalPrice());
+        });
+
+        orderMapper.deleteOrders("TEST");
 
     }
 }
