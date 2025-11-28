@@ -36,14 +36,12 @@ public class BannerService {
     }
 
 
-    // 나중에 배너 관련 파일 로직 짤 때 참고.
 //    public FileDownloadDto getDownloadInfo(Long prodNo) {
 //
 //        ProductCheckFileDto productCheckFileDto = productFileMapper.checkDownloadFile(prodNo, userId);
 //
 //        Long fileId = productCheckFileDto.getFileId();
 //
-//        // 예외 처리를 어떻게 해야 할 지 고민 ...
 //
 //        return fileService.loadFile(fileId);
 //    }

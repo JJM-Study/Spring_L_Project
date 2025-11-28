@@ -157,7 +157,7 @@ public class OrderService {
         orderMaster.setOrderNo(orderNo);
 //        logger.info("orderMaster :" + orderMaster);
 
-        // 주문 번호 존재 여부 체크에 따른 비즈니스 예외 추가 필요.
+        // 주문 번호 존재 여부 체크에 따른 비즈니스 예외 추가 검토.
         orderMapper.insertOrderMaster(orderMaster);
 
 
