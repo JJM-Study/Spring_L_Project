@@ -2,6 +2,7 @@ package org.example.myproject.product.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.service.AuthService;
@@ -25,6 +26,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/product")
+@RequiredArgsConstructor
 public class ProductController {
 
     @Autowired
@@ -38,6 +40,9 @@ public class ProductController {
 
     @Autowired
     ObjectMapper objectMapper;
+
+
+    private final Safelist safelist;
 
     private static final Logger logger = LogManager.getLogger(ProductController.class);
 
@@ -103,7 +108,7 @@ public class ProductController {
 
             String userId = authService.getAuthenticUserId(request);
 
-            Safelist safelist = Safelist.basicWithImages();
+            //Safelist safelist = Safelist.basicWithImages();
 
             ProductDetailDto itemDetail = productService.selectProductDetail(prodNo, userId);
             if(itemDetail.getDetailDesc() != null) {

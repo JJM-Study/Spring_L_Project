@@ -1,5 +1,6 @@
 package org.example.myproject.config;
 
+import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -49,4 +50,16 @@ public class WebConfig implements WebMvcConfigurer {
         registrationBean.setOrder(1);
         return registrationBean;
     }
+
+    @Bean
+    public Safelist safelist() {
+        return Safelist.basicWithImages()
+                // .addAttributes("태그명", "속성명")
+                .addAttributes("img", "style", "class", "width", "height")
+                .addAttributes("p", "style", "class")
+                .addAttributes("span", "style", "class")
+                .addAttributes("div", "style", "class")
+                .addTags("h1", "h2", "h3", "h4", "h5");
+    }
+
 }
