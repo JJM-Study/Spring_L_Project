@@ -1,0 +1,168 @@
+body {
+                min-height: 100vh;
+                margin: 0;
+                overflow-y: hidden;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+body > div {
+                margin: auto;
+                width: 500px;
+                margin-top: 50vh;
+                transform: translateY(-50%);
+                padding: 50px;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+body > div > form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+}
+
+h1 {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #333;
+                font-size: 28px;
+                font-weight: 600;
+}
+
+.form-group {
+                width: 100%;
+                margin-bottom: 15px;
+                position: relative;
+}
+
+            .form-row {
+                display: flex;
+                gap: 10px;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .form-row label {
+                flex: 1;
+            }
+
+            label {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 0;
+                transition: border-color 0.2s, box-shadow 0.2s;
+                background: #f8f9fa;
+            }
+
+            label:focus-within {
+                border-color: #0d6efd;
+                box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+                background: #fff;
+            }
+
+            label i {
+                font-size: 18px;
+                color: #666;
+                margin: 0 12px;
+            }
+
+            label input {
+                flex: 1;
+                border: none;
+                outline: none;
+                font-size: 16px;
+                background: transparent;
+                padding: 12px 0;
+            }
+
+            .icon-btn {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #666;
+                padding: 0 12px;
+                font-size: 18px;
+                transition: color 0.2s;
+            }
+
+            .icon-btn:hover {
+                color: #0d6efd;
+            }
+
+            .check-btn {
+                background-color: #6c757d;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: background-color 0.2s;
+                margin-left: 8px;
+            }
+
+            .check-btn:hover {
+                background-color: #5a6268;
+            }
+
+            .button-group {
+                width: 100%;
+                display: flex;
+                gap: 10px;
+                margin-top: 25px;
+            }
+
+            button[type="submit"] {
+                flex: 1;
+                background-color: #0d6efd;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 12px 16px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: background-color 0.2s;
+            }
+
+            button[type="submit"]:hover {
+                background-color: #0b5ed7;
+            }
+
+            button[type="submit"]:active {
+                background-color: #0a58ca;
+            }
+
+            .back-btn {
+                flex: 1;
+                background-color: transparent;
+                color: #0d6efd;
+                border: 2px solid #0d6efd;
+                border-radius: 5px;
+                padding: 10px 16px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
+
+            .back-btn:hover {
+                background-color: #0d6efd;
+                color: white;
+            }
+
+            .error-message {
+                color: #dc3545;
+                font-size: 12px;
+                margin-top: 4px;
+            }
+
+            .success-message {
+                color: #28a745;
+                font-size: 12px;
+                margin-top: 4px;
+            }

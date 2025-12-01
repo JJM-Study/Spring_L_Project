@@ -1,3 +1,11 @@
+.div-main {
+    max-width: 1800px;
+    width: 98%;
+    margin: 0 auto;
+    display : flex;
+    justify-content:center;
+}
+
 section {
   overflow-x : scroll;
   scrollbar-width: none;
@@ -21,6 +29,23 @@ section::-webkit-scrollbar {
 .div-prod-parent {
     display: flex;
     justify-content: center;
+}
+
+.product-image-container {
+    height:138px;
+
+}
+
+.product-image-container a {
+    height: 100%;
+    width: 100%;
+        align-items:center;
+        display:flex;
+}
+
+.product-image {
+    height:100%;
+
 }
 
 .in-cart-btn {
@@ -110,6 +135,7 @@ section::-webkit-scrollbar {
     font-weight: bold;
     font-size: 1.5rem;
     color : #212529;
+    margin-top : 50px;
 }
 
 .div-prod-list {

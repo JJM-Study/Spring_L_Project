@@ -41,7 +41,6 @@ public enum ErrorCode {
     // 카트
     IS_IN_CART("C001", "이미 장바구니에 있습니다.", HttpStatus.BAD_REQUEST),
 
-
     // 파일
     FILE_NOT_FOUND("F001", "파일을 찾지 못했습니다.", HttpStatus.NOT_FOUND),
 
