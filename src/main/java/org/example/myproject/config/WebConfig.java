@@ -34,10 +34,14 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public FilterRegistrationBean<XssFilter> xssFilterFilterRegistrationBean() {
+//    public FilterRegistrationBean<XssFilter> xssFilterFilterRegistrationBean() {
+    public FilterRegistrationBean<XssFilter> xssFilterFilterRegistrationBean(Safelist safelist) {
         FilterRegistrationBean<XssFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new XssFilter());
+        //registrationBean.setFilter(new XssFilter());
+        registrationBean.setFilter(new XssFilter(safelist));
+
         registrationBean.addUrlPatterns("/product/detail/*");
+        registrationBean.addUrlPatterns("/test/detail/insert"); // 테스트용
         registrationBean.setOrder(2);
         return registrationBean;
     }
@@ -51,6 +55,7 @@ public class WebConfig implements WebMvcConfigurer {
         return registrationBean;
     }
 
+    // 확장 계획 : Safelist.none() 또는 Safelist.builder()로서 완전 나의 커스텀 safeList를 만들어볼 것.
     @Bean
     public Safelist safelist() {
         return Safelist.basicWithImages()

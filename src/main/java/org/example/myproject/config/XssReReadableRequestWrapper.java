@@ -18,14 +18,28 @@ public class XssReReadableRequestWrapper extends HttpServletRequestWrapper {
     private byte[] cachedBody;
     private final Map<String, String[]> sanitizedParameters;
 
-    public XssReReadableRequestWrapper(HttpServletRequest request) throws IOException {
+    // 2025/12/02 추가
+    private Safelist safelist;
+
+    public XssReReadableRequestWrapper(HttpServletRequest request, Safelist safelist) throws IOException {
         super(request);
+
+        this.safelist = safelist;
 
         cacheRequestBody(request);
 
         this.sanitizedParameters = sanitizeParameterMap(request.getParameterMap());
 
     }
+
+//    public XssReReadableRequestWrapper(HttpServletRequest request) throws IOException {
+//        super(request);
+//
+//        cacheRequestBody(request);
+//
+//        this.sanitizedParameters = sanitizeParameterMap(request.getParameterMap());
+//
+//    }
 
 
     // 요청 바디에 메모리 캐싱
@@ -48,16 +62,29 @@ public class XssReReadableRequestWrapper extends HttpServletRequestWrapper {
     }
 
 
+
     private String sanitizeValue(String value) {
         if (value == null || value.trim().isEmpty()) {
             return null;
         }
 
-        String decodedValue = Jsoup.parse(value).text();
+        //String decodedValue = Jsoup.parse(value).text();
 
-        return Jsoup.clean(decodedValue, Safelist.none());
+    //    return Jsoup.clean(decodedValue, Safelist.none());
+        return Jsoup.clean(value, this.safelist);
 
     }
+
+//    private String sanitizeValue(String value) {
+//        if (value == null || value.trim().isEmpty()) {
+//            return null;
+//        }
+//
+//        String decodedValue = Jsoup.parse(value).text();
+//
+//        return Jsoup.clean(decodedValue, Safelist.none());
+//
+//    }
 
 
     @Override
