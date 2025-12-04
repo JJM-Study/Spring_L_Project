@@ -16,18 +16,18 @@ public enum ErrorCode {
 
     PRODUCT_ORDER_NOT_FOUND("O002", "주문 상품이 비어 있습니다.",  HttpStatus.NOT_FOUND),
 
-    PRODUCT_ORDER_EXISTENCE("0003", "해당 주문번호가 이미 존재합니다.", HttpStatus.CONFLICT),
+    PRODUCT_ORDER_EXISTENCE("O003", "해당 주문번호가 이미 존재합니다.", HttpStatus.CONFLICT),
 
-    IS_IN_LYB("O004", "이미 소유 중인 상품입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    IS_IN_LYB("O004", "이미 소유 중인 상품입니다.", HttpStatus.BAD_REQUEST),
 
-        // 재고
+    // 재고
     STOCK_NOT_ENOUGH("S001", "상품의 재고가 없습니다.", HttpStatus.BAD_REQUEST),
 
     STOCK_NOT_ENOUGH_DETAIL("S002", "다음 상품들의 재고가 부족합니다: {0}", HttpStatus.BAD_REQUEST),
 
     STOCK_UPDATE_FAILED("S003", "재고 업데이트가 실패했습니다.", HttpStatus.BAD_REQUEST),
 
-    STOCK_NOT_ENOUGH_CONCURRENCY("SOO4", "동시성으로 인해서 재고가 부족해졌습니다.", HttpStatus.BAD_REQUEST),
+    STOCK_NOT_ENOUGH_CONCURRENCY("S004", "동시성으로 인해서 재고가 부족해졌습니다.", HttpStatus.BAD_REQUEST),
 
     // 인증
     REQUEST_LOGIN("A001", "로그인이 필요합니다. (커스텀 Business 예외)", HttpStatus.UNAUTHORIZED),

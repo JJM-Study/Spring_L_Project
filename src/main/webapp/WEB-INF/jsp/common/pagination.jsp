@@ -24,7 +24,9 @@
                         <c:param name="title" value="${title}" />
                     </c:if>
                 </c:url>
-                <li class="page-item"><a class="page-link" href="${pageUrl}">${i}</a></li>
+                <%-- <li class="page-item"><a class="page-link" href="${pageUrl}">${i}</a></li> --%>
+                <li class="page-item <c:if test="${i eq pagination.curPage}">active</c:if>"><a class="page-link" href="${pageUrl}">${i}</a></li>
+
             </c:forEach>
 
             <c:url var="nextUrl" value="${baseUrl}">

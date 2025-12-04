@@ -81,6 +81,11 @@ justify-content: center;
     height: 40px;
 }
 
+#page {
+    display:flex;
+    justify-content:center;
+}
+
 /* .product-title-container > .card-title {
     margin-top : -5px;
     margin-bottom : 0px;
