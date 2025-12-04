@@ -6,9 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.myproject.common.CommonConstants;
+import org.example.myproject.common.constant.CommonConstants;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;

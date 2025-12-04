@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.service.AuthService;
 import org.example.myproject.cart.service.CartService;
-import org.example.myproject.common.DateUtils;
+import org.example.myproject.common.util.DateUtils;
 import org.example.myproject.common.dto.Pagination;
 import org.example.myproject.product.dto.*;
 import org.example.myproject.product.service.ProductService;

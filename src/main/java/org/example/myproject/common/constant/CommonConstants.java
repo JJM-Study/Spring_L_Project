@@ -1,4 +1,4 @@
-package org.example.myproject.common;
+package org.example.myproject.common.constant;
 
 public class CommonConstants {
 
