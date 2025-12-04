@@ -1,4 +1,4 @@
-package org.example.myproject.common.dto;
+package org.example.myproject.common.mapper;
 
 import org.example.myproject.common.dto.UploadCallbackDto;
 import org.apache.ibatis.annotations.Mapper;
