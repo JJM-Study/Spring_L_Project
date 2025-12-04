@@ -1,6 +1,5 @@
-package org.example.myproject.config;
+package org.example.myproject.common.dto;
 
-import jakarta.validation.constraints.Max;
 import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

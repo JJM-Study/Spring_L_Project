@@ -1,6 +1,6 @@
 package org.example.myproject.common.service;
 
-import org.example.myproject.common.dto.UploadCallbackMapper;
+import org.example.myproject.common.mapper.UploadCallbackMapper;
 import org.example.myproject.common.dto.UploadCallbackDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
