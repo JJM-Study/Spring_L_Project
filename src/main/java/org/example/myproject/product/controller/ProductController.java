@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.auth.service.AuthService;
 import org.example.myproject.cart.service.CartService;
+import org.example.myproject.common.controller.AbstractBaseController;
 import org.example.myproject.common.util.DateUtils;
 import org.example.myproject.common.dto.Pagination;
 import org.example.myproject.product.dto.*;
@@ -27,7 +28,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/product")
 @RequiredArgsConstructor
-public class ProductController {
+public class ProductController extends AbstractBaseController {
 
     @Autowired
     ProductService productService;
@@ -87,7 +88,7 @@ public class ProductController {
         model.addAttribute("itemList", productList);
         model.addAttribute("pagination", pagination);
         model.addAttribute("pageUrl", "/product/products");
-        model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-list.jsp");
+//        model.addAttribute("layoutBody", "/WEB-INF/jsp/product/product-list.jsp");
         model.addAttribute("title", title);
 
 
@@ -96,7 +97,8 @@ public class ProductController {
         logger.info("next :" + pagination.getNextPage());
         logger.info("title : " + title);
 
-        return "layout/main-layout";
+//        return "layout/main-layout";
+        return layout("/product/product-list.jsp", model);
 //        return "product/product-list";
     }
 

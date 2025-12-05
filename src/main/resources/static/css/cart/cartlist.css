@@ -33,6 +33,7 @@ white-space: nowrap;
 
 td {
     text-align:center;
+    white-space : nowrap;
 }
 
 .del-cart-btn {

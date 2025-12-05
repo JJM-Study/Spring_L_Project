@@ -21,7 +21,12 @@
             </dl>
         </div>
 
-        <a href="/order/ordlist">주문 리스트 확인</a>
+        <div id="links">
+            <button type="button" class="btn btn-primary" onclick="location.href='/order/ordlist'">주문 리스트 확인</button>
+            <button type="button" class="btn btn-primary" onclick="location.href='/library/my'">내 서재로 가기</button>
+        <%-- <a href="/order/ordlist">주문 리스트 확인</a> --%>
+        <%-- <a href="/library/my">내 서재로 가기</a> --%>
+        </div>
 
         <div>
             <h3>상품 정보</h3>
