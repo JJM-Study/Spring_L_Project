@@ -10,7 +10,7 @@ const VALIDATION_STATUS = Object.freeze({
     FORMAT_INVALID: 3,
 });
 
-function isValidaUsername(username) {
+function isValidUsername(username) {
 const regex = /^[a-z0-9]+$/i;
 
     if (username === null || username === "") {

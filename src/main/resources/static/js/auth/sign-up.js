@@ -150,7 +150,7 @@ async function checkId() {
     const username = document.querySelector('input[name="username"]').value;
         console.log("check username : " + username);
 
-            const valid = isValidaUsername(username);
+            const valid = isValidUsername(username);
             //debugger;
             if(valid === VALIDATION_STATUS.EMPTY_INVALID) {
                 alert("아이디를 입력해주세요.");
