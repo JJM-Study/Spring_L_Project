@@ -73,7 +73,7 @@
 
     </resultMap>
 
-    <select id="selectProductPrice" resultType="org.example.myproject.product.dto.ProductPriceDto">
+    <select id="selectProductPrice" resultType="org.example.myproject.product.dto.ProductCommonDto$PriceInfo">
         SELECT prod_no, price
         FROM product_master
         WHERE prod_no IN

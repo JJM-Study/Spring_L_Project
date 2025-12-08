@@ -13,7 +13,7 @@ public interface ProductMapper {
 
     ProductDetailDto selectProductDetail(String prodNo, String userId);
 
-    List<ProductPriceDto> selectProductPrice(@Param("prodNos") List<Long> prodNos);
+    List<ProductCommonDto.PriceInfo> selectProductPrice(@Param("prodNos") List<Long> prodNos);
 
     int selectProductCount(@Param("title") String title);
 

@@ -26,7 +26,7 @@ public class ProductService {
         return productMapper.selectProductDetail(prodNo, userId);
     }
 
-    public List<ProductPriceDto> selectProductPrice(List<Long> prodNo) {
+    public List<ProductCommonDto.PriceInfo> selectProductPrice(List<Long> prodNo) {
 
         return productMapper.selectProductPrice(prodNo);
     }
@@ -38,23 +38,24 @@ public class ProductService {
     }
 
     // 2025/10/25 추가. main, sub 이미지 분류 위함.
-    public SendImageDto isMainImage(ProductDetailDto detailDto) {
+    //public imageGroupDto isMainImage(ProductDetailDto detailDto) {
+    public ProductCommonDto.ImageGroup isMainImage(ProductDetailDto detailDto) {
 
-        SendImageDto sendImageDTO = new SendImageDto();
+        ProductCommonDto.ImageGroup imageGroupDto = new ProductCommonDto.ImageGroup();
         List<ProductImageDto> subImages = new ArrayList<>();
 
 
         for(ProductImageDto images : detailDto.getImageList()) {
             if (images.getIsMain()) {
-                sendImageDTO.setMainImage(images);
+                imageGroupDto.setMainImage(images);
             } else {
                 subImages.add(images);
             }
         }
 
-        sendImageDTO.setSubImages(subImages);
+        imageGroupDto.setSubImages(subImages);
 
-        return sendImageDTO;
+        return imageGroupDto;
     }
 
     public ProductDto selectNowOrdProduct(Long prodNo) {

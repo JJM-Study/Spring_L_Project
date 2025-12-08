@@ -2,13 +2,12 @@ package org.example.myproject.cart.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.myproject.auth.controller.AuthController;
 import org.example.myproject.cart.dto.ChkCartItemDto;
 import org.example.myproject.cart.mapper.CartMapper;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.order.dto.OrderDetailDto;
 import org.example.myproject.order.dto.OrderDto;
-import org.example.myproject.product.dto.ProductPriceDto;
+import org.example.myproject.product.dto.ProductCommonDto;
 import org.example.myproject.product.service.ProductService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +65,11 @@ public class CartService {
                     .collect(Collectors.toList());
 
 
-            List<ProductPriceDto> productPriceList = productService.selectProductPrice(productNos);
+            List<ProductCommonDto.PriceInfo> productPriceList = productService.selectProductPrice(productNos);
 
             // 이걸 Map으로 변환
             Map<Long, Integer> productPriceMap = productPriceList.stream()
-                    .collect(Collectors.toMap(ProductPriceDto::getProdNo, ProductPriceDto::getPrice));
+                    .collect(Collectors.toMap(ProductCommonDto.PriceInfo::getProdNo, ProductCommonDto.PriceInfo::getPrice));
 
             long totalPrice = cartItems.stream().mapToLong(cartItem -> {
                 Long prodNo = cartItem.getProdNo();

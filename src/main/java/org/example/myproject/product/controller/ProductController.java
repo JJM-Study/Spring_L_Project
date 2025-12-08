@@ -129,7 +129,8 @@ public class ProductController extends AbstractBaseController {
 
             itemDetail.setSalesDtFormatted(DateUtils.formatLocalDateTime(itemDetail.getSalesDt()));
 
-            SendImageDto sendImageDTO = productService.isMainImage(itemDetail);
+            //SendImageDto sendImageDTO = productService.isMainImage(itemDetail);
+            ProductCommonDto.ImageGroup ImageGroupDto = productService.isMainImage(itemDetail);
 
             logger.info("itemDetail : " + itemDetail);
 
@@ -159,8 +160,8 @@ public class ProductController extends AbstractBaseController {
             model.addAttribute("itemList", itemDetail);
             model.addAttribute("itemDetailJson", itemDetailJson);
 //        model.addAttribute("itemListJson", itemDetailJson);
-            model.addAttribute("subImages", sendImageDTO.getSubImages());
-            model.addAttribute("mainImages", sendImageDTO.getMainImage());
+            model.addAttribute("subImages", ImageGroupDto.getSubImages());
+            model.addAttribute("mainImages", ImageGroupDto.getMainImage());
 
             logger.info("isInCart :" + isInCart);
 //        return "product/product-detail";

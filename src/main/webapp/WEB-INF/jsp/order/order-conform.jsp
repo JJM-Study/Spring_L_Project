@@ -1,23 +1,27 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<%@ include file="/WEB-INF/views/common/header.jsp" %>--%>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/order/order-conform.css">
 
-    <section class="container mt-4">
+    <section class="container mt-5">
 
         <div>
-            <h2>주문 완료</h2>
-            <dl>
-                <dt>주문번호</dt>
-                <dd>${orderInfo.orderNo}</dd>
-                <dt>결제 상태</dt>
-                <dd>${orderInfo.orderStatus}</dd>
-                <dt>결제 방식</dt>
-                <%-- <dd>${orderInfo.paymentMethod}</dd> --%>
-                <dd>결제 생략</dd>
-                <dt>총 결제 금액</dt>
-                <dd>${orderInfo.totalPrice}</dd>
-
+            <h2 class="mb-4">
+                <i class="fas fa-check-circle text-success"></i> 주문이 완료되었습니다!
+            </h2>
+            <div class="order-summary-box">
+                <dl>
+                    <dt>주문번호</dt>
+                    <dd>${orderInfo.orderNo}</dd>
+                    <dt>결제 상태</dt>
+                    <dd>${orderInfo.orderStatus}</dd>
+                    <dt>결제 방식</dt>
+                    <%-- <dd>${orderInfo.paymentMethod}</dd> --%>
+                    <dd>결제 생략</dd>
+                    <dt>총 결제 금액</dt>
+                    <dd>${orderInfo.totalPrice}</dd>
+                </div>
             </dl>
         </div>
 
