@@ -10,6 +10,7 @@ import org.example.myproject.auth.service.AuthService;
 import org.example.myproject.cart.dto.CartDto;
 import org.example.myproject.cart.dto.ChkCartItemDto;
 import org.example.myproject.cart.service.CartService;
+import org.example.myproject.common.controller.AbstractBaseController;
 import org.example.myproject.error.BusinessException;
 import org.example.myproject.error.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/cart")
-public class CartController {
+public class CartController extends AbstractBaseController {
 
     private static final Logger logger = LogManager.getLogger(CartController.class);
 
@@ -75,7 +76,8 @@ public class CartController {
         List<CartDto> cartList = cartService.selectOrderCartList(orderColumn, orderType, userId);
         model.addAttribute("cartList", cartList);
 //        return "cart/cartlist";
-        return "layout/main-layout";
+//        return "layout/main-layout";
+        return layout("/cart/cartlist.jsp", model);
     }
 
     @ResponseBody

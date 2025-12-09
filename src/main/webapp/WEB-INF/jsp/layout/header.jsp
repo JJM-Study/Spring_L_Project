@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
@@ -18,6 +19,8 @@
 <body>
 <div class="wrapper d-flex flex-column min-vh-100">
 
+
+
 <c:if test="${showNav !=false}">
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -34,16 +37,17 @@
                         <a class="nav-link active" aria-current="page" href="/library/my">내 서재</a>
                      </li> --%>
                      <li class="nav-item">
-                        <a class="nav-link" href="/cart/cartlist">장바구니</a>
+                        <%-- <a class="nav-link" href="/cart/cartlist">장바구니</a> --%>
+                        <a class="nav-link ${fn:contains(curUrl, '/cart/') ? 'active' : ''}" href="/cart/cartlist">장바구니</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="/product/products">상품</a>
+                        <a class="nav-link ${fn:contains(curUrl, '/product/') ? 'active' : ''}" href="/product/products">상품</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" href="/order/ordlist">주문내역</a>
+                        <a class="nav-link ${fn:contains(curUrl, '/order/') ? 'active' : ''}" href="/order/ordlist">주문내역</a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="/library/my">내 서재</a>
+                        <a class="nav-link ${fn:contains(curUrl, 'library') ? 'active' : ''}" aria-current="page" href="/library/my">내 서재</a>
                      </li>
                 </ul>
                 <ul class="navbar-nav userInfo-menu">
