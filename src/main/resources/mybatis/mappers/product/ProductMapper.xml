@@ -142,12 +142,26 @@
 
     </select>
 
+<!--    <update id="updateSalesCount">-->
+<!--        <foreach collection="list" item="item" separator=";">-->
+<!--            UPDATE product_status-->
+<!--            SET sales_count = sales_count + #{item.qty}-->
+<!--            WHERE prod_no = #{item.prodNo}-->
+<!--        </foreach>-->
+<!--    </update>-->
 
     <update id="updateSalesCount">
-        <foreach collection="list" item="item" separator=";">
-            UPDATE product_status
-            SET sales_count = sales_count + #{item.qty}
-            WHERE prod_no = #{item.prodNo}
+        UPDATE product_status SET sales_count = CASE
+        <foreach item="item" collection="list">
+            WHEN prod_no = #{item.prodNo} THEN sales_count = sales_count + #{item.qty}
         </foreach>
+        ELSE sales_count
+        END
+        WHERE prod_no IN (
+        <foreach item="item" collection="list" separator=",">
+            #{item.prodNo}
+        </foreach>
+        )
     </update>
+
 </mapper>

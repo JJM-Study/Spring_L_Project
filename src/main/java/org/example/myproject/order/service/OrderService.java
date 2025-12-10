@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+import java.util.Comparator;
 
 @Service
 @RequiredArgsConstructor
@@ -167,10 +167,15 @@ public class OrderService {
 //            stockService.decreaseStock(details.getProdNo(), details.getQty());
 //        }
 
+        // Deadlock 방지 / 상품 번호 순으로 정렬하여 락 획득 순서를 고정함
+        orderDetails.sort(Comparator.comparing(OrderDetailDto::getProdNo));
+
+
         orderDetails.forEach((details -> details.setOrderNo(orderNo)));
 
 
         orderMapper.insertOrderDetailBulk(orderDetails);
+
 
         Integer updatedStock = stockService.decreaseStockBulk(orderDetails); // for문 안 쓰고 좀 더 효율적으로 일괄 처리하도록 리팩토링 함. 2025/11/04
 
