@@ -24,16 +24,17 @@
 ## 3. System Architecture & Design (핵심 설계)
 
 ### 3-1. ERD 설계 및 최적화
-> =**[ `Digital_E-Commerce.ppt`내 ERD 슬라이드 캡처 이미지 넣을 것 ]**
+> <img src="https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/ERD/ERD_DETAIL.png" alt="전체 ERD 다이어그램" width="100%">
 
-<details> 
-<summary>전체 ERD (상세 스키마) 보기</summary>
-![E-COMM ERD](https://raw.githubusercontent.com/JJM-Study/jjm/e4be99a7d5c68638161075816478f3e730ee770a/assets/D_E-Comm/ERD/ERD_E-COMM.png)
+<details>
+<summary><span style="color:blue">전체 ERD (상세 스키마) 보기</span></summary>
+<img src="https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/ERD/ERD_E-COMM.png" alt="전체 ERD 다이어그램" width="100%">
 </details>
 
 
 ### 3-2. 패키지 구조 (Domain-Driven like)
-> **=[ 여기에 PPT 3페이지 패키지 구조 이미지 포함할 것]**
+
+> ![패키지 구조](https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/ARCH/3.png)
 
 * 기능별 응집도를 높이기 위해 도메인(Product, Order, Auth 등) 단위로 패키지를 구성.
 * DTO 관리 전략 : 핵심 DTO는 독립 파일로, 보조 DTO는 Inner Class로 관리하여 클래스 폭발을 방지.
@@ -48,11 +49,16 @@
 * **문제 :** 다수의 사용자가 동시에 주문 시 `Select-Update` 갭으로 인한 재고 불일치 발생 가능성.
 * **검증 :** `CountDownLatch`를 활용하여 10개 스레드 동시 주문 테스트를 수행, 정확한 재고 차감을 검증.
 
+#### ===== 주문 완료 결과 (UI) =====
 
-|      주문 완료 결과 (UI)       | 동시성 테스트 로그 (Server Log) |
-| :----------------------: | ----------------------- |
-| <img src="" width ="400" | **[여기에 로그 캡처 이미지 삽입]**  |
-|     *사용자에게 보여지는 결과*      | *실제 5건 성공, 5건 롤백된 검증*   |
+<img src="https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/UI/7.png" width ="125%"/>
+
+**=> 사용자에게 보여지는 결과**
+
+#### ===== 동시성 테스트 로그 (Server Log) =====
+
+<img src="https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/TEST/concurrency_and_transaction.png" width ="125%"/>
+**=>** **실제 5건 성공, 5건 롤백된 검증**
 
 ### 2. 시스템 안정성 및 에러 핸들링
 예측 가능한 예외 처리를 위해 **도메인별 비즈니스 에러 코드(Enum)** 를 정의하고 전역적으로 관리.
@@ -77,12 +83,11 @@
 
 ## 5. UI Preview (주요 화면)
 
-
-|             메인 화면              | 상품 상세                          |
-| :----------------------------: | ------------------------------ |
-| <img src="3.png" width=100%">  | <img src="5.png" width=100%">  |
-|        ** 로그인 / 회원가입 **        | ** 내 서재 (다운로드) **              |
-| <img src="1.png" width="100%"> | <img src="9.png" width="100%"> |
+|                                                  메인 화면                                                  |                                                  상품 상세                                                  |
+| :-----------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------: |
+| <img src="https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/UI/3.png" width="100%"/> | <img src="https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/UI/5.png" width="100%"/> |
+|                                                 **로그인**                                                 |                                             **내 서재 (다운로드)**                                             |
+| <img src="https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/UI/1.png" width="100%"/> | <img src="https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/UI/9.png" width="100%"/> |
 
 ---
 
@@ -104,6 +109,7 @@
 
 ### 7. Troubleshooting
 
-프로젝트 진행 중 발생한 기술적 이슈와 문제 해결 과정은 별도 문서로 정리 예정.
+프로젝트 진행 중 발생한 기술적 이슈와 문제 해결 과정은 별도 문서로 정리.
+*[Project_TroubleShttoing_Memo.md](docs/Proejct_Troubleshooting_Memo.md)* : 기술적 시행착오 및 구조 개선 사례
 
 
