@@ -1,8 +1,8 @@
 
 ## 1. 프로젝트 개요
 * **프로젝트명:** Digital E-Commerce
-* ** 개발 인원 ** 1인 (Backend & Frontend)
-* ** 주요 목표 **
+* **개발 인원** 1인 (Backend & Frontend)
+* **주요 목표**
   *  단순한 쇼핑몰 기능 구현을 넘어, **재고 정합성(Concurrency)**과 **데이터 무결성** 확보
   * 명확한 **에러 핸들링 규격** 정의를 통한 프론트엔드-백엔드 협업 효율 증대
   * **레거시 웹 환경(JSP)** 에서의 현대적인 보안(XSS, CSRF) 및 아키텍처 적용
@@ -44,10 +44,10 @@
 ## 4. Key Technical Feature (기술적 도전과 해결)
 
 ### 1. 동시성 제어 (Concurrency Control)
-*주문 폭주 상황에서 **재고 마이너스 (Over-selling)** 문제를 방지하기 위해 원자적 갱신 쿼리를 사용.
+* 주문 폭주 상황에서 **재고 마이너스 (Over-selling)** 문제를 방지하기 위해 원자적 갱신 쿼리를 사용.
 
-* **문제 :** 다수의 사용자가 동시에 주문 시 `Select-Update` 갭으로 인한 재고 불일치 발생 가능성.
-* **검증 :** `CountDownLatch`를 활용하여 10개 스레드 동시 주문 테스트를 수행, 정확한 재고 차감을 검증.
+	* **문제 :** 다수의 사용자가 동시에 주문 시 `Select-Update` 갭으로 인한 재고 불일치 발생 가능성.
+	* **검증 :** `CountDownLatch`를 활용하여 10개 스레드 동시 주문 테스트를 수행, 정확한 재고 차감을 검증.
 
 #### ===== 주문 완료 결과 (UI) =====
 
@@ -58,21 +58,22 @@
 #### ===== 동시성 테스트 로그 (Server Log) =====
 
 <img src="https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/TEST/concurrency_and_transaction.png" width ="125%"/>
-**=>** **실제 5건 성공, 5건 롤백된 검증**
+**=> 실제 5건 성공, 5건 롤백된 검증**
 
 ### 2. 시스템 안정성 및 에러 핸들링
 예측 가능한 예외 처리를 위해 **도메인별 비즈니스 에러 코드(Enum)** 를 정의하고 전역적으로 관리.
 
-* ***구현 :** `GlobalExceptionHandler`를 통해 Runtime Exception을 잡고, 표준화 된 JSON 포맷으로 응답.
+* **구현 :** `GlobalExceptionHandler`를 통해 Runtime Exception을 잡고, 표준화 된 JSON 포맷으로 응답.
 
 * **효과 :** 백엔드에서 구체적인 에러 코드(`S001`: 재고 부족, `A001`:인증 필요)를 정의하여 응답. 이를 통해, **프론트엔드에서 단순 메세지 출력이 아닌, 상황에 맞는 UX를 제공할 수 있음. 	
     *```
 	ex)  if (response.code === 'A001') {
 		// 에러 메세지 대신 로그인 페이지 이동
 		redirectToLogin()
-    }
+    }```
 
-** [=여기 PPT의 MockMvc 응답 JSON 또는 Postman 응답 JSON 이미지 넣을 것.]
+* **결과 :**
+<img src="https://raw.githubusercontent.com/JJM-Study/jjm/main/assets/D_E-Comm/TEST/handle_exception.png" width="100%"/>
 
 
 ### 3. 보안 (Security)
@@ -95,14 +96,14 @@
 
 #### 1. GIS 기반 물류/배송 시스템 도입 (Physical Delivery)
 * **목표 :** 디지털 상품을 넘어 실물 배송 프로세스 확장 
-* ** 기술 : ** MySQL 8.0 Geometry 타입(Sptial Index)을 활용한 위치 기반 물류 시스템
-* ** 설계 : ** `TB_DELI_MAST`(배송), `TB_DELI_GIS`(위치) 테이블 분리를 통해 주문 로직과의 간섭 최소화
+* **기술 :** MySQL 8.0 Geometry 타입(Sptial Index)을 활용한 위치 기반 물류 시스템
+* **설계 :** `TB_DELI_MAST`(배송), `TB_DELI_GIS`(위치) 테이블 분리를 통해 주문 로직과의 간섭 최소화
 
 #### 2. Role 기반 오픈 마켓 플랫폼 전환 (Multi-Vendor Platform)
 * **목표 :** 관리자(Admin) 혼자 판매하는 쇼핑몰이 아닌, **일반 사용자도 권한 획득 후 판매자(Seller)가 될 수 있는 플랫폼** 으로 확장
 * **설계 및 구현 계획 :**
     * **Spring Security 고도화:** `ROLE_USER` ->  `ROLE_SELLER`로의 동적 권한 승격 로직 구현
-    * ** 데이터 격리 : ** 기존 `SELLER_ID` 컬럼을 활용하여, 판매자별로 자신의 상품과 주문 내역만 조회/관리할 수 있는 **판매자 전용 어드민 페이지(Dashboard)** 구축
+    * **데이터 격리 :** 기존 `SELLER_ID` 컬럼을 활용하여, 판매자별로 자신의 상품과 주문 내역만 조회/관리할 수 있는 **판매자 전용 어드민 페이지(Dashboard)** 구축
     * **정산 시스템 :** 판매 수익금 및 정산 수수료 정책 로직 추가 예정
 
 ---
