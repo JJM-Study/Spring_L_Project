@@ -28,7 +28,7 @@
 
 <details> 
 <summary>전체 ERD (상세 스키마) 보기</summary>
-![전체 ERD 다이어그램](https://raw.githubusercontent.com/JJM-Study/jjm/main/Repositoiry%20Resources/Digital%20E-Commerce/ERD/ERD_E-COMMERCE.png)
+![E-COMM ERD](https://raw.githubusercontent.com/JJM-Study/jjm/e4be99a7d5c68638161075816478f3e730ee770a/assets/D_E-Comm/ERD/ERD_E-COMM.png)
 </details>
 
 
