@@ -9,8 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 
-public abstract class AbstractBaseController {
-
+//public abstract class AbstractBaseController {
+public class AbstractBaseController {
     private static final Logger logger = LogManager.getLogger(AbstractBaseController.class);
 
     private static final String MAIN_LAYOUT_PATH = "layout/main-layout";
