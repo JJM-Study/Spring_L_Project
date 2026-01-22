@@ -73,7 +73,10 @@ public class OrderService {
     @Transactional
 //    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails) {
     //public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto, HttpServletRequest request) {
-    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDetails, @Nullable List<CartDto> cartDto, String userId) {
+    public String createOrder(OrderDto orderMaster, List<OrderDetailDto> orderDts, @Nullable List<CartDto> cartDto, String userId) {
+
+        // 가변 리스트로 복사함.
+        List<OrderDetailDto> orderDetails = new ArrayList<>(orderDts);
 
         Map<Long, Integer> requestQuantities = orderDetails.stream()
                 .collect(Collectors.toMap(
@@ -298,5 +301,6 @@ public class OrderService {
         }
 
     }
+
 
 }
