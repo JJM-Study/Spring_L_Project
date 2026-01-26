@@ -48,7 +48,7 @@ public class AnonymousIdFilter implements Filter {
 
             setAnonymousIdCookie(httpServletResponse, anonymousId);
 
-            logger.info("쿠키 " + anonymousId + "발급 완료");
+//            logger.info("쿠키 " + anonymousId + "발급 완료");
         }
 
         request.setAttribute(CommonConstants.ANONYMOUS_ID_KEY, anonymousId);

@@ -59,6 +59,19 @@ public class OrderServiceConcurrencyTest {
     //private final Integer INITIAL_STOCK_QTY = 1200; // 초기 재고 설정용 // updateStock 추가 고려
     private final Integer INITIAL_STOCK_QTY = 5; // 초기 재고 설정용 // updateStock 추가 고려
 
+    /* ※ 주의 테스트 할 때
+
+    <insert id="insertOrderMaster" ...>
+    insert into order_master
+    (order_no, user_id, total_amount, total_price)
+values
+    (#{order.orderNo}, #{order.userId}, #{order.totalAmount}, #{order.totalPrice})
+</insert>
+
+주석 해제 한 후 할 것.
+
+    */
+
     @Test
     @WithMockUser("ConcurrencyTester")
     @DisplayName("동시에 여러 주문 요청 시 재고 차감 및 동시성 검증")
@@ -66,8 +79,13 @@ public class OrderServiceConcurrencyTest {
         Integer requiredStock = 1;
         String user = "user";
 
+        CountDownLatch startLatch = new CountDownLatch(1);
+
+
+
         ExecutorService executorService = Executors.newFixedThreadPool(32);
-        CountDownLatch latch = new CountDownLatch(THREAD_COUNT);
+        //CountDownLatch latch = new CountDownLatch(THREAD_COUNT);
+        CountDownLatch doneLatch = new CountDownLatch(THREAD_COUNT);
 
         StockQtyDto stockQtyDto = StockQtyDto.builder().stockQty(INITIAL_STOCK_QTY).prodNo(TEST_PROD_NO).build();
         stockService.updateProdStock(stockQtyDto);
@@ -89,6 +107,9 @@ public class OrderServiceConcurrencyTest {
             final int userIdIndex = i;
             executorService.submit(() -> {
                 try {
+
+
+
                     //MockHttpServletRequest mockRequest = new MockHttpServletRequest();
                     //mockRequest.setUserPrincipal(() -> "user" + userIdIndex);
                     String userId = user + userIdIndex;
@@ -101,6 +122,7 @@ public class OrderServiceConcurrencyTest {
 
 
 
+                    startLatch.await();
 
                     //logger.info("재고 상황 : " + );
                     //orderService.createOrder(orderDto, orderDetails, null ,mockRequest);
@@ -110,8 +132,6 @@ public class OrderServiceConcurrencyTest {
                     //logger.info("주문번호: {} ", list);
 
 
-
-
                 } catch(BusinessException e) {
                     // 재고 부족 등의 BusinessException 발생 시
                     logger.warn("주문 실패 (재고 부족 등): {}", e.getMessage());
@@ -119,14 +139,21 @@ public class OrderServiceConcurrencyTest {
                     logger.error("기타 예외 : {}", e.getMessage());
                 }
                 finally {
-                    latch.countDown();
+                    //latch.countDown();
+                    doneLatch.countDown();
                 }
             });
 
         }
 
 
-        latch.await();
+        //latch.await();
+        Thread.sleep(500);
+
+        startLatch.countDown();
+
+        doneLatch.await(); // 모든 작업 종료 대기
+
         executorService.shutdown();
 
         logger.info("=== 동시성 검증 완료. 최종 재고 확인 필요. ===");
