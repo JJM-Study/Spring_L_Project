@@ -111,6 +111,10 @@
             <artifactId>spring-security-taglibs</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
 
         <!-- Servlet API (컴파일 전용, 런타임에는 Tomcat이 제공) -->
         <dependency>

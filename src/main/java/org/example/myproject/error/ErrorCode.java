@@ -45,7 +45,19 @@ public enum ErrorCode {
     FILE_NOT_FOUND("F001", "파일을 찾지 못했습니다.", HttpStatus.NOT_FOUND),
 
     // 라이브러리
-    FAIL_ADD_LIBRARY("L001", "라이브러리 추가에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+    FAIL_ADD_LIBRARY("L001", "라이브러리 추가에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+
+
+    // === 외부 API / Engine / 2026/05/08 ===
+    ENGINE_SERVICE_UNAVAILABLE("E001", "외부 서비스 엔진과 통신할 수 없습니다.", HttpStatus.SERVICE_UNAVAILABLE),
+
+    ENGINE_TIMEOUT("E002", "외부 엔진 응답 시간이 초과되었습니다.", HttpStatus.GATEWAY_TIMEOUT),
+
+    ENGINE_RESPONSE_ERROR("E003", "외부 엔진에서 에러가 발생했습니다.", HttpStatus.BAD_GATEWAY),
+
+    ENGINE_DATA_UNMATCHED("E004", "외부 서비스의 응답 데이터 규격이 올바르지 않습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+
+    EXTERNAL_AUTH_FAILED("E005", "외부 API 인증에 실패했습니다.", HttpStatus.UNAUTHORIZED);
 
     private final String code;
     private final String message;

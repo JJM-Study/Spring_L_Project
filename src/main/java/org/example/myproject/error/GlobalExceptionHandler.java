@@ -10,6 +10,7 @@ import org.springframework.web.ErrorResponse;
 import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,14 @@ public class GlobalExceptionHandler {
                 //.status(e.getErrorCode().getStatus())
                 .status(errorCode.getStatus())
                 .body(body);
+    }
+
+    @ExceptionHandler(ExternalServiceExceptionHandler.class)
+    public Mono<ResponseEntity<ErrorCode>> ExternalServiceException(ErrorCode errorCode) {
+
+
+        logger.info("External Error : " + );
+        return ResponseEntity.status(errorCode.getStatus()).body(errorCode.getCode(), errorCode.getMessage());
     }
 }
 

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -73,5 +74,13 @@ public class WebConfig implements WebMvcConfigurer {
                 .addAttributes("div", "style", "class")
                 .addTags("h1", "h2", "h3", "h4", "h5");
     }
+
+
+    // 향후 타임아웃이나 기타 설정이 필요할 때.
+//    @Bean
+//    public WebClient.Builder webClientBuilder() {
+//
+//        return WebClient.builder();
+//    }
 
 }
