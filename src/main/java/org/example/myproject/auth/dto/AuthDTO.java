@@ -42,4 +42,5 @@ public class AuthDTO implements UserDetails {
     public String getPassword() {
         return password;
     }
+
 }

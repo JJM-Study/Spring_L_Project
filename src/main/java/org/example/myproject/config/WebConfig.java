@@ -77,10 +77,10 @@ public class WebConfig implements WebMvcConfigurer {
 
 
     // 향후 타임아웃이나 기타 설정이 필요할 때.
-//    @Bean
-//    public WebClient.Builder webClientBuilder() {
-//
-//        return WebClient.builder();
-//    }
+    @Bean
+    public WebClient.Builder webClientBuilder() {
+
+        return WebClient.builder();
+    }
 
 }

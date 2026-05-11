@@ -32,7 +32,8 @@ public class AuthService {
     @Transactional
     public boolean signUpUser(AuthDTO authDTO) {
 
-        authDTO.setPassword(passwordEncoder.encode(authDTO.getPassword()));
+        String encodedPassword = passwordEncoder.encode(authDTO.getPassword());
+        authDTO.setPassword(encodedPassword);
         return authMapper.signUpUser(authDTO);
     }
 

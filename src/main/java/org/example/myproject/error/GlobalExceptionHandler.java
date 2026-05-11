@@ -3,6 +3,7 @@ package org.example.myproject.error;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import reactor.core.publisher.Mono;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestControllerAdvice()
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LogManager.getLogger(ErrorCode.class);
@@ -46,11 +47,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ExternalServiceExceptionHandler.class)
-    public Mono<ResponseEntity<ErrorCode>> ExternalServiceException(ErrorCode errorCode) {
+    public ResponseEntity<String> ExternalServiceException(ExternalServiceExceptionHandler e) {
 
+        String code = e.getErrorCode().getCode();
+        String message = e.getErrorCode().getMessage();
+        HttpStatus status = e.getErrorCode().getStatus();
 
-        logger.info("External Error : " + );
-        return ResponseEntity.status(errorCode.getStatus()).body(errorCode.getCode(), errorCode.getMessage());
+        logger.info("External Error : " + e.getMessage());
+        return ResponseEntity.status(status).body("message :" + message + "code :" + code + "status :" + status);
     }
 }
 
