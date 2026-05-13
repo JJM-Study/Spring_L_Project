@@ -1,40 +1,41 @@
 package org.example.myproject.gis.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import javax.xml.stream.Location;
+
 import java.util.List;
 
-@RequiredArgsConstructor
+@Data
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class OutputGISDto {
 
-    @JsonProperty("my_location")
-    private MyLocation myLocation;
+    //@JsonProperty("center_lat")
+    private Double centerLat;
 
-    @JsonProperty("nearby_locations")
-    private List<NearbyLocation> nearbyLocations;
+    //@JsonProperty("center_lon")
+    private Double centerLon;
 
-    static class MyLocation {
+    //@JsonProperty("nearby_nodes")
+    private List<NodeInfo> nearbyNodes;
 
-        @JsonProperty("lat")
-        private Double lat;
-        @JsonProperty("lon")
-        private Double lon;
-
-    }
-
-    static class NearbyLocation {
-        @JsonProperty("node_id")
+    @Data
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+    static class NodeInfo {
+        //@JsonProperty("node_id")
         private int nodeId;
 
-        @JsonProperty("distance_km")
+        //@JsonProperty("distance_km")
         private Double distanceKm;
 
-        @JsonProperty("lat")
+        //@JsonProperty("lat")
         private Double lat;
 
-        @JsonProperty("lon")
+        //@JsonProperty("lon")
         private Double lon;
 
     }
