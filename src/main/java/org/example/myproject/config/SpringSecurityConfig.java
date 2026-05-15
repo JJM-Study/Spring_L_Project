@@ -48,12 +48,9 @@ public class SpringSecurityConfig {
     @Bean
     public SecurityFilterChain securityException(HttpSecurity http, AuthenticationFailureHandler authenticationFailureHandler ) throws Exception {
 
-
-
-
         /* 로그인 */
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/login", "/home", "/", "/sign-up", "/WEB-INF/**", "/product/**").permitAll()
+                .requestMatchers("/login", "/home", "/", "/sign-up", "/WEB-INF/**", "/product/**", "/swagger-ui/**", "/v3/api-docs").permitAll()
                         .requestMatchers(HttpMethod.POST, "/sign-up").permitAll()  // POST도 명시적으로 허용
 
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()

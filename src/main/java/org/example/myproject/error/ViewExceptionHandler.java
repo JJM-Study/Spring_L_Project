@@ -68,10 +68,14 @@ public class ViewExceptionHandler implements ErrorController {
     public String commonExceptionHandler(Exception exception, Model model, HttpServletResponse response, HttpServletRequest request){
         Object statusCode = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
+        Throwable throwable = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+
         logger.info("statusCode : " + statusCode);
+        logger.info("throwable :" + throwable);
+        Object message = request.getAttribute("javax.servlet.error.message");
 
         int status = 500;
-
+        logger.info("Error Message: {}", message);
         if (statusCode != null) {
 
             try {
