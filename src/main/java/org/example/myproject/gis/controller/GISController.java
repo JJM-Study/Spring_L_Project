@@ -14,6 +14,7 @@ import org.example.myproject.gis.dto.OutputGISDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -36,16 +37,18 @@ public class GISController {
         this.webClient = webClientBuilder
                 .baseUrl(properties.getBaseUrl())
                 .build();
+        this.properties = properties;
     }
 
     @ResponseBody
+    @PostMapping("/nearby")
     public Mono<OutputGISDto> UseGIS (@RequestBody InputGISDto request){
 
         logger.info("input_log : " + request);
-
+        logger.info("BaseUrl : " + properties.getBaseUrl() + "\nSpatialPath : " + properties.getSpatialPath());
         return webClient
                 .post()
-                .uri("/nearby")
+                .uri(properties + "/nearby")
                 .bodyValue(request)
                 .retrieve()
                 .bodyToMono(OutputGISDto.class)
