@@ -18,5 +18,10 @@ public class ExternalServiceExceptionHandler extends RuntimeException {
 
     }
 
+    public ExternalServiceExceptionHandler(ErrorCode errorCode, Throwable cause) {
+        super(errorCode.getMessage(), cause);
+        this.errorCode = errorCode;
+    }
+
 
 }

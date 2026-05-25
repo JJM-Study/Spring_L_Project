@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.example.myproject.common.constant.CommonConstants;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -29,12 +31,14 @@ public class AnonymousIdFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
+
         // HTTP 프로토콜 특정화를 위한 다운 캐스팅이라고 할 수 있다.
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 
 
-        // for 문 보단 최적화의 관점에선 stream이 나을 듯.
+
+        // for 문 보단 최적화의 관점에선 stream이 나을 듯. // 스트림은 객체 생성, 람다 파이프라인 오버헤드가 있어서 단순 반복문보다 느리고 메모리를 더 쓰는 문제라서 그냥 foreach 쓰자.
         Optional<Cookie> anonymousIdCookie = Arrays.stream(Optional.ofNullable(httpServletRequest.getCookies()).orElse(new Cookie[0]))
                 .filter(cookie -> CommonConstants.ANONYMOUS_ID_KEY.equals(cookie.getName()))
                 .findFirst();
@@ -53,6 +57,7 @@ public class AnonymousIdFilter implements Filter {
 
         request.setAttribute(CommonConstants.ANONYMOUS_ID_KEY, anonymousId);
 
+
         chain.doFilter(request, response);
     }
 
@@ -63,5 +68,7 @@ public class AnonymousIdFilter implements Filter {
         newCookie.setHttpOnly(true); // 자바스크립트로 읽기 방지.
         httpServletResponse.addCookie(newCookie);
     }
+
+
 
 }

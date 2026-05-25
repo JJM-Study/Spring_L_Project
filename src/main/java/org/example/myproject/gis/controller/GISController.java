@@ -1,5 +1,7 @@
 package org.example.myproject.gis.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,11 +15,13 @@ import org.example.myproject.gis.dto.OutputGISDto;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -48,11 +52,17 @@ public class GISController {
         logger.info("BaseUrl : " + properties.getBaseUrl() + "\nSpatialPath : " + properties.getSpatialPath());
         return webClient
                 .post()
-                .uri(properties + "/nearby")
+                //.uri(properties.getBaseUrl() + properties.getSpatialPath() + "/nearby")
+                .uri(properties.getBaseUrl() + properties.getBaseUrl() + "/nearby") // 의도적 에러 내기.
                 .bodyValue(request)
                 .retrieve()
                 .bodyToMono(OutputGISDto.class)
-                .onErrorMap(e -> new ExternalServiceExceptionHandler(ErrorCode.ENGINE_SERVICE_UNAVAILABLE));
-
+//                .doOnError(WebClientResponseException.class, e -> {
+//                    logger.info("Http Status Code {}", e.getStatusCode());
+//                    logger.info("Response Body {}", e.getResponseBodyAsString());
+//                });
+                .onErrorMap(e -> new ExternalServiceExceptionHandler(ErrorCode.ENGINE_SERVICE_UNAVAILABLE, e)); // Http 에러도 출력 가능하도록 해버리자.
     }
+
+
 }

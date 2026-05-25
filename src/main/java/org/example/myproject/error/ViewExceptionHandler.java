@@ -70,12 +70,15 @@ public class ViewExceptionHandler implements ErrorController {
 
         Throwable throwable = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
 
-        logger.info("statusCode : " + statusCode);
-        logger.info("throwable :" + throwable);
-        Object message = request.getAttribute("javax.servlet.error.message");
+        String reason = throwable.getMessage();
+
+        logger.info("view statusCode : " + statusCode);
+//        logger.info("throwable :" + throwable);
+        logger.info("reason view response error: " + reason);
+        Object message = request.getAttribute("org.springframework.web.util.WebUtils.ERROR_MESSAGE_ATTRIBUTE");
 
         int status = 500;
-        logger.info("Error Message: {}", message);
+        logger.info("view Error Message: {}", message);
         if (statusCode != null) {
 
             try {
@@ -87,7 +90,6 @@ public class ViewExceptionHandler implements ErrorController {
             }
         }
 
-            String reason = exception.getMessage();
             model.addAttribute("status", status);
             model.addAttribute("reason", reason);
 
