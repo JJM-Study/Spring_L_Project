@@ -108,9 +108,3 @@
 
 ---
 
-### 7. Troubleshooting
-
-프로젝트 진행 중 발생한 기술적 이슈와 문제 해결 과정은 별도 문서로 정리.
-*[Project_TroubleShttoing_Memo.md](docs/Proejct_Troubleshooting_Memo.md)* : 기술적 시행착오 및 구조 개선 사례
-
-
