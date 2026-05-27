@@ -53,7 +53,7 @@ public class GISController {
         return webClient
                 .post()
                 //.uri(properties.getBaseUrl() + properties.getSpatialPath() + "/nearby")
-                .uri(properties.getBaseUrl() + properties.getBaseUrl() + "/nearby") // 의도적 에러 내기.
+                .uri(properties.getBaseUrl() + properties.getSpatialPath() + "/nearby1") // 의도적 에러 내기.
                 .bodyValue(request)
                 .retrieve()
                 .bodyToMono(OutputGISDto.class)

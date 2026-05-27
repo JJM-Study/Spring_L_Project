@@ -65,20 +65,24 @@ public class ViewExceptionHandler implements ErrorController {
 
 
     @RequestMapping("/error")
-    public String commonExceptionHandler(Exception exception, Model model, HttpServletResponse response, HttpServletRequest request){
+    public String commonExceptionHandler(Model model, HttpServletResponse response, HttpServletRequest request){
         Object statusCode = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
         Throwable throwable = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
 
-        String reason = throwable.getMessage();
+        String reason = (throwable) != null ? throwable.getMessage() : null;
 
         logger.info("view statusCode : " + statusCode);
 //        logger.info("throwable :" + throwable);
         logger.info("reason view response error: " + reason);
         Object message = request.getAttribute("org.springframework.web.util.WebUtils.ERROR_MESSAGE_ATTRIBUTE");
+        //404 에러 처리가 제대로 안 되므로 에러 처리 흐름을 이해하고 그에 따라 처리하도록 수정할 것.
 
-        int status = 500;
+
+//        int status = 500; // 이게 servletResponse 에도 같은 논리로 적용 되더라.
+        int status = (response.getStatus() > 0) ? response.getStatus() : 500;
         logger.info("view Error Message: {}", message);
+
         if (statusCode != null) {
 
             try {
@@ -94,7 +98,7 @@ public class ViewExceptionHandler implements ErrorController {
             model.addAttribute("reason", reason);
 
             if (status == 404) {
-                model.addAttribute("status", status);
+//                model.addAttribute("status", status);
                 model.addAttribute("layoutBody", "/WEB-INF/jsp/error/404.jsp");
             } else {
                 model.addAttribute("layoutBody", "/WEB-INF/jsp/error/common-error.jsp");
