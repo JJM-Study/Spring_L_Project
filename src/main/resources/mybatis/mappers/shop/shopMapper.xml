@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.example.myproject.shop.mapper.ShopMapper">
+
+    <select id="selectShopId" resultType="org.example.myproject.shop.dto.ShopDTO">
+        select
+            shop_id as shopId,
+            shop_name as shopName,
+            category_large as categoryLarge,
+            category_mid as categoryMid,
+            road_address as roadAddress
+        from shop
+        where shop_id IN
+        <foreach collection="externalIds"
+                 item="externalId"
+                 open="("
+                 separator=","
+                 close=")">
+            #{externalId}
+        </foreach>
+    </select>
+
+</mapper>

@@ -14,6 +14,7 @@ import org.springframework.web.ErrorResponse;
 import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClientException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -80,7 +81,20 @@ public class GlobalExceptionHandler {
     public String handle404(HttpServletRequest request, HttpServletResponse response) {request.setAttribute(RequestDispatcher.ERROR_STATUS_CODE, 404);
         response.setStatus(404);
 
+        logger.info("404 error");
+
         return "forward:/error";
+    }
+
+    @ExceptionHandler({WebClientResponseException.class})
+    public ResponseEntity<String> handleWebClientResponse(WebClientResponseException webClientResponseException) {
+        HttpStatusCode code = webClientResponseException.getStatusCode();
+
+        logger.info("WebClient Error Code : {}", code);
+
+
+
+        return ResponseEntity.status(code).build();
     }
 
     @ResponseBody
@@ -108,6 +122,14 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(ExternalServiceExceptionHandler.class)
     public ResponseEntity<String> ExternalServiceException(ExternalServiceExceptionHandler e) {
+
+        // RuntimeException 에 handler 2개를 못 받네.
+        if (e.getCause() instanceof WebClientResponseException rawEx) {
+            logger.error("외부 API 실제 실패 이유 -> 상태코드 {}, 본문 {}",
+                   rawEx.getStatusCode(),
+                   rawEx.getResponseBodyAsString()
+            );
+        }
 
         String code = e.getErrorCode().getCode();
         String message = e.getErrorCode().getMessage();
