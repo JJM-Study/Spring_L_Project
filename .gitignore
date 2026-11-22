@@ -32,3 +32,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### TEST ###
+/src/main/resources/test.properties
