@@ -19,11 +19,9 @@
     <update id="updateGeoTargets">
         update tb_selling_location
         SET
-        longitude = #{x},
-        latitude = #{y}
-        where location_id = #{locationId}
-        and longitude is null
-        and latitude is null
+        longitude = ${query.x},
+        latitude = ${query.y}
+        where location_id = ${query.location_id}
     </update>
 
 </mapper>
