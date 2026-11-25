@@ -12,6 +12,10 @@ import java.util.List;
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class OutputGISDto {
+    @JsonProperty("clientId")
+    private Long clientId;
+    @JsonProperty("dataVersion")
+    private Long dataVersion;
 
     //@JsonProperty("center_lon")
     private Double centerLon;
@@ -30,7 +34,6 @@ public class OutputGISDto {
         //@JsonProperty("node_id")
         private int nodeId;
 
-        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private List<String> externalId;
 
         //@JsonProperty("distance_km")
@@ -49,6 +52,7 @@ public class OutputGISDto {
         @Data
         @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
         public static class ShopInfo {
+            private String locationId;
             private String shopId;
             private String shopName;
             private String categoryLarge;

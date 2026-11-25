@@ -14,4 +14,6 @@ import org.springframework.stereotype.Service;
 public class EngineApiProperties {
     private String baseUrl;
     private String spatialPath;
+    private Long clientId;
+    private String apiKey;
 }

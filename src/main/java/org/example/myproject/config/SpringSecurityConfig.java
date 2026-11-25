@@ -50,6 +50,7 @@ public class SpringSecurityConfig {
 
         /* 로그인 */
         http.authorizeHttpRequests((requests) -> requests
+                //.requestMatchers(HttpMethod.PUT, "/api/spatial/locations").authenticated() // 로그인은 나중에 필요할 때 하자.
                 .requestMatchers("/login", "/home", "/", "/sign-up", "/WEB-INF/**", "/product/**", "/swagger-ui/**", "http://localhost:8080/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/sign-up").permitAll()  // POST도 명시적으로 허용
 

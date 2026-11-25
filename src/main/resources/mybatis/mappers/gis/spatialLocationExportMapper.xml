@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.myproject.gis.mapper.SpatialLocationExportMapper">
+    <select id="findValidLocations" resultType="org.example.myproject.gis.dto.SpatialLocationExportDto">
+        SELECT location_id AS externalId,
+               longitude AS lon,
+               latitude AS lat
+        FROM tb_selling_location
+        WHERE ddt IS NULL
+          AND longitude IS NOT NULL
+          AND latitude IS NOT NULL
+          AND longitude BETWEEN -180 AND 180
+          AND latitude BETWEEN -90 AND 90
+        ORDER BY location_id
+
+    </select>
+    <select id="findSellingLocations" resultType="org.example.myproject.gis.dto.OutputGISDto$NodeInfo$ShopInfo">
+        SELECT location_id AS locationId, location_name AS shopName, address AS roadAddress
+        FROM tb_selling_location
+        WHERE ddt IS NULL AND location_id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">#{id}</foreach>
+    </select>
+</mapper>
+
