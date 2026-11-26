@@ -1,6 +1,9 @@
 package org.example.myproject.gis.client;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.myproject.config.properties.EngineApiProperties;
+import org.example.myproject.gis.controller.GISController;
 import org.example.myproject.gis.dto.InputGISDto;
 import org.example.myproject.gis.dto.OutputGISDto;
 import org.example.myproject.gis.dto.SpatialLocationExportDto;
@@ -17,6 +20,8 @@ public class SpatialEngineClient {
     private final RestClient http;
     private final EngineApiProperties settings;
 
+    private static final Logger logger = LogManager.getLogger(SpatialEngineClient.class);
+
     public SpatialEngineClient(RestClient.Builder builder, EngineApiProperties settings) {
         this.settings = settings;
         this.http = builder.baseUrl(settings.getBaseUrl() + settings.getSpatialPath()).build();
@@ -31,6 +36,7 @@ public class SpatialEngineClient {
 
     public OutputGISDto nearby(InputGISDto query) {
         checkConfiguration();
+        logger.info("Input GIS query : k = {}, lon = {}, lan = {}", + query.getK(), query.getLon(), query.getLat());
         return requireBody(http.post().uri("/clients/{id}/nearby", settings.getClientId())
                 .header("X-API-Key", settings.getApiKey())
                 .body(query).retrieve().body(OutputGISDto.class));

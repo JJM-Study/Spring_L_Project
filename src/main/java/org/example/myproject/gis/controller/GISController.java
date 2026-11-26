@@ -1,9 +1,13 @@
 package org.example.myproject.gis.controller;
 
+import org.apache.juli.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.example.myproject.gis.client.SpatialEngineClient;
 import org.example.myproject.gis.dto.InputGISDto;
 import org.example.myproject.gis.dto.OutputGISDto;
 import org.example.myproject.gis.service.SpatialLocationExportService;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +15,14 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestClientResponseException;
 import java.util.Map;
 
+
 @RestController
+@RequestMapping("/gis/")
 public class GISController {
     private final SpatialEngineClient engine;
     private final SpatialLocationExportService locations;
+
+    private static final Logger logger = LogManager.getLogger(GISController.class);
 
     public GISController(SpatialEngineClient engine, SpatialLocationExportService locations) {
         this.engine = engine;
